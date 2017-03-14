@@ -1,6 +1,6 @@
 'use strict';
 
-import Hapi from 'hapi';
+const Hapi = require('hapi');
 
 // Create a server with a host and port
 const server = new Hapi.Server();

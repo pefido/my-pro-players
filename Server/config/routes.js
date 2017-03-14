@@ -1,5 +1,5 @@
 var controller = require('require-directory')(module, '../controllers');
-//import controller from './controllers';
+
 var routes = [];
 
 routes.push({path: '/', method: 'GET', config: controller.index});
