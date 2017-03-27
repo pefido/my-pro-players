@@ -1,6 +1,13 @@
 'use strict';
 
+const Datastore = require('nedb');
 const Hapi = require('hapi');
+
+// load db
+const db = new Datastore({
+  filename: './config/datastore.db',
+  autoload: true
+});
 
 // Create a server with a host and port
 const server = new Hapi.Server();
