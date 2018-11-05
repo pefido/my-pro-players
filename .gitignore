@@ -1,1 +1,3 @@
 /Server/node_modules
+/Client/dist/*
+/Client/node_modules
