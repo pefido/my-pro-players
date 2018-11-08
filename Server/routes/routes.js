@@ -36,29 +36,20 @@ module.exports = (app, db) => {
   });
 
   app.get('/players/:id', (req, res) => {
-    var dbPlayer = db.getPlayer(req.params.id);
-    if (dbPlayer != undefined) {
-      var currentTime = new Date();
-      var lastDate = new Date(dbPlayer.lastUpdated);
-
-      //update player if it is older than 30 seconds
-      if ((currentTime - lastDate) / 1000 < 30) {
-        res.send(dbPlayer);
+    playerController.getPlayer(req.params.id, (resPlayer) => {
+      if (resPlayer != undefined) {
+        res.send(resPlayer);
       } else {
-        playerController.updatePlayerInfo(dbPlayer, currentTime, (savedPlayer) => {
-          res.send(savedPlayer);
-        });
+        res.status(404).send('Player not found');
       }
-    } else {
-      res.status(404).send('Player not found');
-    } 
+    });
 
   });
 
   app.get('/users/:id/players', (req, res) => {
     var dbUser = db.getUser(req.params.id);
     if (dbUser != undefined){
-      db.getPlayers(dbUser.followingPlayers, (followingPlayers) => {
+      playerController.getPlayers(dbUser.followingPlayers, (followingPlayers) => {
         res.send(followingPlayers);
       });
     } else {

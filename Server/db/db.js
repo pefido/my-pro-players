@@ -23,7 +23,7 @@ class DB {
     this.usersCollection.set(1, {
       id: 1,
       username: 'pefido',
-      followingPlayers: [20717177]
+      followingPlayers: [20717177, 21081580]
     });
     this.usersCollection.set(2, {
       id: 2,

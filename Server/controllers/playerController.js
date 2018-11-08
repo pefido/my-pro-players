@@ -16,6 +16,45 @@ class playerController {
       });
     });
   }
+
+  getPlayer(id, callback) {
+    var resPlayer = undefined;
+    var dbPlayer = this.db.getPlayer(id);
+
+    if (dbPlayer != undefined) {
+      var currentTime = new Date();
+      var lastDate = new Date(dbPlayer.lastUpdated);
+      //update player if it is older than 30 seconds
+      if ((currentTime - lastDate) / 1000 < 30) {
+         callback(dbPlayer);
+      } else {
+        this.updatePlayerInfo(dbPlayer, currentTime, (savedPlayer) => {
+          callback(savedPlayer);
+        });
+      }
+    } else {
+      allback(resPlayer);
+    }
+  }
+
+  getPlayers(playerCollection, callback) {
+    var resPlayers = [];
+    if(playerCollection){
+      var countPlayers = playerCollection.length;
+      playerCollection.forEach( (id) => {
+        this.getPlayer(id, (resPlayer) => {
+          resPlayers.push(resPlayer);
+          countPlayers--;
+          if(countPlayers === 0) {
+            callback(resPlayers);
+          }
+        });
+      });
+
+    } else {
+      callback(resPlayers);
+    }
+  }
   
 }
 

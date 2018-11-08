@@ -1,4 +1,18 @@
-<div>
-  <span>cenas</span>
+<div class="usersContainer">
+  <div class="introSentence">
+    Hello {{vm.user.username}}! Check who is playing
+  </div>
+  <div class="listContainer">
+    <div class="listEntry" ng-repeat="player in vm.players">
+        <span class="playerNameEntry">
+          {{player.name}}
+        </span>
+      <div>
+        <span class="playerPlayingEntry" ng-class="{playingBorder: player.playing, offlineBorder: !player.playing}">
+          {{vm.getPlayerStatus(player)}}
+        </span>
+      </div>
+    </div>
+  </div>
   <h2>{{vm.sampleText}}</h2>
 </div>
