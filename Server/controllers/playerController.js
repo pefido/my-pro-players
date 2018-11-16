@@ -33,7 +33,7 @@ class playerController {
         });
       }
     } else {
-      allback(resPlayer);
+      callback(resPlayer);
     }
   }
 

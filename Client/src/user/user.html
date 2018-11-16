@@ -1,12 +1,21 @@
 <div class="usersContainer">
-  <div class="introSentence">
-    Hello {{vm.user.username}}! Check who is playing
+  <div class="introContainer">
+    <div class="introSentence">
+      Hello {{vm.user.username}}! Check who is playing
+    </div>
   </div>
   <div class="listContainer">
-    <div class="listEntry" ng-repeat="player in vm.players">
-        <span class="playerNameEntry">
-          {{player.name}}
-        </span>
+    <div class="addPlayerContainer">
+      <input focus-on="newPlayerFocus" ng-if="vm.isAddingPlayer()" ng-blur="vm.toggleAddingPlayer()" class="newPlayerInput" ng-model = "vm.playerInputText" ng-keydown = "vm.addPlayer($event)" type="text" name="newPlayer" placeholder="Insert player name">
+      <button class="addPlayer" ng-if="!vm.isAddingPlayer()" ng-click="vm.toggleAddingPlayer()">
+        + Add Player
+      </button>
+    </div>
+    <div class="listEntry" ng-repeat="player in vm.players" ng-mouseenter = "vm.toggleDeleteButtonVis(player)" ng-mouseleave = "vm.toggleDeleteButtonVis(player)" ">
+      <button class = "deletePlayerButton" ng-click = "vm.removePlayer(player.id)" ng-class="{'invisible' : !player.deleteButtonInvisible}" name = "deletePlayer">X</button>
+      <span class="playerNameEntry">
+        {{player.name}}
+      </span>
       <div>
         <span class="playerPlayingEntry" ng-class="{playingBorder: player.playing, offlineBorder: !player.playing}">
           {{vm.getPlayerStatus(player)}}

@@ -6,8 +6,11 @@
     <base href="/">
 </head>
 
-<body>
+<body ng-controller="appController">
 
+    <div class="notificationContainer">
+        <span ng-class="notificationObj.type" ng-show="notificationObj.display" class="notification">{{notificationObj.message}}</span>
+    </div>
     <div class="header">
         <H1>my-pro-players</H1>
     </div>

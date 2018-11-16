@@ -20,6 +20,13 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
+    this.playersCollection.set(23796520, {
+      id: 23796520,
+      name: 'mithy',
+      playing: false,
+      lastUpdated: '2018-11-02T16:22:05.639Z'
+    });
+
     this.usersCollection.set(1, {
       id: 1,
       username: 'pefido',
@@ -37,6 +44,29 @@ class DB {
     return this.usersCollection.get(parseInt(id));
   }
 
+  addPlayerToUser(userId, playerId) {
+    var user = this.getUser(userId);
+    var res = false;
+    if(!(user.followingPlayers.includes(parseInt(playerId))) ) {
+      user.followingPlayers.push(parseInt(playerId));
+      this.usersCollection.set(user.id, user);
+      res = true;
+    }
+    return res;
+  }
+
+  removePlayerFromUser(userId, playerId, callback) {
+    var user = this.getUser(userId);
+    var newPlayerCollection = undefined;
+    if(user.followingPlayers.includes(parseInt(playerId)) ) {
+      user.followingPlayers = user.followingPlayers.filter((player) => {
+        return player != parseInt(playerId);
+      });
+      this.usersCollection.set(user.id, user);
+      newPlayerCollection = user.followingPlayers;
+    }
+    callback(newPlayerCollection);
+  }
 
 
   /////////player related operations
@@ -53,6 +83,17 @@ class DB {
 
   getPlayer(id) {
     return this.playersCollection.get(parseInt(id));
+  }
+
+  getPlayerIdByUsername(username) {
+    var resPlayer = Array.from(this.playersCollection.values()).find((player) => {
+      return player.name === username;
+    });
+    if(resPlayer){
+      return resPlayer.id;
+    } else {
+      return undefined;
+    }
   }
 
   updatePlayer(player, callback) {

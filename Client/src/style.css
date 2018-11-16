@@ -6,7 +6,7 @@ body {
 }
 
 .header {
-  padding-top: 40px;
+  padding-top: 15px;
   padding-bottom: 20px;
   border-style: solid;
   border-width: 0px 0px 1px 0px;
@@ -31,6 +31,10 @@ body {
   margin-bottom: 10px;
 }
 
+.introContainer > div{
+  display: inline-block;
+}
+
 .introSentence {
   font-size: 20px;
   font-weight: 50;
@@ -40,14 +44,59 @@ body {
 }
 
 .listContainer {
-  margin: 30px auto 30px auto;
+  margin: 5px auto 30px auto;
   width: 60%;
   min-width: 550px;
   background-color: #3b4457;
 }
 
+.addPlayerContainer {
+text-align: right;
+background-color: #28303f;
+padding: 15px 5px 5px 10px;
+}
+
+.addPlayer {
+  display: inline-block;
+  text-align: center;
+  color: #FFF59D;
+  font-size: 15px;
+  padding: 5px 10px 5px 10px;
+  border: solid 2px;
+  border-radius: 5px;
+  border-color: #FFF59D;
+  background-color: transparent;
+  width: fit-content;
+}
+
+.addingPlayer {
+  display: block;
+  width: auto;
+}
+
+.newPlayerInput{
+  text-align: center;
+  color: #FFF59D;
+  font-size: 15px;
+  padding: 5px 10px 5px 10px;
+  border: solid 2px;
+  border-radius: 5px;
+  border-color: #FFF59D;
+  width: 100% ;
+  background-color: #3b4457;
+}
+
+input:focus, button:focus{
+  outline: none;
+}
+
+.newPlayerInput::placeholder{
+  color: #28303f;
+}
+
 .listEntry {
   padding: 15px 10px 15px 10px;
+  vertical-align: middle;
 }
 
 .listEntry > div {
@@ -59,7 +108,8 @@ body {
 .playerNameEntry {
   font-size: 20px;
   display: inline-block;
-  width: 49%;
+  width: 42%;
+  margin-left: 5px;
   vertical-align: middle;
 }
 
@@ -82,4 +132,44 @@ body {
 .offlineBorder {
   border-color: #F44336;
   color: #F44336;
+}
+
+.notificationContainer {
+  text-align: center;
+  min-height: 48px;
+}
+
+.notification {
+  font-size: 20px;
+  text-align: center;
+  display: inline-block;
+  padding: 5px 10px 5px 10px;
+  margin-top: 10px;
+  border: solid 2px;
+  border-radius: 5px;
+  vertical-align: middle;
+}
+
+.notification.success {
+  border-color: #4CAF50;
+  color: #4CAF50;
+}
+
+.notification.error {
+  border-color: #F44336;
+  color: #F44336;
+}
+
+.deletePlayerButton {
+  color:#E57373;
+  background-color: inherit;
+  border: none;
+  padding: 0;
+  font-size: 20px;
+  font-weight: 200;
+  vertical-align: middle;
+}
+
+.deletePlayerButton.invisible {
+  visibility: hidden;
 }
