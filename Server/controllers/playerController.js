@@ -39,7 +39,7 @@ class playerController {
 
   getPlayers(playerCollection, callback) {
     var resPlayers = [];
-    if(playerCollection){
+    if(playerCollection.length){
       var countPlayers = playerCollection.length;
       playerCollection.forEach( (id) => {
         this.getPlayer(id, (resPlayer) => {

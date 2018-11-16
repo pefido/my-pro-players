@@ -73,7 +73,7 @@ class DB {
 
   getPlayers(players, callback) {
     var followingPlayers = Array.from(this.playersCollection.values());
-    if(players){
+    if(players.length){
       followingPlayers = followingPlayers.filter((player) => {
         return players.includes(player.id);
       });
