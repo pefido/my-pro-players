@@ -13,10 +13,18 @@
     </div>
     <div class="listEntry" ng-repeat="player in vm.players" ng-mouseenter = "vm.toggleDeleteButtonVis(player)" ng-mouseleave = "vm.toggleDeleteButtonVis(player)" ">
       <button class = "deletePlayerButton" ng-click = "vm.removePlayer(player.id)" ng-class="{'invisible' : !player.deleteButtonInvisible}" name = "deletePlayer">X</button>
-      <span class="playerNameEntry">
-        {{player.name}}
-      </span>
-      <div>
+      <div class="playerNameEntry">
+        <span>
+          {{player.name}}
+        </span>
+      </div>
+      <div class="gameInfo">
+        <span ng-if="!player.playing" >last game 15 minutes ago</span>
+        <div ng-if="player.playing">
+          playing with some champion
+        </div>
+      </div>
+      <div class="playingStatus">
         <span class="playerPlayingEntry" ng-class="{playingBorder: player.playing, offlineBorder: !player.playing}">
           {{vm.getPlayerStatus(player)}}
         </span>

@@ -8,22 +8,64 @@ class DB {
     //insert dunmy data
     this.playersCollection.set(20717177, {
       id: 20717177,
+      accountId: 23989840,
       name: 'Rekkles',
       playing: false,
+      lastMatch: {
+        lane: "MID",
+        gameId: 3829300875,
+        champion: 15,
+        platformId: "EUW1",
+        timestamp: 1542012837696,
+        queue: 420,
+        role: "DUO",
+        season: 11
+      },
+      currentMatch: {
+
+      },
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
     this.playersCollection.set(21081580, {
       id: 21081580,
+      accountId: 0,
       name: 'Pefido',
       playing: false,
+      lastMatch: {
+        lane: "MID",
+        gameId: 3829300875,
+        champion: 15,
+        platformId: "EUW1",
+        timestamp: 1542012837696,
+        queue: 420,
+        role: "DUO",
+        season: 11
+      },
+      currentMatch: {
+
+      },
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
     this.playersCollection.set(23796520, {
       id: 23796520,
+      accountId: 0,
       name: 'mithy',
       playing: false,
+      lastMatch: {
+        lane: "MID",
+        gameId: 3829300875,
+        champion: 15,
+        platformId: "EUW1",
+        timestamp: 1542012837696,
+        queue: 420,
+        role: "DUO",
+        season: 11
+      },
+      currentMatch: {
+
+      },
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
@@ -47,7 +89,7 @@ class DB {
   addPlayerToUser(userId, playerId) {
     var user = this.getUser(userId);
     var res = false;
-    if(!(user.followingPlayers.includes(parseInt(playerId))) ) {
+    if (!(user.followingPlayers.includes(parseInt(playerId)))) {
       user.followingPlayers.push(parseInt(playerId));
       this.usersCollection.set(user.id, user);
       res = true;
@@ -58,7 +100,7 @@ class DB {
   removePlayerFromUser(userId, playerId, callback) {
     var user = this.getUser(userId);
     var newPlayerCollection = undefined;
-    if(user.followingPlayers.includes(parseInt(playerId)) ) {
+    if (user.followingPlayers.includes(parseInt(playerId))) {
       user.followingPlayers = user.followingPlayers.filter((player) => {
         return player != parseInt(playerId);
       });
@@ -73,7 +115,7 @@ class DB {
 
   getPlayers(players, callback) {
     var followingPlayers = Array.from(this.playersCollection.values());
-    if(players.length){
+    if (players.length) {
       followingPlayers = followingPlayers.filter((player) => {
         return players.includes(player.id);
       });
@@ -89,7 +131,7 @@ class DB {
     var resPlayer = Array.from(this.playersCollection.values()).find((player) => {
       return player.name === username;
     });
-    if(resPlayer){
+    if (resPlayer) {
       return resPlayer.id;
     } else {
       return undefined;
@@ -98,6 +140,7 @@ class DB {
 
   updatePlayer(player, callback) {
     var editingPlayer = this.getPlayer(player.id);
+    editingPlayer.accountId = player.accountId;
     editingPlayer.name = player.name;
     editingPlayer.playing = false;
     editingPlayer.lastUpdated = player.lastUpdated;

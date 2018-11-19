@@ -96,21 +96,36 @@ input:focus, button:focus{
 
 .listEntry {
   padding: 15px 10px 15px 10px;
+  height: 32px;
   vertical-align: middle;
-}
-
-.listEntry > div {
-  display: inline-block;
-  width: 49%;
-  text-align: right;
 }
 
 .playerNameEntry {
+  color: #FFF59D;
   font-size: 20px;
   display: inline-block;
-  width: 42%;
+  width: 28%;
   margin-left: 5px;
+}
+
+.playerNameEntry > span {
   vertical-align: middle;
+}
+
+.gameInfo {
+  display: inline-block;
+  width: 50%;
+  line-height: normal;
+}
+
+.gameInfo > span {
+  vertical-align: middle;
+}
+
+.playingStatus {
+  display: inline-block;
+  width: 15%;
+  text-align: right;
 }
 
 .playerPlayingEntry {

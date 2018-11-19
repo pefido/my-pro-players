@@ -5,13 +5,20 @@ class playerController {
     this.db = db;
   }
 
-  updatePlayerInfo(dbPlayer, currentTime, callback){
+  updatePlayerInfo(dbPlayer, currentTime, callback) {
     riotAPI.getPlayerInfo(dbPlayer.id, (newPlayer) => {
       newPlayer.lastUpdated = currentTime;
       this.db.updatePlayer(newPlayer, (savedPlayer) => {
         riotAPI.getSpectatorInfo(savedPlayer.id, (spectatorInfo) => {
           savedPlayer.playing = (spectatorInfo != undefined);
-          callback(savedPlayer);
+          if(!savedPlayer.playing) {
+            riotAPI.getLastMatchInfo(savedPlayer.accountId, (lastMatch) => {
+              savedPlayer.lastMatch = lastMatch;
+              callback(savedPlayer);
+            });
+          } else {
+            callback(savedPlayer);
+          }
         });
       });
     });
