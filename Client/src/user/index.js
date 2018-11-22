@@ -45,7 +45,7 @@ app.directive('user', [function () {
             dbRequest.addPlayerToUser(vm.user.id, vm.playerInputText).then((res) => {
               if (res.status === 200) {
                 vm.user.followingPlayers.push(res.data.id);
-                vm.players.push(res.data);
+                res.data.playing ? vm.players.unshift(res.data) : vm.players.push(res.data);
                 vm.Notification.setNotification('success', 'Player added!', 3);
                 vm.toggleAddingPlayer();
               } else {
@@ -81,7 +81,7 @@ app.directive('user', [function () {
               vm.Notification.setNotification('error', 'Player not followed', 3);
               break;
           }
-        })
+        });
       }
 
       vm.toggleDeleteButtonVis = (player) => {

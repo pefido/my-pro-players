@@ -1,7 +1,7 @@
 const riotAPI = require('../services/riotAPI');
 
 class playerController {
-  constructor(db){
+  constructor(db) {
     this.db = db;
   }
 
@@ -11,7 +11,7 @@ class playerController {
       this.db.updatePlayer(newPlayer, (savedPlayer) => {
         riotAPI.getSpectatorInfo(savedPlayer.id, (spectatorInfo) => {
           savedPlayer.playing = (spectatorInfo != undefined);
-          if(!savedPlayer.playing) {
+          if (!savedPlayer.playing) {
             riotAPI.getLastMatchInfo(savedPlayer.accountId, (lastMatch) => {
               savedPlayer.lastMatch = lastMatch;
               savedPlayer.lastMatch.lastPlayed = this.getLastPlayed(savedPlayer.lastMatch.timestamp);
@@ -39,8 +39,10 @@ class playerController {
       var lastDate = new Date(dbPlayer.lastUpdated);
       //update player if it is older than 30 seconds
       if ((currentTime - lastDate) / 1000 < 30) {
-         callback(dbPlayer);
+        console.log("was cached");
+        callback(dbPlayer);
       } else {
+        console.log("not cached, fetching");
         this.updatePlayerInfo(dbPlayer, currentTime, (savedPlayer) => {
           callback(savedPlayer);
         });
@@ -52,13 +54,13 @@ class playerController {
 
   getPlayers(playerCollection, callback) {
     var resPlayers = [];
-    if(playerCollection.length){
+    if (playerCollection.length) {
       var countPlayers = playerCollection.length;
-      playerCollection.forEach( (id) => {
+      playerCollection.forEach((id) => {
         this.getPlayer(id, (resPlayer) => {
           resPlayers.push(resPlayer);
           countPlayers--;
-          if(countPlayers === 0) {
+          if (countPlayers === 0) {
             callback(resPlayers);
           }
         });
@@ -74,16 +76,16 @@ class playerController {
     var seconds = (((new Date) - timestamp) / 1000);
 
     seconds >= 60 * 2 && seconds < 3600 * 2 ? lastPlayed = Math.round(seconds / 60) + " minutes" :
-    seconds >= 3600 * 2 && seconds < 86400 * 2 ? lastPlayed = Math.round((seconds / 60) / 60) + " hours" :
-    seconds >= 86400 * 2 && seconds < 604800 * 2 ? lastPlayed = Math.round(((seconds / 60) / 60) / 24) + " days" :
-    seconds >= 604800 * 2 && seconds < 2592000 * 2 ? lastPlayed = Math.round((((seconds / 60) / 60) / 24) / 7) + " weeks" :
-    seconds > 2592000 * 2 && seconds < 31536000 * 2 ? lastPlayed = Math.round((((seconds / 60) / 60) / 24) / 12) + " months" :
-    seconds > 31536000 * 2 ? lastPlayed = Math.round((((seconds / 60) / 60) / 24) / 362) + " years" : 
-    lastPlayed = Math.round(seconds) + "seconds";
+      seconds >= 3600 * 2 && seconds < 86400 * 2 ? lastPlayed = Math.round((seconds / 60) / 60) + " hours" :
+        seconds >= 86400 * 2 && seconds < 604800 * 2 ? lastPlayed = Math.round(((seconds / 60) / 60) / 24) + " days" :
+          seconds >= 604800 * 2 && seconds < 2592000 * 2 ? lastPlayed = Math.round((((seconds / 60) / 60) / 24) / 7) + " weeks" :
+            seconds > 2592000 * 2 && seconds < 31536000 * 2 ? lastPlayed = Math.round((((seconds / 60) / 60) / 24) / 12) + " months" :
+              seconds > 31536000 * 2 ? lastPlayed = Math.round((((seconds / 60) / 60) / 24) / 362) + " years" :
+                lastPlayed = Math.round(seconds) + "seconds";
 
     return lastPlayed;
   }
-  
+
 }
 
 module.exports = playerController;
