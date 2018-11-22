@@ -14,9 +14,15 @@ class playerController {
           if(!savedPlayer.playing) {
             riotAPI.getLastMatchInfo(savedPlayer.accountId, (lastMatch) => {
               savedPlayer.lastMatch = lastMatch;
+              savedPlayer.lastMatch.lastPlayed = this.getLastPlayed(savedPlayer.lastMatch.timestamp);
               callback(savedPlayer);
             });
           } else {
+            savedPlayer.currentMatch = spectatorInfo;
+            var participant = savedPlayer.currentMatch.participants.find((player) => {
+              return player.summonerId === savedPlayer.id;
+            });
+            savedPlayer.currentMatch.playingChampion = this.db.getChampionNameById(participant.championId);
             callback(savedPlayer);
           }
         });
@@ -61,6 +67,21 @@ class playerController {
     } else {
       callback(resPlayers);
     }
+  }
+
+  getLastPlayed(timestamp) {
+    var lastPlayed = "";
+    var seconds = (((new Date) - timestamp) / 1000);
+
+    seconds >= 60 * 2 && seconds < 3600 * 2 ? lastPlayed = Math.round(seconds / 60) + " minutes" :
+    seconds >= 3600 * 2 && seconds < 86400 * 2 ? lastPlayed = Math.round((seconds / 60) / 60) + " hours" :
+    seconds >= 86400 * 2 && seconds < 604800 * 2 ? lastPlayed = Math.round(((seconds / 60) / 60) / 24) + " days" :
+    seconds >= 604800 * 2 && seconds < 2592000 * 2 ? lastPlayed = Math.round((((seconds / 60) / 60) / 24) / 7) + " weeks" :
+    seconds > 2592000 * 2 && seconds < 31536000 * 2 ? lastPlayed = Math.round((((seconds / 60) / 60) / 24) / 12) + " months" :
+    seconds > 31536000 * 2 ? lastPlayed = Math.round((((seconds / 60) / 60) / 24) / 362) + " years" : 
+    lastPlayed = Math.round(seconds) + "seconds";
+
+    return lastPlayed;
   }
   
 }

@@ -6,6 +6,7 @@ class playerUtilities {
   getPlayerStatus(player) {
     return player.playing ? 'Playing' : 'Offline';
   }
+  
 }
 
 module.exports = new playerUtilities();

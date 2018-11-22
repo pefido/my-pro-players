@@ -3,6 +3,7 @@ class DB {
   constructor() {
     this.playersCollection = new Map();
     this.usersCollection = new Map();
+    this.championsCollection = {};
 
 
     //insert dunmy data
@@ -69,6 +70,48 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
+    this.playersCollection.set(95206795, {
+      id: 95206795,
+      accountId: 231084181,
+      name: 'FNC Caps1',
+      playing: false,
+      lastMatch: {
+
+      },
+      currentMatch: {
+
+      },
+      lastUpdated: '2018-11-02T16:22:05.639Z'
+    });
+
+    this.playersCollection.set(73297023, {
+      id: 73297023,
+      accountId: 221657540,
+      name: 'mithypote',
+      playing: false,
+      lastMatch: {
+        
+      },
+      currentMatch: {
+
+      },
+      lastUpdated: '2018-11-02T16:22:05.639Z'
+    });
+
+    this.playersCollection.set(109537252, {
+      id: 109537252,
+      accountId: 241195068,
+      name: 'G2 Perkz',
+      playing: false,
+      lastMatch: {
+        
+      },
+      currentMatch: {
+
+      },
+      lastUpdated: '2018-11-02T16:22:05.639Z'
+    });
+
     this.usersCollection.set(1, {
       id: 1,
       username: 'pefido',
@@ -80,6 +123,17 @@ class DB {
       followingPlayers: []
     });
   }
+
+
+
+
+
+
+
+
+
+
+
 
   /////////user related operations
   getUser(id) {
@@ -146,6 +200,10 @@ class DB {
     editingPlayer.lastUpdated = player.lastUpdated;
     this.playersCollection.set(editingPlayer.id, editingPlayer);
     callback(editingPlayer);
+  }
+
+  getChampionNameById(id) {
+    return this.championsCollection[id];
   }
 
 }
