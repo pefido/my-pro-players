@@ -128,6 +128,12 @@ input:focus, button:focus{
   text-align: right;
 }
 
+@keyframes playing {
+  0% {background-color: #3b4457;}
+  50% {background-color: #28303f;}
+  100% {background-color: #3b4457;}
+}
+
 .playerPlayingEntry {
   font-size: 15px;
   text-align: center;
@@ -142,6 +148,9 @@ input:focus, button:focus{
 .playingBorder {
   border-color: #4CAF50;
   color: #4CAF50;
+  animation-name: playing;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
 }
 
 .offlineBorder {
@@ -187,4 +196,8 @@ input:focus, button:focus{
 
 .deletePlayerButton.invisible {
   visibility: hidden;
+}
+
+.queueName, .championName {
+  font-size: 15px;
 }

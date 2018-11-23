@@ -1,4 +1,5 @@
 const riotAPI = require('../services/riotAPI');
+const fs = require('fs');
 
 
 class ServerUtilities {
@@ -14,6 +15,8 @@ class ServerUtilities {
         delete db.championsCollection[champion];
       }
     });
+
+    db.matchmakingQueues = JSON.parse(fs.readFileSync('./db/gameConstants.json')).matchmakingQueues;
 
   }
 

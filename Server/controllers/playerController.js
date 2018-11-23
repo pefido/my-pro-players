@@ -23,6 +23,7 @@ class playerController {
               return player.summonerId === savedPlayer.id;
             });
             savedPlayer.currentMatch.playingChampion = this.db.getChampionNameById(participant.championId);
+            savedPlayer.currentMatch.playingQueue = this.db.getQueueById(savedPlayer.currentMatch.gameQueueConfigId);
             callback(savedPlayer);
           }
         });

@@ -4,6 +4,7 @@ class DB {
     this.playersCollection = new Map();
     this.usersCollection = new Map();
     this.championsCollection = {};
+    this.matchmakingQueues = [];
 
 
     //insert dunmy data
@@ -112,6 +113,34 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
+    this.playersCollection.set(20110160, {
+      id: 20110160,
+      accountId: 23099233,
+      name: 'TSM ZV3N',
+      playing: false,
+      lastMatch: {
+        
+      },
+      currentMatch: {
+
+      },
+      lastUpdated: '2018-11-02T16:22:05.639Z'
+    });
+
+    this.playersCollection.set(119056994, {
+      id: 119056994,
+      accountId: 2065869677416832,
+      name: 'D3us',
+      playing: false,
+      lastMatch: {
+        
+      },
+      currentMatch: {
+
+      },
+      lastUpdated: '2018-11-02T16:22:05.639Z'
+    });
+
     this.usersCollection.set(1, {
       id: 1,
       username: 'pefido',
@@ -204,6 +233,12 @@ class DB {
 
   getChampionNameById(id) {
     return this.championsCollection[id];
+  }
+
+  getQueueById(queueId) {
+    return this.matchmakingQueues.find((queue) => {
+      return queue.id === queueId;
+    });
   }
 
 }
