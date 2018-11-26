@@ -127,10 +127,10 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
-    this.playersCollection.set(119056994, {
-      id: 119056994,
-      accountId: 2065869677416832,
-      name: 'D3us',
+    this.playersCollection.set(21071845, {
+      id: 21071845,
+      accountId: 24467412,
+      name: 'G2 Jerkz',
       playing: false,
       lastMatch: {
         
@@ -144,7 +144,7 @@ class DB {
     this.usersCollection.set(1, {
       id: 1,
       username: 'pefido',
-      followingPlayers: [20717177, 21081580]
+      followingPlayers: [20717177, 21081580, 23796520, 95206795, 73297023, 109537252, 20110160, 21071845]
     });
     this.usersCollection.set(2, {
       id: 2,

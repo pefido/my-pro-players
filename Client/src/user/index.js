@@ -14,6 +14,8 @@ app.directive('user', [function () {
       vm.Notification = Notification;
       vm.sampleText = "this is the user page";
       vm.addingPlayer = false;
+      vm.isSpectateModalVisible = false;
+      vm.spectateModalPlayer = {};
 
       dbRequest.getUser($stateParams.id).then((res) => {
         vm.user = res.data;
@@ -86,6 +88,23 @@ app.directive('user', [function () {
 
       vm.toggleDeleteButtonVis = (player) => {
         player.deleteButtonInvisible = !player.deleteButtonInvisible
+      }
+
+      vm.toggleSpectateModalVisible = (player, event) => {
+        if (event == undefined) {
+          if(vm.isSpectateModalVisible) {
+            vm.isSpectateModalVisible = !vm.isSpectateModalVisible;
+          } else if (!vm.isSpectateModalVisible && player.playing) {
+            vm.spectateModalPlayer = player;
+            vm.isSpectateModalVisible = !vm.isSpectateModalVisible;
+          }
+        } else if(event.which === 27) {//escape key
+          vm.isSpectateModalVisible = !vm.isSpectateModalVisible; 
+        }
+
+        if (vm.isSpectateModalVisible) {
+          focus('spectatorModal');
+        }
       }
 
     }]

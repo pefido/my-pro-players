@@ -86,7 +86,7 @@ padding: 15px 5px 5px 10px;
   background-color: #3b4457;
 }
 
-input:focus, button:focus{
+input:focus, button:focus, .spectateModalContent:focus{
   outline: none;
 }
 
@@ -130,7 +130,7 @@ input:focus, button:focus{
 
 @keyframes playing {
   0% {background-color: #3b4457;}
-  50% {background-color: #28303f;}
+  50% {background-color: #6a7895;}
   100% {background-color: #3b4457;}
 }
 
@@ -151,6 +151,7 @@ input:focus, button:focus{
   animation-name: playing;
   animation-duration: 2s;
   animation-iteration-count: infinite;
+  cursor: pointer;
 }
 
 .offlineBorder {
@@ -200,4 +201,32 @@ input:focus, button:focus{
 
 .queueName, .championName {
   font-size: 15px;
+}
+
+.spectateModal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 20%; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.spectateModalContent {
+  background-color: #3b4457;
+  margin: auto;
+  padding: 20px;
+  border: solid 2px;
+  border-radius: 5px;
+  border-color: #FFF59D;
+  width: 80%;
+  max-width: 550px;
+}
+
+.spectateModal .introSentence {
+  padding-bottom: 15px;
 }

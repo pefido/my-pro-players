@@ -6,30 +6,44 @@
   </div>
   <div class="listContainer">
     <div class="addPlayerContainer">
-      <input focus-on="newPlayerFocus" ng-if="vm.isAddingPlayer()" ng-blur="vm.toggleAddingPlayer()" class="newPlayerInput" ng-model = "vm.playerInputText" ng-keydown = "vm.addPlayer($event)" type="text" name="newPlayer" placeholder="Insert player name">
+      <input focus-on="newPlayerFocus" ng-if="vm.isAddingPlayer()" ng-blur="vm.toggleAddingPlayer()" class="newPlayerInput"
+        ng-model="vm.playerInputText" ng-keydown="vm.addPlayer($event)" type="text" name="newPlayer" placeholder="Insert player name">
       <button class="addPlayer" ng-if="!vm.isAddingPlayer()" ng-click="vm.toggleAddingPlayer()">
         + Add Player
       </button>
     </div>
-    <div class="listEntry" ng-repeat="player in vm.players | orderBy:'!playing'" ng-mouseenter = "vm.toggleDeleteButtonVis(player)" ng-mouseleave = "vm.toggleDeleteButtonVis(player)" ">
-      <button class = "deletePlayerButton" ng-click = "vm.removePlayer(player.id)" ng-class="{'invisible' : !player.deleteButtonInvisible}" name = "deletePlayer">X</button>
+    <div class="listEntry" ng-repeat="player in vm.players | orderBy:'!playing'" ng-mouseenter="vm.toggleDeleteButtonVis(player)"
+      ng-mouseleave="vm.toggleDeleteButtonVis(player)" ">
+      <button class = " deletePlayerButton" ng-click="vm.removePlayer(player.id)"
+      ng-class="{'invisible' : !player.deleteButtonInvisible}" name="deletePlayer">X</button>
       <div class="playerNameEntry">
         <span>
           {{player.name}}
         </span>
       </div>
       <div class="gameInfo">
-        <span ng-if="!player.playing" >last played {{player.lastMatch.lastPlayed}} ago</span>
+        <span ng-if="!player.playing">last played {{player.lastMatch.lastPlayed}} ago</span>
         <div class="playingContainer" ng-if="player.playing">
-          playing <a class="queueName">{{player.currentMatch.playingQueue.shortName || player.currentMatch.playingQueue.name}}</a> with <a class="championName">{{player.currentMatch.playingChampion.name}}</a>
+          playing <a class="queueName">{{player.currentMatch.playingQueue.shortName ||
+            player.currentMatch.playingQueue.name}}</a> with <a class="championName">{{player.currentMatch.playingChampion.name}}</a>
         </div>
       </div>
       <div class="playingStatus">
-        <span class="playerPlayingEntry" ng-class="{playingBorder: player.playing, offlineBorder: !player.playing}">
+        <span class="playerPlayingEntry" ng-class="{playingBorder: player.playing, offlineBorder: !player.playing}"
+          ng-click="vm.toggleSpectateModalVisible(player)">
           {{vm.getPlayerStatus(player)}}
         </span>
       </div>
     </div>
   </div>
   <h2>{{vm.sampleText}}</h2>
+</div>
+<div class="spectateModal" ng-if="vm.isSpectateModalVisible" ng-click="vm.toggleSpectateModalVisible()">
+  <div class="spectateModalContent" tabindex="0" focus-on="spectatorModal" ng-click="$event.stopPropagation()"
+    ng-keydown="vm.toggleSpectateModalVisible(undefined, $event)">
+    <div class="introSentence">
+      Copy this to your terminal to start spectating:
+    </div>
+    <span class="spectateModalCommand">cd /Applications/League\ of\ Legends.app/Contents/LoL/RADS/solutions/lol_game_client_sln/releases/ && cd $(ls -1vr -d */ | head -1) && cd deploy && chmod +x ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends && riot_launched=true ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends 8394 LoLLauncher "" "-Locale=en_US" "spectator spectator.euw1.lol.riotgames.com:80 {{vm.spectateModalPlayer.currentMatch.observers.encryptionKey}} {{vm.spectateModalPlayer.currentMatch.gameId}} EUW1"</span>
+  </div>
 </div>
