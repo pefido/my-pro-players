@@ -8,8 +8,8 @@
 
 <body ng-controller="appController">
 
-    <div class="notificationContainer">
-        <span ng-class="notificationObj.type" ng-show="notificationObj.display" class="notification">{{notificationObj.message}}</span>
+    <div class="notificationContainer" ng-show="notificationObj.display">
+        <span ng-class="notificationObj.type" class="notification">{{notificationObj.message}}</span>
     </div>
     <div class="header">
         <H1>my-pro-players</H1>

@@ -162,6 +162,14 @@ input:focus, button:focus, .spectateModalContent:focus{
 .notificationContainer {
   text-align: center;
   min-height: 48px;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 20px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  overflow: auto; /* Enable scroll if needed */
+  
 }
 
 .notification {
@@ -177,11 +185,13 @@ input:focus, button:focus, .spectateModalContent:focus{
 
 .notification.success {
   border-color: #4CAF50;
+  background-color: #28303f;
   color: #4CAF50;
 }
 
 .notification.error {
   border-color: #F44336;
+  background-color: #28303f;
   color: #F44336;
 }
 
