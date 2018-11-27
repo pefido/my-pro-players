@@ -6,7 +6,7 @@ body {
 }
 
 .header {
-  padding-top: 15px;
+  padding-top: 30px;
   padding-bottom: 20px;
   border-style: solid;
   border-width: 0px 0px 1px 0px;
@@ -104,7 +104,7 @@ input:focus, button:focus, .spectateModalContent:focus{
   color: #FFF59D;
   font-size: 20px;
   display: inline-block;
-  width: 28%;
+  width: 34%;
   margin-left: 5px;
 }
 
@@ -114,7 +114,7 @@ input:focus, button:focus, .spectateModalContent:focus{
 
 .gameInfo {
   display: inline-block;
-  width: 50%;
+  width: 44%;
   line-height: normal;
 }
 
@@ -233,10 +233,11 @@ input:focus, button:focus, .spectateModalContent:focus{
   border: solid 2px;
   border-radius: 5px;
   border-color: #FFF59D;
-  width: 80%;
+  width: 40%;
   max-width: 550px;
 }
 
 .spectateModal .introSentence {
+  text-align: center;
   padding-bottom: 15px;
 }

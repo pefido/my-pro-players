@@ -9,13 +9,11 @@ app.directive('user', [function () {
     templateUrl: './user.html',
     bindToController: true,
     controllerAs: 'vm',
-    controller: ['Notification', 'focus', '$stateParams', 'dbRequest', function (Notification, focus, $stateParams, dbRequest) {
+    controller: ['Clipboard', 'Notification', 'focus', '$stateParams', 'dbRequest', function (Clipboard, Notification, focus, $stateParams, dbRequest) {
       var vm = this;
       vm.Notification = Notification;
       vm.sampleText = "this is the user page";
       vm.addingPlayer = false;
-      vm.isSpectateModalVisible = false;
-      vm.spectateModalPlayer = {};
 
       dbRequest.getUser($stateParams.id).then((res) => {
         vm.user = res.data;
@@ -88,24 +86,15 @@ app.directive('user', [function () {
 
       vm.toggleDeleteButtonVis = (player) => {
         player.deleteButtonInvisible = !player.deleteButtonInvisible
-      }
+      };
 
-      vm.toggleSpectateModalVisible = (player, event) => {
-        if (event == undefined) {
-          if(vm.isSpectateModalVisible) {
-            vm.isSpectateModalVisible = !vm.isSpectateModalVisible;
-          } else if (!vm.isSpectateModalVisible && player.playing) {
-            vm.spectateModalPlayer = player;
-            vm.isSpectateModalVisible = !vm.isSpectateModalVisible;
-          }
-        } else if(event.which === 27) {//escape key
-          vm.isSpectateModalVisible = !vm.isSpectateModalVisible; 
+      vm.copySpectateCommand = (player) => {
+        if(player.playing) {
+          var command = 'cd /Applications/League\ of\ Legends.app/Contents/LoL/RADS/solutions/lol_game_client_sln/releases/ && cd $(ls -1vr -d */ | head -1) && cd deploy && chmod +x ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends && riot_launched=true ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends 8394 LoLLauncher "" "-Locale=en_US" "spectator spectator.euw1.lol.riotgames.com:80 ' + player.currentMatch.observers.encryptionKey + ' ' + player.currentMatch.gameId + ' EUW1"';
+          Clipboard.copyToClipboard(command);
+          vm.Notification.setNotification('success', 'Spectator link copied to clipboard!', 4);
         }
-
-        if (vm.isSpectateModalVisible) {
-          focus('spectatorModal');
-        }
-      }
+      };
 
     }]
   };

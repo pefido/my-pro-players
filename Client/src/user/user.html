@@ -30,20 +30,11 @@
       </div>
       <div class="playingStatus">
         <span class="playerPlayingEntry" ng-class="{playingBorder: player.playing, offlineBorder: !player.playing}"
-          ng-click="vm.toggleSpectateModalVisible(player)">
+          ng-click="vm.copySpectateCommand(player)">
           {{vm.getPlayerStatus(player)}}
         </span>
       </div>
     </div>
   </div>
   <h2>{{vm.sampleText}}</h2>
-</div>
-<div class="spectateModal" ng-if="vm.isSpectateModalVisible" ng-click="vm.toggleSpectateModalVisible()">
-  <div class="spectateModalContent" tabindex="0" focus-on="spectatorModal" ng-click="$event.stopPropagation()"
-    ng-keydown="vm.toggleSpectateModalVisible(undefined, $event)">
-    <div class="introSentence">
-      Copy this to your terminal to start spectating:
-    </div>
-    <span class="spectateModalCommand">cd /Applications/League\ of\ Legends.app/Contents/LoL/RADS/solutions/lol_game_client_sln/releases/ && cd $(ls -1vr -d */ | head -1) && cd deploy && chmod +x ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends && riot_launched=true ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends 8394 LoLLauncher "" "-Locale=en_US" "spectator spectator.euw1.lol.riotgames.com:80 {{vm.spectateModalPlayer.currentMatch.observers.encryptionKey}} {{vm.spectateModalPlayer.currentMatch.gameId}} EUW1"</span>
-  </div>
 </div>

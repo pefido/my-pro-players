@@ -18,3 +18,23 @@ app.factory('focus', ($rootScope, $timeout) => {
     });
   }
 });
+
+app.service('Clipboard',
+  class clipboard {
+    constructor() {}
+
+    copyToClipboard(text) {
+      var copyElement = document.createElement("span");
+      copyElement.appendChild(document.createTextNode(text));
+      copyElement.id = 'tmpCopyToClipboard';
+      angular.element(document.body.append(copyElement));
+      var range = document.createRange();
+      range.selectNode(copyElement);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      copyElement.remove();
+    }
+  }
+);

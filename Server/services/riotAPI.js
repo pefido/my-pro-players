@@ -15,8 +15,17 @@ class riotAPI {
         callback(res);
       })
       .catch((err) => {
-        console.log("error getPlayerInfo");
-        console.log(err.message);
+        if (err.statusCode == 404) {
+          callback(undefined);
+        } else if(err.statusCode == 429) {
+          var retryTimer = 1000;
+          console.log("max requests reached, retrying in " + retryTimer + " ms");
+          setTimeout(() => {this.getPlayerInfo(id, callback);}
+          , retryTimer);
+        } else {
+          console.log("error getPlayerInfo");
+          console.log(err.message);
+        }
       });
   }
 
@@ -28,6 +37,11 @@ class riotAPI {
       .catch((err) => {
         if (err.statusCode == 404) {
           callback(undefined);
+        } else if(err.statusCode == 429) {
+          var retryTimer = 1000;
+          console.log("max requests reached, retrying in " + retryTimer + " ms");
+          setTimeout(() => {this.getSpectatorInfo(id, callback);}
+          , retryTimer);
         } else {
           console.log("error getSpectatorInfo");
           console.log(err.message);
@@ -44,9 +58,13 @@ class riotAPI {
       .catch((err) => {
         if (err.statusCode == 404) {
           callback(undefined);
+        } else if(err.statusCode == 429) {
+          var retryTimer = 1000;
+          console.log("max requests reached, retrying in " + retryTimer + " ms");
+          setTimeout(() => {this.getLastMatchInfo(accountId, callback);}
+          , retryTimer);
         } else {
-          console.log("error getLastMatchInfo");
-          console.log(err.message);
+          console.log("error getLastMatchInfo: " + accountId);
         }
       });
   }

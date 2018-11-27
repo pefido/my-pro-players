@@ -141,10 +141,53 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
+    this.playersCollection.set(20308708, {
+      id: 20308708,
+      accountId: 23396278,
+      name: 'G0DGILIUS',
+      playing: false,
+      lastMatch: {
+        
+      },
+      currentMatch: {
+
+      },
+      lastUpdated: '2018-11-02T16:22:05.639Z'
+    });
+
+    this.playersCollection.set(22322085, {
+      id: 22322085,
+      accountId: 26164230,
+      name: 'MSF Hansssama',
+      playing: false,
+      lastMatch: {
+        
+      },
+      currentMatch: {
+
+      },
+      lastUpdated: '2018-11-02T16:22:05.639Z'
+    });
+
+    this.playersCollection.set(30657524, {
+      id: 30657524,
+      accountId: 34455333,
+      name: 'MSF Febiven',
+      playing: false,
+      lastMatch: {
+        
+      },
+      currentMatch: {
+
+      },
+      lastUpdated: '2018-11-02T16:22:05.639Z'
+    });
+
     this.usersCollection.set(1, {
       id: 1,
       username: 'pefido',
-      followingPlayers: [20717177, 21081580, 23796520, 95206795, 73297023, 109537252, 20110160, 21071845]
+      followingPlayers: [20717177, 21081580, 23796520, 95206795, 73297023, 109537252, 20110160, 21071845, 20308708,
+        22322085, 30657524]
     });
     this.usersCollection.set(2, {
       id: 2,
