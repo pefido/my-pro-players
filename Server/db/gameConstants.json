@@ -928,6 +928,7 @@
     {
       "id": 450,
       "name": "PvP ARAM Howling Abyss 5v5",
+      "shortName": "ARAM",
       "gameMode": "ARAM",
       "mapType": "HOWLING_ABYSS",
       "rotating": false,

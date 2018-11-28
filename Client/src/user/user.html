@@ -6,14 +6,15 @@
   </div>
   <div class="listContainer">
     <div class="addPlayerContainer">
+      <div class="userSettingsButtonContainer" ng-click="vm.toggleUserSettingsModalVisible()" ng-bind-html="vm.addIcon('gear', {'class': 'userSettingsButton'})"></div>
       <input focus-on="newPlayerFocus" ng-if="vm.isAddingPlayer()" ng-blur="vm.toggleAddingPlayer()" class="newPlayerInput"
         ng-model="vm.playerInputText" ng-keydown="vm.addPlayer($event)" type="text" name="newPlayer" placeholder="Insert player name">
       <button class="addPlayer" ng-if="!vm.isAddingPlayer()" ng-click="vm.toggleAddingPlayer()">
-        + Add Player
+          + Add Player
       </button>
     </div>
     <div class="listEntry" ng-repeat="player in vm.players | orderBy:'!playing'" ng-mouseenter="vm.toggleDeleteButtonVis(player)"
-      ng-mouseleave="vm.toggleDeleteButtonVis(player)" ">
+      ng-mouseleave="vm.toggleDeleteButtonVis(player)">
       <button class = " deletePlayerButton" ng-click="vm.removePlayer(player.id)"
       ng-class="{'invisible' : !player.deleteButtonInvisible}" name="deletePlayer">X</button>
       <div class="playerNameEntry">
@@ -38,3 +39,17 @@
   </div>
   <h2>{{vm.sampleText}}</h2>
 </div>
+
+<div class="userSettingsModal" ng-if="vm.isUserSettingsModalVisible" ng-click="vm.toggleUserSettingsModalVisible()">
+  <div class="userSettingsModalContent" tabindex="0" focus-on="userSettingsModal" ng-click="$event.stopPropagation()"
+    ng-keydown="vm.toggleUserSettingsModalVisible($event)">
+    <div class="introSentence">
+      User Settings
+    </div>
+    <div class="userSettingsList">
+      <div ng-repeat="setting in vm.user.settings" class="userSettingsEntry">
+        {{setting.name}} : {{setting.value}}
+      </div>
+    </div>
+  </div>
+</div> 

@@ -46,14 +46,17 @@ body {
 .listContainer {
   margin: 5px auto 30px auto;
   width: 60%;
-  min-width: 550px;
+  min-width: 600px;
   background-color: #3b4457;
 }
 
 .addPlayerContainer {
-text-align: right;
-background-color: #28303f;
-padding: 15px 5px 5px 10px;
+  display: flex;
+  flex-direction: row-reverse;
+  text-align: right;
+  background-color: #28303f;
+  padding: 15px 5px 5px 10px;
+  overflow: hidden;
 }
 
 .addPlayer {
@@ -69,24 +72,20 @@ padding: 15px 5px 5px 10px;
   width: fit-content;
 }
 
-.addingPlayer {
-  display: block;
-  width: auto;
-}
-
 .newPlayerInput{
+  flex: 2;
   text-align: center;
   color: #FFF59D;
   font-size: 15px;
   padding: 5px 10px 5px 10px;
+  width: 100%;
   border: solid 2px;
   border-radius: 5px;
   border-color: #FFF59D;
-  width: 100% ;
   background-color: #3b4457;
 }
 
-input:focus, button:focus, .spectateModalContent:focus{
+input:focus, button:focus, .userSettingsModalContent:focus{
   outline: none;
 }
 
@@ -237,7 +236,43 @@ input:focus, button:focus, .spectateModalContent:focus{
   max-width: 550px;
 }
 
-.spectateModal .introSentence {
+.userSettingsModal .introSentence {
   text-align: center;
   padding-bottom: 15px;
+  margin: 0px;
+}
+
+.userSettingsButtonContainer{
+  margin-left: 20px;
+  vertical-align: bottom;
+}
+
+.userSettingsButton{
+  width: 32;
+  height: 32; 
+  fill: #FFF59D;
+  cursor: pointer;
+}
+
+.userSettingsModal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 20%; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+ .userSettingsModalContent {
+  background-color: #3b4457;
+  margin: auto;
+  padding: 20px;
+  border: solid 2px;
+  border-radius: 5px;
+  border-color: #FFF59D;
+  width: 80%;
+  max-width: 550px;
 }

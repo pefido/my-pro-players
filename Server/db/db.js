@@ -183,15 +183,41 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
+    this.playersCollection.set(22136916, {
+      id: 22136916,
+      accountId: 25932954,
+      name: 'kaSing 2018',
+      playing: false,
+      lastMatch: {
+        
+      },
+      currentMatch: {
+
+      },
+      lastUpdated: '2018-11-02T16:22:05.639Z'
+    });
+
     this.usersCollection.set(1, {
       id: 1,
       username: 'pefido',
+      settings: [
+        {
+          name: 'system',
+          value: 'mac'
+        }
+      ],
       followingPlayers: [20717177, 21081580, 23796520, 95206795, 73297023, 109537252, 20110160, 21071845, 20308708,
-        22322085, 30657524]
+        22322085, 30657524, 22136916]
     });
     this.usersCollection.set(2, {
       id: 2,
       username: 'theTruckman',
+      settings: [
+        {
+          name: 'system',
+          value: 'windows'
+        }
+      ],
       followingPlayers: []
     });
   }

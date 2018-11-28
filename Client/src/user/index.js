@@ -2,6 +2,7 @@ const angular = require('angular');
 const app = angular.module('app');
 require('../services/dbRequest');
 const playerUtil = require('../services/playerUtilities');
+const octicons = require("octicons");
 
 app.directive('user', [function () {
   return {
@@ -9,11 +10,18 @@ app.directive('user', [function () {
     templateUrl: './user.html',
     bindToController: true,
     controllerAs: 'vm',
-    controller: ['Clipboard', 'Notification', 'focus', '$stateParams', 'dbRequest', function (Clipboard, Notification, focus, $stateParams, dbRequest) {
+    controller: ['$sce', 'Clipboard', 'Notification', 'focus', '$stateParams', 'dbRequest', function ($sce, Clipboard, Notification, focus, $stateParams, dbRequest) {
       var vm = this;
       vm.Notification = Notification;
       vm.sampleText = "this is the user page";
       vm.addingPlayer = false;
+      vm.octicons = octicons;
+      vm.sce = $sce;
+      vm.isUserSettingsModalVisible = false;
+
+      vm.addIcon = (icon, optionsObj) => {
+        return $sce.trustAsHtml(octicons[icon].toSVG(optionsObj));
+      };
 
       dbRequest.getUser($stateParams.id).then((res) => {
         vm.user = res.data;
@@ -90,11 +98,30 @@ app.directive('user', [function () {
 
       vm.copySpectateCommand = (player) => {
         if(player.playing) {
-          var command = 'cd /Applications/League\ of\ Legends.app/Contents/LoL/RADS/solutions/lol_game_client_sln/releases/ && cd $(ls -1vr -d */ | head -1) && cd deploy && chmod +x ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends && riot_launched=true ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends 8394 LoLLauncher "" "-Locale=en_US" "spectator spectator.euw1.lol.riotgames.com:80 ' + player.currentMatch.observers.encryptionKey + ' ' + player.currentMatch.gameId + ' EUW1"';
+          console.log("platform:");
+          console.log(window.navigator.platform);
+          var command = "";
+          if(window.navigator.platform.includes("Mac")){
+            command = 'cd /Applications/League\ of\ Legends.app/Contents/LoL/RADS/solutions/lol_game_client_sln/releases/ && cd $(ls -1vr -d */ | head -1) && cd deploy && chmod +x ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends && riot_launched=true ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends 8394 LoLLauncher "" "-Locale=en_US" "spectator spectator.euw1.lol.riotgames.com:80 ' + player.currentMatch.observers.encryptionKey + ' ' + player.currentMatch.gameId + ' EUW1"';
+          } else {
+            command = "some other command I need to find out";
+          }
+
           Clipboard.copyToClipboard(command);
           vm.Notification.setNotification('success', 'Spectator link copied to clipboard!', 4);
         }
       };
+
+      vm.toggleUserSettingsModalVisible = (event) => {
+        if (event == undefined) {
+            vm.isUserSettingsModalVisible = !vm.isUserSettingsModalVisible;
+        } else if(event.which === 27) {//escape key
+          vm.isUserSettingsModalVisible = !vm.isUserSettingsModalVisible; 
+        }
+         if (vm.isUserSettingsModalVisible) {
+          focus('userSettingsModal');
+        }
+      }
 
     }]
   };
