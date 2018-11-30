@@ -69,6 +69,16 @@ module.exports = (app, db) => {
     })
   });
 
+  app.put('/users/:id/settings', (req, res) => {
+    db.updateUserSettings(req.params.id, req.body, (savedSettings) => {
+      if(savedSettings) {
+        res.send();
+      }
+    })
+  });
+
+
+
 
   //////players routes
   app.get('/players', (req, res) => {

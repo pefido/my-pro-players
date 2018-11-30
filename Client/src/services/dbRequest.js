@@ -12,6 +12,10 @@ class dbRequest {
     return this.$http.get(this.baseUri + "/users/" + id);
   }
 
+  updateUserSettings(userId, settings){
+    return this.$http.put(this.baseUri + "/users/" + userId + "/settings/", settings);
+  }
+
 
 
 

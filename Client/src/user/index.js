@@ -101,7 +101,7 @@ app.directive('user', [function () {
           console.log("platform:");
           console.log(window.navigator.platform);
           var command = "";
-          if(window.navigator.platform.includes("Mac")){
+          if(vm.user.settings.system === "mac"){
             command = 'cd /Applications/League\ of\ Legends.app/Contents/LoL/RADS/solutions/lol_game_client_sln/releases/ && cd $(ls -1vr -d */ | head -1) && cd deploy && chmod +x ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends && riot_launched=true ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends 8394 LoLLauncher "" "-Locale=en_US" "spectator spectator.euw1.lol.riotgames.com:80 ' + player.currentMatch.observers.encryptionKey + ' ' + player.currentMatch.gameId + ' EUW1"';
           } else {
             command = "some other command I need to find out";
@@ -121,7 +121,18 @@ app.directive('user', [function () {
          if (vm.isUserSettingsModalVisible) {
           focus('userSettingsModal');
         }
-      }
+      };
+
+      vm.changeUserSettings = () => {
+        dbRequest.updateUserSettings(vm.user.id, vm.user.settings).then((res) => {
+          if(res.status != 200) {
+            vm.Notification.setNotification('error', 'Settings not saved!', 3);
+          }
+        })
+        .catch((err) => {
+          vm.Notification.setNotification('error', 'Settings not saved!', 3);
+        });
+      };
 
     }]
   };

@@ -200,24 +200,18 @@ class DB {
     this.usersCollection.set(1, {
       id: 1,
       username: 'pefido',
-      settings: [
-        {
-          name: 'system',
-          value: 'mac'
-        }
-      ],
+      settings: {
+        system: 'mac'
+      },
       followingPlayers: [20717177, 21081580, 23796520, 95206795, 73297023, 109537252, 20110160, 21071845, 20308708,
         22322085, 30657524, 22136916]
     });
     this.usersCollection.set(2, {
       id: 2,
       username: 'theTruckman',
-      settings: [
-        {
-          name: 'system',
-          value: 'windows'
-        }
-      ],
+      settings: {
+        system: 'windows'
+      },
       followingPlayers: []
     });
   }
@@ -260,6 +254,13 @@ class DB {
       newPlayerCollection = user.followingPlayers;
     }
     callback(newPlayerCollection);
+  }
+
+  updateUserSettings(userId, settingsObj) {
+    var user = this.getUser(userId);
+    user.settings.system = settingsObj.system;
+    this.usersCollection.set(user.id, user);
+    return user.settings;
   }
 
 

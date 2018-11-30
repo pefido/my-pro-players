@@ -162,7 +162,7 @@ input:focus, button:focus, .userSettingsModalContent:focus{
   text-align: center;
   min-height: 48px;
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 2; /* Sit on top */
   padding-top: 20px; /* Location of the box */
   left: 0;
   top: 0;
@@ -275,4 +275,25 @@ input:focus, button:focus, .userSettingsModalContent:focus{
   border-color: #FFF59D;
   width: 80%;
   max-width: 550px;
+}
+
+.userSettingsEntry {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+
+.userSettingName {
+  font-size: 16px;
+  color: #FFF59D;
+}
+
+.userSettingOptions {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.settingRadioContainer {
+  padding-left: 30px;
 }
