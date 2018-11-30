@@ -4,6 +4,7 @@ class DB {
     this.playersCollection = new Map();
     this.usersCollection = new Map();
     this.championsCollection = {};
+    this.matchCollection = [];
     this.matchmakingQueues = [];
 
 
@@ -14,14 +15,7 @@ class DB {
       name: 'Rekkles',
       playing: false,
       lastMatch: {
-        lane: "MID",
-        gameId: 3829300875,
-        champion: 15,
-        platformId: "EUW1",
-        timestamp: 1542012837696,
-        queue: 420,
-        role: "DUO",
-        season: 11
+        fullMatch: {}
       },
       currentMatch: {
 
@@ -35,14 +29,7 @@ class DB {
       name: 'Pefido',
       playing: false,
       lastMatch: {
-        lane: "MID",
-        gameId: 3829300875,
-        champion: 15,
-        platformId: "EUW1",
-        timestamp: 1542012837696,
-        queue: 420,
-        role: "DUO",
-        season: 11
+        fullMatch: {}
       },
       currentMatch: {
 
@@ -56,14 +43,7 @@ class DB {
       name: 'mithy',
       playing: false,
       lastMatch: {
-        lane: "MID",
-        gameId: 3829300875,
-        champion: 15,
-        platformId: "EUW1",
-        timestamp: 1542012837696,
-        queue: 420,
-        role: "DUO",
-        season: 11
+        fullMatch: {}
       },
       currentMatch: {
 
@@ -77,7 +57,7 @@ class DB {
       name: 'FNC Caps1',
       playing: false,
       lastMatch: {
-
+        fullMatch: {}
       },
       currentMatch: {
 
@@ -91,7 +71,7 @@ class DB {
       name: 'mithypote',
       playing: false,
       lastMatch: {
-        
+        fullMatch: {}
       },
       currentMatch: {
 
@@ -105,7 +85,7 @@ class DB {
       name: 'G2 Perkz',
       playing: false,
       lastMatch: {
-        
+        fullMatch: {}
       },
       currentMatch: {
 
@@ -119,7 +99,7 @@ class DB {
       name: 'TSM ZV3N',
       playing: false,
       lastMatch: {
-        
+        fullMatch: {}
       },
       currentMatch: {
 
@@ -133,7 +113,7 @@ class DB {
       name: 'G2 Jerkz',
       playing: false,
       lastMatch: {
-        
+        fullMatch: {}
       },
       currentMatch: {
 
@@ -147,7 +127,7 @@ class DB {
       name: 'G0DGILIUS',
       playing: false,
       lastMatch: {
-        
+        fullMatch: {}
       },
       currentMatch: {
 
@@ -161,7 +141,7 @@ class DB {
       name: 'MSF Hansssama',
       playing: false,
       lastMatch: {
-        
+        fullMatch: {}
       },
       currentMatch: {
 
@@ -175,7 +155,7 @@ class DB {
       name: 'MSF Febiven',
       playing: false,
       lastMatch: {
-        
+        fullMatch: {}
       },
       currentMatch: {
 
@@ -189,7 +169,7 @@ class DB {
       name: 'kaSing 2018',
       playing: false,
       lastMatch: {
-        
+        fullMatch: {}
       },
       currentMatch: {
 
@@ -301,6 +281,12 @@ class DB {
     callback(editingPlayer);
   }
 
+
+
+
+
+
+  /////////Other
   getChampionNameById(id) {
     return this.championsCollection[id];
   }

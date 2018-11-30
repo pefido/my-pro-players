@@ -92,6 +92,26 @@ class riotAPI {
     });
   }
 
+  getFullMatchInfo(gameId, callback) {
+    rp(this.baseUri + '/lol/match/v3/matches/' + gameId, { qs: { endIndex: 1, api_key: this.riotAPIKey }, json: true })
+      .then((res) => {
+        callback(res);
+      })
+      .catch((err) => {
+        if (err.statusCode == 404) {
+          callback(undefined);
+        } else if(err.statusCode == 429) {
+          var retryTimer = 1000;
+          console.log("max requests reached, retrying in " + retryTimer + " ms");
+          setTimeout(() => {this.getFullMatchInfo(gameId, callback);}
+          , retryTimer);
+        } else {
+          console.log("error getFullMatchInfo: " + gameId);
+        }
+      });
+  }
+
+
 }
 
 module.exports = new riotAPI();

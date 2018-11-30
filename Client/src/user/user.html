@@ -13,7 +13,7 @@
           + Add Player
       </button>
     </div>
-    <div class="listEntry" ng-repeat="player in vm.players | orderBy:'!playing'" ng-mouseenter="vm.toggleDeleteButtonVis(player)"
+    <div class="listEntry" ng-repeat="player in vm.players | orderBy:'lastPlayedSeconds'" ng-mouseenter="vm.toggleDeleteButtonVis(player)"
       ng-mouseleave="vm.toggleDeleteButtonVis(player)">
       <button class = " deletePlayerButton" ng-click="vm.removePlayer(player.id)"
       ng-class="{'invisible' : !player.deleteButtonInvisible}" name="deletePlayer">X</button>

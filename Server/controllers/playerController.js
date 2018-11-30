@@ -13,11 +13,22 @@ class playerController {
           savedPlayer.playing = (spectatorInfo != undefined);
           if (!savedPlayer.playing) {
             riotAPI.getLastMatchInfo(savedPlayer.accountId, (lastMatch) => {
-              savedPlayer.lastMatch = lastMatch;
-              savedPlayer.lastMatch.lastPlayed = this.getLastPlayed(savedPlayer.lastMatch.timestamp);
-              callback(savedPlayer);
+              
+              if(lastMatch.gameId != savedPlayer.lastMatch.gameId)  {
+
+                riotAPI.getFullMatchInfo(lastMatch.gameId, (fullMatch) => {
+                  lastMatch.fullMatch = fullMatch;
+                  lastMatch.lastPlayed = this.getLastPlayed(lastMatch.timestamp, fullMatch.gameDuration);
+                  savedPlayer.lastPlayedSeconds = this.getLastPlayedSeconds(lastMatch.timestamp, fullMatch.gameDuration);
+                  savedPlayer.lastMatch = lastMatch;
+                  callback(savedPlayer);
+                });
+              } else {
+                callback(savedPlayer);
+              }
             });
           } else {
+            savedPlayer.lastPlayedSeconds = 0;
             savedPlayer.currentMatch = spectatorInfo;
             var participant = savedPlayer.currentMatch.participants.find((player) => {
               return player.summonerId === savedPlayer.id;
@@ -72,9 +83,15 @@ class playerController {
     }
   }
 
-  getLastPlayed(timestamp) {
-    var lastPlayed = "";
+  getLastPlayedSeconds(gameCreation, gameDuration) {
+    var timestamp = gameCreation + (gameDuration * 1000) - (1000 * 60);
     var seconds = (((new Date) - timestamp) / 1000);
+    return seconds;
+  }
+
+  getLastPlayed(gameCreation, gameDuration) {
+    var lastPlayed = "";
+    var seconds = this.getLastPlayedSeconds(gameCreation, gameDuration);
 
     seconds >= 60 * 2 && seconds < 3600 * 2 ? lastPlayed = Math.round(seconds / 60) + " minutes" :
       seconds >= 3600 * 2 && seconds < 86400 * 2 ? lastPlayed = Math.round((seconds / 60) / 60) + " hours" :
@@ -82,7 +99,7 @@ class playerController {
           seconds >= 604800 * 2 && seconds < 2592000 * 2 ? lastPlayed = Math.round((((seconds / 60) / 60) / 24) / 7) + " weeks" :
             seconds > 2592000 * 2 && seconds < 31536000 * 2 ? lastPlayed = Math.round((((seconds / 60) / 60) / 24) / 12) + " months" :
               seconds > 31536000 * 2 ? lastPlayed = Math.round((((seconds / 60) / 60) / 24) / 362) + " years" :
-                lastPlayed = Math.round(seconds) + "seconds";
+                lastPlayed = Math.round(seconds) + " seconds";
 
     return lastPlayed;
   }

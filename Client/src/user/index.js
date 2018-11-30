@@ -98,8 +98,6 @@ app.directive('user', [function () {
 
       vm.copySpectateCommand = (player) => {
         if(player.playing) {
-          console.log("platform:");
-          console.log(window.navigator.platform);
           var command = "";
           if(vm.user.settings.system === "mac"){
             command = 'cd /Applications/League\ of\ Legends.app/Contents/LoL/RADS/solutions/lol_game_client_sln/releases/ && cd $(ls -1vr -d */ | head -1) && cd deploy && chmod +x ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends && riot_launched=true ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends 8394 LoLLauncher "" "-Locale=en_US" "spectator spectator.euw1.lol.riotgames.com:80 ' + player.currentMatch.observers.encryptionKey + ' ' + player.currentMatch.gameId + ' EUW1"';
