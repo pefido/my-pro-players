@@ -15,7 +15,7 @@ class playerController {
             riotAPI.getLastMatchInfo(savedPlayer.accountId, (lastMatch) => {
               
               if(lastMatch.gameId != savedPlayer.lastMatch.gameId)  {
-
+                console.log("game not cached, fetching");
                 riotAPI.getFullMatchInfo(lastMatch.gameId, (fullMatch) => {
                   lastMatch.fullMatch = fullMatch;
                   lastMatch.lastPlayed = this.getLastPlayed(lastMatch.timestamp, fullMatch.gameDuration);
@@ -24,6 +24,7 @@ class playerController {
                   callback(savedPlayer);
                 });
               } else {
+                console.log("game cached");
                 callback(savedPlayer);
               }
             });
@@ -51,10 +52,10 @@ class playerController {
       var lastDate = new Date(dbPlayer.lastUpdated);
       //update player if it is older than 30 seconds
       if ((currentTime - lastDate) / 1000 < 30) {
-        console.log("was cached");
+        console.log("player cached");
         callback(dbPlayer);
       } else {
-        console.log("not cached, fetching");
+        console.log("player not cached, fetching");
         this.updatePlayerInfo(dbPlayer, currentTime, (savedPlayer) => {
           callback(savedPlayer);
         });

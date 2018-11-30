@@ -106,7 +106,7 @@ app.directive('user', [function () {
           }
 
           Clipboard.copyToClipboard(command);
-          vm.Notification.setNotification('success', 'Spectator link copied to clipboard!', 4);
+          vm.Notification.setNotification('success', 'Spectator command copied to clipboard!', 4);
         }
       };
 
