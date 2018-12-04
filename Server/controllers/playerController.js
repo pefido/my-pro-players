@@ -66,21 +66,21 @@ class playerController {
   }
 
   getPlayers(playerCollection, callback) {
-    var resPlayers = [];
     if (playerCollection.length) {
       var countPlayers = playerCollection.length;
       playerCollection.forEach((id) => {
         this.getPlayer(id, (resPlayer) => {
-          resPlayers.push(resPlayer);
+          //resPlayers.push(resPlayer);
+          callback(resPlayer);
           countPlayers--;
-          if (countPlayers === 0) {
-            callback(resPlayers);
+          if(countPlayers === 0) {
+            callback(false);
           }
         });
       });
 
     } else {
-      callback(resPlayers);
+      callback(false);
     }
   }
 

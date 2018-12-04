@@ -10,8 +10,10 @@ app.directive('user', [function () {
     templateUrl: './user.html',
     bindToController: true,
     controllerAs: 'vm',
-    controller: ['$sce', 'Clipboard', 'Notification', 'focus', '$stateParams', 'dbRequest', function ($sce, Clipboard, Notification, focus, $stateParams, dbRequest) {
+    controller: ['$scope', '$sce', 'Clipboard', 'Notification', 'focus', '$stateParams', 'dbRequest', function ($scope, $sce, Clipboard, Notification, focus, $stateParams, dbRequest) {
       var vm = this;
+      vm.user = {};
+      vm.players = [];
       vm.Notification = Notification;
       vm.sampleText = "this is the user page";
       vm.addingPlayer = false;
@@ -25,9 +27,9 @@ app.directive('user', [function () {
 
       dbRequest.getUser($stateParams.id).then((res) => {
         vm.user = res.data;
-
-        dbRequest.getPlayersByUser(vm.user.id).then((res) => {
-          vm.players = res.data;
+        dbRequest.getPlayersByUser(vm.user.id, (player) => {
+          vm.players.push(player);
+          $scope.$apply();
         });
       });
 
@@ -60,12 +62,12 @@ app.directive('user', [function () {
                 //handle other kind of responses
               }
             }, (res) => {
-              switch(res.status) {
+              switch (res.status) {
                 case 404:
                   vm.Notification.setNotification('error', 'Player does not exist', 3);
                   break;
                 case 409:
-                vm.Notification.setNotification('error', 'Player already followed', 3);
+                  vm.Notification.setNotification('error', 'Player already followed', 3);
               }
             });
           }
@@ -76,15 +78,15 @@ app.directive('user', [function () {
 
       vm.removePlayer = (id) => {
         dbRequest.removePlayerFromUser(vm.user.id, id).then((res) => {
-          if(res.status === 200) {
-            vm.players = vm.players.filter((player) => {return player.id != id});
+          if (res.status === 200) {
+            vm.players = vm.players.filter((player) => { return player.id != id });
             vm.user.followingPlayers = res.data;
             vm.Notification.setNotification('success', 'Player removed!', 3);
           } else {
             //handle other kind of responses
           }
         }, (res) => {
-          switch(res.status) {
+          switch (res.status) {
             case 404:
               vm.Notification.setNotification('error', 'Player not followed', 3);
               break;
@@ -97,9 +99,9 @@ app.directive('user', [function () {
       };
 
       vm.copySpectateCommand = (player) => {
-        if(player.playing) {
+        if (player.playing) {
           var command = "";
-          if(vm.user.settings.system === "mac"){
+          if (vm.user.settings.system === "mac") {
             command = 'cd /Applications/League\ of\ Legends.app/Contents/LoL/RADS/solutions/lol_game_client_sln/releases/ && cd $(ls -1vr -d */ | head -1) && cd deploy && chmod +x ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends && riot_launched=true ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends 8394 LoLLauncher "" "-Locale=en_US" "spectator spectator.euw1.lol.riotgames.com:80 ' + player.currentMatch.observers.encryptionKey + ' ' + player.currentMatch.gameId + ' EUW1"';
           } else {
             command = "some other command I need to find out";
@@ -112,24 +114,24 @@ app.directive('user', [function () {
 
       vm.toggleUserSettingsModalVisible = (event) => {
         if (event == undefined) {
-            vm.isUserSettingsModalVisible = !vm.isUserSettingsModalVisible;
-        } else if(event.which === 27) {//escape key
-          vm.isUserSettingsModalVisible = !vm.isUserSettingsModalVisible; 
+          vm.isUserSettingsModalVisible = !vm.isUserSettingsModalVisible;
+        } else if (event.which === 27) {//escape key
+          vm.isUserSettingsModalVisible = !vm.isUserSettingsModalVisible;
         }
-         if (vm.isUserSettingsModalVisible) {
+        if (vm.isUserSettingsModalVisible) {
           focus('userSettingsModal');
         }
       };
 
       vm.changeUserSettings = () => {
         dbRequest.updateUserSettings(vm.user.id, vm.user.settings).then((res) => {
-          if(res.status != 200) {
+          if (res.status != 200) {
             vm.Notification.setNotification('error', 'Settings not saved!', 3);
           }
         })
-        .catch((err) => {
-          vm.Notification.setNotification('error', 'Settings not saved!', 3);
-        });
+          .catch((err) => {
+            vm.Notification.setNotification('error', 'Settings not saved!', 3);
+          });
       };
 
     }]

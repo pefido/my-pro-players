@@ -2,17 +2,17 @@ const angular = require('angular');
 const app = angular.module('app');
 
 class dbRequest {
-  constructor($http) {
+  constructor($http, $q) {
     this.$http = $http;
     this.baseUri = "http://localhost:3000";
   }
 
   //////////User Collection
-  getUser(id){
+  getUser(id) {
     return this.$http.get(this.baseUri + "/users/" + id);
   }
 
-  updateUserSettings(userId, settings){
+  updateUserSettings(userId, settings) {
     return this.$http.put(this.baseUri + "/users/" + userId + "/settings/", settings);
   }
 
@@ -20,19 +20,30 @@ class dbRequest {
 
 
   /////////Player Collection
-  getPlayersByUser(id){
-    return this.$http.get(this.baseUri + "/users/" + id + "/players");
+  getPlayersByUser(id, callback) {
+    var retryTimer = 7000;
+    var eventSource = new EventSource(this.baseUri + "/users/" + id + "/players?retry=" + retryTimer);
+
+    eventSource.addEventListener('playerSent', (e) => {
+      callback(JSON.parse(e.data));
+    });
+    eventSource.addEventListener('playerSentEnd', (e) => {
+      eventSource.close();
+    });
+    eventSource.onerror = () => {
+      eventSource.close();
+    }
   }
 
-  getPlayer(username){
+  getPlayer(username) {
     return this.$http.get(this.baseUri + "/players/" + id);
   }
 
-  addPlayerToUser(userId, playerUsername){
-    return this.$http.post(this.baseUri + "/users/" + userId + "/players/", {'username': playerUsername});
+  addPlayerToUser(userId, playerUsername) {
+    return this.$http.post(this.baseUri + "/users/" + userId + "/players/", { 'username': playerUsername });
   }
 
-  removePlayerFromUser(userId, playerId){
+  removePlayerFromUser(userId, playerId) {
     return this.$http.delete(this.baseUri + "/users/" + userId + "/players/" + playerId);
   }
 

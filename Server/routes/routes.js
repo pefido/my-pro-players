@@ -1,4 +1,5 @@
 const riotAPI = require('../services/riotAPI');
+const sseExpress = require('sse-express');
 
 module.exports = (app, db) => {
   const playerController = new (require('../controllers/playerController'))(db);
@@ -33,11 +34,16 @@ module.exports = (app, db) => {
     res.send({ message: 'user dashboard page' });
   });
 
-  app.get('/users/:id/players', (req, res) => {
+  app.get('/users/:id/players', sseExpress, (req, res) => {
     var dbUser = db.getUser(req.params.id);
     if (dbUser != undefined) {
-      playerController.getPlayers(dbUser.followingPlayers, (followingPlayers) => {
-        res.send(followingPlayers);
+      playerController.getPlayers(dbUser.followingPlayers, (followingPlayer) => {
+        if(followingPlayer) {
+          res.sse('playerSent', followingPlayer);
+        } else {
+          res.sse('playerSentEnd');
+          res.end();
+        }
       });
     } else {
       res.status(404).send('User not found');
