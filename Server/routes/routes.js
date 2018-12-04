@@ -37,7 +37,7 @@ module.exports = (app, db) => {
   app.get('/users/:id/players', sseExpress, (req, res) => {
     var dbUser = db.getUser(req.params.id);
     if (dbUser != undefined) {
-      playerController.getPlayers(dbUser.followingPlayers, (followingPlayer) => {
+      playerController.getPlayersParallel(dbUser.followingPlayers, (followingPlayer) => {
         if(followingPlayer) {
           res.sse('playerSent', followingPlayer);
         } else {

@@ -13,7 +13,7 @@ class riotAPI {
 
   updateMaxRequestsReached() {
     this.reachedMaxRequests = true;
-    setTimeout(() => {this.reachedMaxRequests = true}, this.retryTimer);
+    setTimeout(() => {this.reachedMaxRequests = false}, this.retryTimer);
   }
 
   validateMaxRequests(callback) {
@@ -83,6 +83,7 @@ class riotAPI {
           this.getLastMatchInfo(accountId, callback);
         } else {
           console.log("error getLastMatchInfo: " + accountId);
+          console.log(err.message);
         }
       });
   }

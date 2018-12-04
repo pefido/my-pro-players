@@ -65,7 +65,7 @@ class playerController {
     }
   }
 
-  getPlayers(playerCollection, callback) {
+  getPlayersParallel(playerCollection, callback) {
     if (playerCollection.length) {
       var countPlayers = playerCollection.length;
       playerCollection.forEach((id) => {
@@ -79,6 +79,19 @@ class playerController {
         });
       });
 
+    } else {
+      callback(false);
+    }
+  }
+
+  getPlayersSequential(playerCollection, callback) {
+    if (playerCollection.length > 0) {
+      this.getPlayer(playerCollection[0], (resPlayer) => {
+        callback(resPlayer);
+        var newCollection = playerCollection.slice();
+        newCollection.shift();
+        this.getPlayersSequential(newCollection, callback);
+      });
     } else {
       callback(false);
     }
