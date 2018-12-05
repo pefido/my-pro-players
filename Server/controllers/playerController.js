@@ -18,8 +18,6 @@ class playerController {
                 console.log("game not cached, fetching");
                 riotAPI.getFullMatchInfo(lastMatch.gameId, (fullMatch) => {
                   lastMatch.fullMatch = fullMatch;
-                  lastMatch.lastPlayed = this.getLastPlayed(lastMatch.timestamp, fullMatch.gameDuration);
-                  savedPlayer.lastPlayedSeconds = this.getLastPlayedSeconds(lastMatch.timestamp, fullMatch.gameDuration);
                   savedPlayer.lastMatch = lastMatch;
                   callback(savedPlayer);
                 });
@@ -29,7 +27,6 @@ class playerController {
               }
             });
           } else {
-            savedPlayer.lastPlayedSeconds = 0;
             savedPlayer.currentMatch = spectatorInfo;
             var participant = savedPlayer.currentMatch.participants.find((player) => {
               return player.summonerId === savedPlayer.id;
@@ -70,7 +67,6 @@ class playerController {
       var countPlayers = playerCollection.length;
       playerCollection.forEach((id) => {
         this.getPlayer(id, (resPlayer) => {
-          //resPlayers.push(resPlayer);
           callback(resPlayer);
           countPlayers--;
           if(countPlayers === 0) {
@@ -95,27 +91,6 @@ class playerController {
     } else {
       callback(false);
     }
-  }
-
-  getLastPlayedSeconds(gameCreation, gameDuration) {
-    var timestamp = gameCreation + (gameDuration * 1000) - (1000 * 60);
-    var seconds = (((new Date) - timestamp) / 1000);
-    return seconds;
-  }
-
-  getLastPlayed(gameCreation, gameDuration) {
-    var lastPlayed = "";
-    var seconds = this.getLastPlayedSeconds(gameCreation, gameDuration);
-
-    seconds >= 60 * 2 && seconds < 3600 * 2 ? lastPlayed = Math.round(seconds / 60) + " minutes" :
-      seconds >= 3600 * 2 && seconds < 86400 * 2 ? lastPlayed = Math.round((seconds / 60) / 60) + " hours" :
-        seconds >= 86400 * 2 && seconds < 604800 * 2 ? lastPlayed = Math.round(((seconds / 60) / 60) / 24) + " days" :
-          seconds >= 604800 * 2 && seconds < 2592000 * 2 ? lastPlayed = Math.round((((seconds / 60) / 60) / 24) / 7) + " weeks" :
-            seconds > 2592000 * 2 && seconds < 31536000 * 2 ? lastPlayed = Math.round((((seconds / 60) / 60) / 24) / 12) + " months" :
-              seconds > 31536000 * 2 ? lastPlayed = Math.round((((seconds / 60) / 60) / 24) / 362) + " years" :
-                lastPlayed = Math.round(seconds) + " seconds";
-
-    return lastPlayed;
   }
 
 }

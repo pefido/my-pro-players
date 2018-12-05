@@ -28,6 +28,7 @@ app.directive('user', [function () {
       dbRequest.getUser($stateParams.id).then((res) => {
         vm.user = res.data;
         dbRequest.getPlayersByUser(vm.user.id, (player) => {
+          playerUtil.fillLastPlayed(player);
           vm.players.push(player);
           $scope.$apply();
         });
@@ -55,6 +56,7 @@ app.directive('user', [function () {
             dbRequest.addPlayerToUser(vm.user.id, vm.playerInputText).then((res) => {
               if (res.status === 200) {
                 vm.user.followingPlayers.push(res.data.id);
+                playerUtil.fillLastPlayed(res.data);
                 res.data.playing ? vm.players.unshift(res.data) : vm.players.push(res.data);
                 vm.Notification.setNotification('success', 'Player added!', 3);
                 vm.toggleAddingPlayer();
