@@ -7,85 +7,110 @@ class riotAPI {
     this.baseUri = 'https://euw1.api.riotgames.com';
     this.dataDragonLastVersion = undefined;
     this.dataDragon = 'http://ddragon.leagueoflegends.com/cdn/';
-    this.reachedMaxRequests = false;
     this.retryTimer = 1000;
+    this.requestsPerSecond = 20;
+    this.requestsPer2Min = 100;
+    this.resetMaxRequests();
   }
 
-  updateMaxRequestsReached() {
-    this.reachedMaxRequests = true;
-    setTimeout(() => {this.reachedMaxRequests = false}, this.retryTimer);
+  resetMaxRequests() {
+    setInterval(() => {
+      if(this.requestsPerSecond <= 0) {
+        this.requestsPerSecond = 20;
+      }
+    }, 1000);
+    setInterval(() => {
+      if(this.requestsPer2Min <= 0) {
+        this.requestsPer2Min = 100;
+      }
+    }, 120000);
   }
 
   validateMaxRequests(callback) {
-    if(this.reachedMaxRequests) {
-      console.log("maxRequestsReached true");
-      setTimeout(() => {callback()}, this.retryTimer);
-    } else {
+    if (this.requestsPerSecond > 0 && this.requestsPer2Min > 0) {
       callback();
+    } else {
+      setTimeout(() => {
+        console.log("requests exceeded");
+        this.validateMaxRequests(callback);
+      }, this.retryTimer);
     }
+  }
+
+  updateMaxRequests() {
+    console.log("requests sec: " + this.requestsPerSecond);
+    console.log("requests 2min: " + this.requestsPer2Min);
+    this.requestsPerSecond--;
+    this.requestsPer2Min--;
   }
 
   getPlayerInfo(id, callback) {
     this.validateMaxRequests(() => {
+      this.updateMaxRequests();
       rp(this.baseUri + '/lol/summoner/v3/summoners/' + id, { qs: { api_key: this.riotAPIKey }, json: true })
-      .then((res) => {
-        callback(res);
-      })
-      .catch((err) => {
-        if (err.statusCode == 404) {
-          callback(undefined);
-        } else if(err.statusCode == 429) {
-          this.updateMaxRequestsReached();
-          console.log("max requests reached, retrying in " + this.retryTimer + " ms");
-          this.getPlayerInfo(id, callback);
-        } else {
-          console.log("error getPlayerInfo");
-          console.log(err.message);
-        }
-      });
+        .then((res) => {
+          callback(res);
+        })
+        .catch((err) => {
+          if (err.statusCode == 404) {
+            callback(undefined);
+          } else if (err.statusCode == 429) {
+            console.log("max requests reached, retrying in " + this.retryTimer + " ms");
+            setTimeout(() => {
+              this.getPlayerInfo(id, callback);
+            }, this.retryTimer);
+          } else {
+            console.log("error getPlayerInfo");
+            console.log(err.message);
+          }
+        });
     });
   }
 
   getSpectatorInfo(id, callback) {
     this.validateMaxRequests(() => {
+      this.updateMaxRequests();
       rp(this.baseUri + '/lol/spectator/v3/active-games/by-summoner/' + id, { qs: { api_key: this.riotAPIKey }, json: true })
-      .then((res) => {
-        callback(res);
-      })
-      .catch((err) => {
-        if (err.statusCode == 404) {
-          callback(undefined);
-        } else if(err.statusCode == 429) {
-          this.updateMaxRequestsReached();
-          console.log("max requests reached, retrying in " + this.retryTimer + " ms");
-          this.getSpectatorInfo(id, callback);
-        } else {
-          console.log("error getSpectatorInfo");
-          console.log(err.message);
-          console.log(err);
-        }
-      });
+        .then((res) => {
+          callback(res);
+        })
+        .catch((err) => {
+          if (err.statusCode == 404) {
+            callback(undefined);
+          } else if (err.statusCode == 429) {
+            console.log("max requests reached, retrying in " + this.retryTimer + " ms");
+            setTimeout(() => {
+              this.getSpectatorInfo(id, callback);
+            }, this.retryTimer);
+          } else {
+            console.log("error getSpectatorInfo");
+            console.log(err.message);
+          }
+        });
     });
   }
 
   getLastMatchInfo(accountId, callback) {
-    this.validateMaxRequests
-    rp(this.baseUri + '/lol/match/v3/matchlists/by-account/' + accountId, { qs: { endIndex: 1, api_key: this.riotAPIKey }, json: true })
-      .then((res) => {
-        callback(res.matches[0]);
-      })
-      .catch((err) => {
-        if (err.statusCode == 404) {
-          callback(undefined);
-        } else if(err.statusCode == 429) {
-          this.updateMaxRequestsReached();
-          console.log("max requests reached, retrying in " + this.retryTimer + " ms");
-          this.getLastMatchInfo(accountId, callback);
-        } else {
-          console.log("error getLastMatchInfo: " + accountId);
-          console.log(err.message);
-        }
-      });
+    this.validateMaxRequests(() => {
+      this.updateMaxRequests();
+      rp(this.baseUri + '/lol/match/v3/matchlists/by-account/' + accountId, { qs: { endIndex: 1, api_key: this.riotAPIKey }, json: true })
+        .then((res) => {
+          callback(res.matches[0]);
+        })
+        .catch((err) => {
+          if (err.statusCode == 404) {
+            callback(undefined);
+          } else if (err.statusCode == 429) {
+            console.log("max requests reached, retrying in " + this.retryTimer + " ms");
+            setTimeout(() => {
+              this.getLastMatchInfo(accountId, callback);
+            }, this.retryTimer);
+          } else {
+            console.log("error getLastMatchInfo: " + accountId);
+            console.log(err.message);
+          }
+        });
+    });
   }
 
   getDDragonLastVersion(callback) {
@@ -105,29 +130,32 @@ class riotAPI {
   getChampionsListing(callback) {
     this.getDDragonLastVersion((dataDragonLastVersion) => {
       rp(this.dataDragon + dataDragonLastVersion + '/data/en_US/champion.json')
-      .then((res) => {
-        callback(JSON.parse(res).data);
-      });
+        .then((res) => {
+          callback(JSON.parse(res).data);
+        });
     });
   }
 
   getFullMatchInfo(gameId, callback) {
     this.validateMaxRequests(() => {
+      this.updateMaxRequests();
       rp(this.baseUri + '/lol/match/v3/matches/' + gameId, { qs: { endIndex: 1, api_key: this.riotAPIKey }, json: true })
-      .then((res) => {
-        callback(res);
-      })
-      .catch((err) => {
-        if (err.statusCode == 404) {
-          callback(undefined);
-        } else if(err.statusCode == 429) {
-          this.updateMaxRequestsReached();
-          console.log("max requests reached, retrying in " + this.retryTimer + " ms");
-          this.getFullMatchInfo(gameId, callback);
-        } else {
-          console.log("error getFullMatchInfo: " + gameId);
-        }
-      });
+        .then((res) => {
+          callback(res);
+        })
+        .catch((err) => {
+          if (err.statusCode == 404) {
+            callback(undefined);
+          } else if (err.statusCode == 429) {
+            console.log("max requests reached, retrying in " + this.retryTimer + " ms");
+            setTimeout(() => {
+              this.getFullMatchInfo(gameId, callback);
+            }, this.retryTimer);
+          } else {
+            console.log("error getFullMatchInfo: " + gameId);
+            console.log(err.message);
+          }
+        });
     });
   }
 
