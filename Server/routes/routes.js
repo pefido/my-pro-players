@@ -22,12 +22,13 @@ module.exports = (app, db) => {
   });
 
   app.get('/users/:id', (req, res) => {
-    var user = db.getUser(req.params.id);
-    if (user != undefined) {
-      res.send(user);
-    } else {
-      res.status(404).send("User not found");
-    }
+    db.getUser(req.params.id).then((user) => {
+      if (user != undefined) {
+        res.send(user);
+      } else {
+        res.status(404).send("User not found");
+      }
+    });
   });
 
   app.get('/users/:id/dashboard', (req, res) => {
@@ -35,19 +36,20 @@ module.exports = (app, db) => {
   });
 
   app.get('/users/:id/players', sseExpress, (req, res) => {
-    var dbUser = db.getUser(req.params.id);
-    if (dbUser != undefined) {
-      playerController.getPlayersParallel(dbUser.followingPlayers, (followingPlayer) => {
-        if(followingPlayer) {
-          res.sse('playerSent', followingPlayer);
-        } else {
-          res.sse('playerSentEnd');
-          res.end();
-        }
-      });
-    } else {
-      res.status(404).send('User not found');
-    }
+    db.getUser(req.params.id).then((dbUser) => {
+      if (dbUser != undefined) {
+        playerController.getPlayersParallel(dbUser.followingPlayers, (followingPlayer) => {
+          if(followingPlayer) {
+            res.sse('playerSent', followingPlayer);
+          } else {
+            res.sse('playerSentEnd');
+            res.end();
+          }
+        });
+      } else {
+        res.status(404).send('User not found');
+      }
+    });
   });
 
   app.post('/users/:id/players/', (req, res) => {

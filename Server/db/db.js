@@ -212,6 +212,13 @@ class DB {
     return this.usersCollection.get(parseInt(id));
   }
 
+  getUser(id) {
+    return new Promise((resolve, reject) => {
+      resolve(this.usersCollection.get(parseInt(id)));
+    });
+
+  }
+
   addPlayerToUser(userId, playerId) {
     var user = this.getUser(userId);
     var res = false;
@@ -281,8 +288,17 @@ class DB {
     callback(editingPlayer);
   }
 
-
-
+  updatePlayerPromise(player) {
+    return new Promise((resolve, reject) => {
+      var editingPlayer = this.getPlayer(player.id);
+      editingPlayer.accountId = player.accountId;
+      editingPlayer.name = player.name;
+      editingPlayer.playing = false;
+      editingPlayer.lastUpdated = player.lastUpdated;
+      this.playersCollection.set(editingPlayer.id, editingPlayer);
+      resolve(editingPlayer);
+    });
+  }
 
 
 

@@ -9,7 +9,6 @@ app.directive('notFound', [() => {
     controllerAs: 'vm',
     controller: ['$stateParams', function($stateParams) {
       var vm = this;
-      console.log($stateParams);
       vm.notFoundType = $stateParams.type;
     }]
   };

@@ -24,15 +24,15 @@ class riotAPI {
     }, 120000);
   }
 
-  validateMaxRequests(callback) {
-    if (this.requestsPerSecond > 0 && this.requestsPer2Min > 0) {
-      callback();
-    } else {
-      setTimeout(() => {
-        console.log("requests exceeded");
-        this.validateMaxRequests(callback);
-      }, this.retryTimer);
-    }
+  validateMaxRequests() {
+      if(this.requestsPerSecond > 0 && this.requestsPer2Min > 0) {
+        return;
+      } else {
+        setTimeout(() => {
+          console.log("requests exceeded");
+          this.validateMaxRequests();
+        }, this.retryTimer);
+      }
   }
 
   updateMaxRequests() {
@@ -42,28 +42,43 @@ class riotAPI {
     this.requestsPer2Min--;
   }
 
-  getPlayerInfo(id, callback) {
-    this.validateMaxRequests(() => {
-      this.updateMaxRequests();
-      rp(this.baseUri + '/lol/summoner/v3/summoners/' + id, { qs: { api_key: this.riotAPIKey }, json: true })
-        .then((res) => {
-          callback(res);
-        })
-        .catch((err) => {
-          if (err.statusCode == 404) {
-            callback(undefined);
-          } else if (err.statusCode == 429) {
-            console.log("max requests reached, retrying in " + this.retryTimer + " ms");
-            setTimeout(() => {
-              this.getPlayerInfo(id, callback);
-            }, this.retryTimer);
-          } else {
-            console.log("error getPlayerInfo");
-            console.log(err.message);
-          }
-        });
+  getPlayerInfo(id) {
+    return new Promise((resolve, reject) => {
+      this.validateMaxRequests.then(() => {
+        this.updateMaxRequests();
+        return rp(this.baseUri + '/lol/summoner/v3/summoners/' + id, { qs: { api_key: this.riotAPIKey }, json: true });
+      }).then((res) => {
+
+      }).catch((err) => {
+
+      });
     });
   }
+
+  // getPlayerInfo(id, callback) {
+  //   this.validateMaxRequests(() => {
+  //     this.updateMaxRequests();
+  //     rp(this.baseUri + '/lol/summoner/v3/summoners/' + id, { qs: { api_key: this.riotAPIKey }, json: true })
+  //       .then((res) => {
+  //         callback(res);
+  //       })
+  //       .catch((err) => {
+  //         if (err.statusCode == 404) {
+  //           callback(undefined);
+  //         } else if (err.statusCode == 429) {
+  //           console.log("max requests reached, retrying in " + this.retryTimer + " ms");
+  //           setTimeout(() => {
+  //             this.getPlayerInfo(id, callback);
+  //           }, this.retryTimer);
+  //         } else {
+  //           console.log("error getPlayerInfo");
+  //           console.log(err.message);
+  //         }
+  //       });
+  //   });
+  // }
+
+
 
   getSpectatorInfo(id, callback) {
     this.validateMaxRequests(() => {
