@@ -10,12 +10,11 @@ app.directive('user', [function () {
     templateUrl: './user.html',
     bindToController: true,
     controllerAs: 'vm',
-    controller: ['$scope', '$sce', 'Clipboard', 'Notification', 'focus', '$stateParams', 'dbRequest', function ($scope, $sce, Clipboard, Notification, focus, $stateParams, dbRequest) {
+    controller: ['$state', '$scope', '$sce', 'Clipboard', 'Notification', 'focus', '$stateParams', 'dbRequest', function ($state, $scope, $sce, Clipboard, Notification, focus, $stateParams, dbRequest) {
       var vm = this;
       vm.user = {};
       vm.players = [];
       vm.Notification = Notification;
-      vm.sampleText = "this is the user page";
       vm.addingPlayer = false;
       vm.octicons = octicons;
       vm.sce = $sce;
@@ -32,6 +31,11 @@ app.directive('user', [function () {
           vm.players.push(player);
           $scope.$apply();
         });
+      })
+      .catch((err) => {
+        if(err.status === 404) {
+          $state.transitionTo('notFound', {type:'User'}, {location: false});
+        }
       });
 
       vm.getPlayerStatus = (player) => {

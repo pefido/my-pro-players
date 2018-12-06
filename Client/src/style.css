@@ -1,3 +1,6 @@
+
+/* main page */
+
 body {
   background-color: #28303f;
   font: 14px 'Exo 2';
@@ -25,6 +28,8 @@ body {
   text-align: center;
   margin: 0px;
 }
+
+/* user page */
 
 .usersContainer {
   margin-top: 50px;
@@ -296,4 +301,15 @@ input:focus, button:focus, .userSettingsModalContent:focus{
 
 .settingRadioContainer {
   padding-left: 30px;
+}
+
+
+/* not-found page */
+
+.notFoundContainer {
+  margin-top: 50px;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 100;
+  color: #FFF59D;
 }

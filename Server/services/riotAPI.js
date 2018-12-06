@@ -20,9 +20,7 @@ class riotAPI {
       }
     }, 1000);
     setInterval(() => {
-      if(this.requestsPer2Min <= 0) {
-        this.requestsPer2Min = 100;
-      }
+      this.requestsPer2Min = 100;
     }, 120000);
   }
 
