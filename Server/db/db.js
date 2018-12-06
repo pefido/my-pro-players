@@ -278,17 +278,7 @@ class DB {
     }
   }
 
-  updatePlayer(player, callback) {
-    var editingPlayer = this.getPlayer(player.id);
-    editingPlayer.accountId = player.accountId;
-    editingPlayer.name = player.name;
-    editingPlayer.playing = false;
-    editingPlayer.lastUpdated = player.lastUpdated;
-    this.playersCollection.set(editingPlayer.id, editingPlayer);
-    callback(editingPlayer);
-  }
-
-  updatePlayerPromise(player) {
+  updatePlayer(player) {
     return new Promise((resolve, reject) => {
       var editingPlayer = this.getPlayer(player.id);
       editingPlayer.accountId = player.accountId;
