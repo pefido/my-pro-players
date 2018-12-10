@@ -1,5 +1,5 @@
 const fs = require('fs');
-const rp = require('request-promise');
+const rp = require('request-promise-native');
 
 class riotAPI {
   constructor() {
@@ -31,15 +31,15 @@ class riotAPI {
       } else {
         setTimeout(() => {
           console.log("requests exceeded");
-          this.validateMaxRequests();
+          resolve(this.validateMaxRequests());
         }, this.retryTimer);
       }
     });
   }
 
   updateMaxRequests() {
-    console.log("requests sec: " + this.requestsPerSecond);
-    console.log("requests 2min: " + this.requestsPer2Min);
+    //console.log("requests sec: " + this.requestsPerSecond);
+    //console.log("requests 2min: " + this.requestsPer2Min);
     this.requestsPerSecond--;
     this.requestsPer2Min--;
   }
@@ -58,7 +58,7 @@ class riotAPI {
         } else if (err.statusCode == 429) {
           console.log("max requests reached, retrying in " + this.retryTimer + " ms");
           setTimeout(() => {
-            this.getPlayerInfo(id);
+            return this.getPlayerInfo(id);
           }, this.retryTimer);
         } else {
           console.log("error getPlayerInfo");
@@ -82,7 +82,7 @@ class riotAPI {
         } else if (err.statusCode == 429) {
           console.log("max requests reached, retrying in " + this.retryTimer + " ms");
           setTimeout(() => {
-            this.getSpectatorInfo(id);
+            return this.getSpectatorInfo(id);
           }, this.retryTimer);
         } else {
           console.log("error getSpectatorInfo");
@@ -106,7 +106,7 @@ class riotAPI {
         } else if (err.statusCode == 429) {
           console.log("max requests reached, retrying in " + this.retryTimer + " ms");
           setTimeout(() => {
-            this.getLastMatchInfo(accountId);
+            return this.getLastMatchInfo(accountId);
           }, this.retryTimer);
         } else {
           console.log("error getLastMatchInfo: " + accountId);
@@ -145,7 +145,6 @@ class riotAPI {
         this.updateMaxRequests();
         return rp(this.baseUri + '/lol/match/v3/matches/' + gameId, { qs: { endIndex: 1, api_key: this.riotAPIKey }, json: true });
       }).then((res) => {
-        console.log("resolving getFullMatchInfo");
         resolve(res);
       }).catch((err) => {
         if (err.statusCode == 404) {
@@ -154,7 +153,7 @@ class riotAPI {
         } else if (err.statusCode == 429) {
           console.log("max requests reached, retrying in " + this.retryTimer + " ms");
           setTimeout(() => {
-            this.getFullMatchInfo(gameId);
+            return this.getFullMatchInfo(gameId);
           }, this.retryTimer);
         } else {
           console.log("error getFullMatchInfo: " + gameId);

@@ -55,26 +55,24 @@ module.exports = (app, db) => {
   app.post('/users/:id/players/', (req, res) => {
     var resPlayerId = db.getPlayerIdByUsername(req.body.username);
     if (resPlayerId) {
-      if( db.addPlayerToUser(req.params.id, resPlayerId) ) {
+      db.addPlayerToUser(req.params.id, resPlayerId).then(() => {
         playerController.getPlayer(resPlayerId, (resPlayer) => {
           res.send(resPlayer);
         });
-      } else {
+      }).catch(() => {
         res.status(409).send('Player conflict');
-      }
+      });
     } else {
       res.status(404).send('Player not found');
     }
   });
 
   app.delete('/users/:id/players/:playerId', (req, res) => {
-    db.removePlayerFromUser(req.params.id, req.params.playerId, (newPlayerCollection) => {
-      if(newPlayerCollection != undefined) {
+    db.removePlayerFromUser(req.params.id, req.params.playerId).then((newPlayerCollection) => {
         res.send(newPlayerCollection);
-      } else {
-        res.status(404).send('Player does not exist in user');
-      }
-    })
+    }).catch(() => {
+      res.status(404).send('Player does not exist in user');
+    });
   });
 
   app.put('/users/:id/settings', (req, res) => {

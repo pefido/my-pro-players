@@ -10,31 +10,37 @@ class playerController {
       newPlayer.lastUpdated = currentTime;
       return this.db.updatePlayer(newPlayer);
     }).then((savedPlayer) => {
-      return riotAPI.getSpectatorInfo(savedPlayer.id);
-    }).then((spectatorInfo) => {
-      savedPlayer.playing = (spectatorInfo != undefined);
-      if(!savedPlayer.playing) {
-        return riotAPI.getLastMatchInfo(savedPlayer.accountId).then((lastMatch) => {
-          if(lastMatch.gameId != savedPlayer.lastMatch.gameId) {
-            console.log("game not cached, fetching");
-            return riotAPI.getFullMatchInfo(lastMatch.gameId).then((fullMatch) => {
-              lastMatch.fullMatch = fullMatch;
-              savedPlayer.lastMatch = lastMatch;
+      return riotAPI.getSpectatorInfo(savedPlayer.id).then((spectatorInfo) => {
+        savedPlayer.playing = (spectatorInfo != undefined);
+        if (!savedPlayer.playing) {
+          return riotAPI.getLastMatchInfo(savedPlayer.accountId).then((lastMatch) => {
+            if (lastMatch.gameId != savedPlayer.lastMatch.gameId) {
+              console.log("game not cached, fetching");
+              return riotAPI.getFullMatchInfo(lastMatch.gameId).then((fullMatch) => {
+                lastMatch.fullMatch = fullMatch;
+                savedPlayer.lastMatch = lastMatch;
+                return savedPlayer;
+              });
+            } else {
+              console.log("game cached");
               return savedPlayer;
-            });
-          } else {
-            console.log("game cached");
-            return savedPlayer;
-          }
-        });
-      } else {
-        console.log("game cached");
-        return savedPlayer;
-      }
+            }
+          });
+        } else {
+          console.log("is playing");
+          savedPlayer.currentMatch = spectatorInfo;
+          var participant = savedPlayer.currentMatch.participants.find((player) => {
+            return player.summonerId === savedPlayer.id;
+          });
+          savedPlayer.currentMatch.playingChampion = this.db.getChampionNameById(participant.championId);
+          savedPlayer.currentMatch.playingQueue = this.db.getQueueById(savedPlayer.currentMatch.gameQueueConfigId);
+          return savedPlayer;
+        }
+      });
     }).then((savedPlayer) => {
       callback(savedPlayer);
     });
-    
+
 
 
 
@@ -45,65 +51,65 @@ class playerController {
     //   newPlayer.lastUpdated = currentTime;
 
 
-      // this.db.updatePlayerPromise(newPlayer).then((savedPlayer) => {
-      //   riotAPI.getSpectatorInfo(savedPlayer.id, (spectatorInfo) => {
-      //     savedPlayer.playing = (spectatorInfo != undefined);
-      //     if (!savedPlayer.playing) {
-      //       riotAPI.getLastMatchInfo(savedPlayer.accountId, (lastMatch) => {
-              
-      //         if(lastMatch.gameId != savedPlayer.lastMatch.gameId)  {
-      //           console.log("game not cached, fetching");
-      //           riotAPI.getFullMatchInfo(lastMatch.gameId, (fullMatch) => {
-      //             lastMatch.fullMatch = fullMatch;
-      //             savedPlayer.lastMatch = lastMatch;
-      //             callback(savedPlayer);
-      //           });
-      //         } else {
-      //           console.log("game cached");
-      //           callback(savedPlayer);
-      //         }
-      //       });
-      //     } else {
-      //       savedPlayer.currentMatch = spectatorInfo;
-      //       var participant = savedPlayer.currentMatch.participants.find((player) => {
-      //         return player.summonerId === savedPlayer.id;
-      //       });
-      //       savedPlayer.currentMatch.playingChampion = this.db.getChampionNameById(participant.championId);
-      //       savedPlayer.currentMatch.playingQueue = this.db.getQueueById(savedPlayer.currentMatch.gameQueueConfigId);
-      //       callback(savedPlayer);
-      //     }
-      //   });
-      // });
+    // this.db.updatePlayerPromise(newPlayer).then((savedPlayer) => {
+    //   riotAPI.getSpectatorInfo(savedPlayer.id, (spectatorInfo) => {
+    //     savedPlayer.playing = (spectatorInfo != undefined);
+    //     if (!savedPlayer.playing) {
+    //       riotAPI.getLastMatchInfo(savedPlayer.accountId, (lastMatch) => {
 
-      // this.db.updatePlayer(newPlayer, (savedPlayer) => {
-      //   riotAPI.getSpectatorInfo(savedPlayer.id, (spectatorInfo) => {
-      //     savedPlayer.playing = (spectatorInfo != undefined);
-      //     if (!savedPlayer.playing) {
-      //       riotAPI.getLastMatchInfo(savedPlayer.accountId, (lastMatch) => {
-              
-      //         if(lastMatch.gameId != savedPlayer.lastMatch.gameId)  {
-      //           console.log("game not cached, fetching");
-      //           riotAPI.getFullMatchInfo(lastMatch.gameId, (fullMatch) => {
-      //             lastMatch.fullMatch = fullMatch;
-      //             savedPlayer.lastMatch = lastMatch;
-      //             callback(savedPlayer);
-      //           });
-      //         } else {
-      //           console.log("game cached");
-      //           callback(savedPlayer);
-      //         }
-      //       });
-      //     } else {
-      //       savedPlayer.currentMatch = spectatorInfo;
-      //       var participant = savedPlayer.currentMatch.participants.find((player) => {
-      //         return player.summonerId === savedPlayer.id;
-      //       });
-      //       savedPlayer.currentMatch.playingChampion = this.db.getChampionNameById(participant.championId);
-      //       savedPlayer.currentMatch.playingQueue = this.db.getQueueById(savedPlayer.currentMatch.gameQueueConfigId);
-      //       callback(savedPlayer);
-      //     }
-      //   });
-      // });
+    //         if(lastMatch.gameId != savedPlayer.lastMatch.gameId)  {
+    //           console.log("game not cached, fetching");
+    //           riotAPI.getFullMatchInfo(lastMatch.gameId, (fullMatch) => {
+    //             lastMatch.fullMatch = fullMatch;
+    //             savedPlayer.lastMatch = lastMatch;
+    //             callback(savedPlayer);
+    //           });
+    //         } else {
+    //           console.log("game cached");
+    //           callback(savedPlayer);
+    //         }
+    //       });
+    //     } else {
+    //       savedPlayer.currentMatch = spectatorInfo;
+    //       var participant = savedPlayer.currentMatch.participants.find((player) => {
+    //         return player.summonerId === savedPlayer.id;
+    //       });
+    //       savedPlayer.currentMatch.playingChampion = this.db.getChampionNameById(participant.championId);
+    //       savedPlayer.currentMatch.playingQueue = this.db.getQueueById(savedPlayer.currentMatch.gameQueueConfigId);
+    //       callback(savedPlayer);
+    //     }
+    //   });
+    // });
+
+    // this.db.updatePlayer(newPlayer, (savedPlayer) => {
+    //   riotAPI.getSpectatorInfo(savedPlayer.id, (spectatorInfo) => {
+    //     savedPlayer.playing = (spectatorInfo != undefined);
+    //     if (!savedPlayer.playing) {
+    //       riotAPI.getLastMatchInfo(savedPlayer.accountId, (lastMatch) => {
+
+    //         if(lastMatch.gameId != savedPlayer.lastMatch.gameId)  {
+    //           console.log("game not cached, fetching");
+    //           riotAPI.getFullMatchInfo(lastMatch.gameId, (fullMatch) => {
+    //             lastMatch.fullMatch = fullMatch;
+    //             savedPlayer.lastMatch = lastMatch;
+    //             callback(savedPlayer);
+    //           });
+    //         } else {
+    //           console.log("game cached");
+    //           callback(savedPlayer);
+    //         }
+    //       });
+    //     } else {
+    //       savedPlayer.currentMatch = spectatorInfo;
+    //       var participant = savedPlayer.currentMatch.participants.find((player) => {
+    //         return player.summonerId === savedPlayer.id;
+    //       });
+    //       savedPlayer.currentMatch.playingChampion = this.db.getChampionNameById(participant.championId);
+    //       savedPlayer.currentMatch.playingQueue = this.db.getQueueById(savedPlayer.currentMatch.gameQueueConfigId);
+    //       callback(savedPlayer);
+    //     }
+    //   });
+    // });
   }
 
   getPlayer(id, callback) {
@@ -135,7 +141,7 @@ class playerController {
         this.getPlayer(id, (resPlayer) => {
           callback(resPlayer);
           countPlayers--;
-          if(countPlayers === 0) {
+          if (countPlayers === 0) {
             callback(false);
           }
         });

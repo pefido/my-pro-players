@@ -220,27 +220,32 @@ class DB {
   }
 
   addPlayerToUser(userId, playerId) {
-    var user = this.getUser(userId);
-    var res = false;
-    if (!(user.followingPlayers.includes(parseInt(playerId)))) {
-      user.followingPlayers.push(parseInt(playerId));
-      this.usersCollection.set(user.id, user);
-      res = true;
-    }
-    return res;
+    return new Promise((resolve, reject) => {
+      this.getUser(userId).then((user) => {
+        if (!(user.followingPlayers.includes(parseInt(playerId)))) {
+          user.followingPlayers.push(parseInt(playerId));
+          this.usersCollection.set(user.id, user);
+          resolve();
+        }
+        reject();
+      });
+    });
   }
 
-  removePlayerFromUser(userId, playerId, callback) {
-    var user = this.getUser(userId);
-    var newPlayerCollection = undefined;
-    if (user.followingPlayers.includes(parseInt(playerId))) {
-      user.followingPlayers = user.followingPlayers.filter((player) => {
-        return player != parseInt(playerId);
+  removePlayerFromUser(userId, playerId) {
+    return new Promise((resolve, reject) => {
+      this.getUser(userId).then((user) => {
+        if (user.followingPlayers.includes(parseInt(playerId))) {
+          user.followingPlayers = user.followingPlayers.filter((player) => {
+            return player != parseInt(playerId);
+          });
+          this.usersCollection.set(user.id, user);
+          resolve(user.followingPlayers);
+        } else {
+          reject();
+        }
       });
-      this.usersCollection.set(user.id, user);
-      newPlayerCollection = user.followingPlayers;
-    }
-    callback(newPlayerCollection);
+    });
   }
 
   updateUserSettings(userId, settingsObj) {
