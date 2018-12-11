@@ -209,14 +209,10 @@ class DB {
 
   /////////user related operations
   getUser(id) {
-    return this.usersCollection.get(parseInt(id));
-  }
-
-  getUser(id) {
     return new Promise((resolve, reject) => {
-      resolve(this.usersCollection.get(parseInt(id)));
+      var user = this.usersCollection.get(parseInt(id));
+      user ? resolve(user) : reject();
     });
-
   }
 
   addPlayerToUser(userId, playerId) {
@@ -249,10 +245,13 @@ class DB {
   }
 
   updateUserSettings(userId, settingsObj) {
-    var user = this.getUser(userId);
-    user.settings.system = settingsObj.system;
-    this.usersCollection.set(user.id, user);
-    return user.settings;
+    return new Promise((resolve, reject) => {
+      return this.getUser(userId).then((user) => {
+        user.settings.system = settingsObj.system;
+        this.usersCollection.set(user.id, user);
+        resolve(user.settings);
+      });
+    });
   }
 
 

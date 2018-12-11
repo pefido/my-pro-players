@@ -56,9 +56,9 @@ module.exports = (app, db) => {
     var resPlayerId = db.getPlayerIdByUsername(req.body.username);
     if (resPlayerId) {
       db.addPlayerToUser(req.params.id, resPlayerId).then(() => {
-        playerController.getPlayer(resPlayerId, (resPlayer) => {
-          res.send(resPlayer);
-        });
+        return playerController.getPlayer(resPlayerId);
+      }).then((resPlayer) => {
+        res.send(resPlayer);
       }).catch(() => {
         res.status(409).send('Player conflict');
       });
@@ -76,7 +76,8 @@ module.exports = (app, db) => {
   });
 
   app.put('/users/:id/settings', (req, res) => {
-    db.updateUserSettings(req.params.id, req.body, (savedSettings) => {
+    console.log("updating settings");
+    db.updateUserSettings(req.params.id, req.body).then((savedSettings) => {
       if(savedSettings) {
         res.send(savedSettings);
       }
@@ -92,12 +93,10 @@ module.exports = (app, db) => {
   });
 
   app.get('/players/:id', (req, res) => {
-    playerController.getPlayer(req.params.id, (resPlayer) => {
-      if (resPlayer != undefined) {
+    playerController.getPlayer(req.params.id).then((resPlayer) => {
         res.send(resPlayer);
-      } else {
-        res.status(404).send('Player not found');
-      }
+    }).catch(() => {
+      res.status(404).send('Player not found');
     });
   });
 
