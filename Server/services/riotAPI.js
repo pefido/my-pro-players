@@ -8,6 +8,7 @@ class riotAPI {
     this.dataDragonLastVersion = undefined;
     this.dataDragon = 'http://ddragon.leagueoflegends.com/cdn/';
     this.retryTimer = 1000;
+    this.noServiceTimer = 3000;
     this.requestsPerSecond = 20;
     this.requestsPer2Min = 100;
     this.resetMaxRequests();
@@ -47,6 +48,12 @@ class riotAPI {
     this.requestsPer2Min--;
   }
 
+  retryRequest(resolve, requestFunction, argumentArray, retryTimer) {
+    setTimeout(() => {
+      resolve(requestFunction.apply(this, argumentArray));
+    }, retryTimer);
+  }
+
   getPlayerInfo(id) {
     return new Promise((resolve, reject) => {
       this.validateMaxRequests().then(() => {
@@ -55,17 +62,22 @@ class riotAPI {
       }).then((res) => {
         resolve(res);
       }).catch((err) => {
-        if (err.statusCode == 404) {
-          //mudar isto para um reject
-          resolve(undefined);
-        } else if (err.statusCode == 429) {
-          console.log("max requests reached, retrying in " + this.retryTimer + " ms");
-          setTimeout(() => {
-            resolve(this.getPlayerInfo(id));
-          }, this.retryTimer);
-        } else {
-          console.log("error getPlayerInfo");
-          console.log(err.message);
+        switch(err.statusCode) {
+          case 404:
+            //mudar isto para um reject
+            resolve(undefined);
+            break;
+          case 429:
+            console.log("max requests reached, retrying in " + this.retryTimer + " ms");
+            this.retryRequest(resolve, this.getPlayerInfo, [id], this.retryTimer);
+            break;
+          case 503:
+            console.log("getPlayerInfo Service unavailable, retrying in " + this.noServiceTimer + " ms");
+            this.retryRequest(resolve, this.getPlayerInfo, [id], this.noServiceTimer);
+            break;
+          default:
+            console.log("error getPlayerInfo");
+            console.log(err.message);
         }
       });
     });
@@ -79,17 +91,22 @@ class riotAPI {
       }).then((res) => {
         resolve(res);
       }).catch((err) => {
-        if (err.statusCode == 404) {
-          //mudar isto para um reject
-          resolve(undefined);
-        } else if (err.statusCode == 429) {
-          console.log("max requests reached, retrying in " + this.retryTimer + " ms");
-          setTimeout(() => {
-            resolve(this.getSpectatorInfo(id));
-          }, this.retryTimer);
-        } else {
-          console.log("error getSpectatorInfo");
-          console.log(err.message);
+        switch(err.statusCode) {
+          case 404:
+            //mudar isto para um reject
+            resolve(undefined);
+            break;
+          case 429:
+            console.log("max requests reached, retrying in " + this.retryTimer + " ms");
+            this.retryRequest(resolve, this.getSpectatorInfo, [id], this.retryTimer);
+            break;
+          case 503:
+            console.log("getPlayerInfo Service unavailable, retrying in " + this.noServiceTimer + " ms");
+            this.retryRequest(resolve, this.getSpectatorInfo, [id], this.noServiceTimer);
+            break;
+          default:
+            console.log("error getSpectatorInfo");
+            console.log(err.message);
         }
       });
     });
@@ -103,17 +120,22 @@ class riotAPI {
       }).then((res) => {
         resolve(res.matches[0]);
       }).catch((err) => {
-        if (err.statusCode == 404) {
-          //mudar isto para um reject
-          resolve(undefined);
-        } else if (err.statusCode == 429) {
-          console.log("max requests reached, retrying in " + this.retryTimer + " ms");
-          setTimeout(() => {
-            resolve(this.getLastMatchInfo(accountId));
-          }, this.retryTimer);
-        } else {
-          console.log("error getLastMatchInfo: " + accountId);
-          console.log(err.message);
+        switch(err.statusCode) {
+          case 404:
+            //mudar isto para um reject
+            resolve(undefined);
+            break;
+          case 429:
+            console.log("max requests reached, retrying in " + this.retryTimer + " ms");
+            this.retryRequest(resolve, this.getLastMatchInfo, [id], this.retryTimer);
+            break;
+          case 503:
+            console.log("getPlayerInfo Service unavailable, retrying in " + this.noServiceTimer + " ms");
+            this.retryRequest(resolve, this.getLastMatchInfo, [id], this.noServiceTimer);
+            break;
+          default:
+            console.log("error getLastMatchInfo");
+            console.log(err.message);
         }
       });
     });
@@ -152,17 +174,22 @@ class riotAPI {
       }).then((res) => {
         resolve(res);
       }).catch((err) => {
-        if (err.statusCode == 404) {
-          //mudar isto para um reject
-          resolve(undefined);
-        } else if (err.statusCode == 429) {
-          console.log("max requests reached, retrying in " + this.retryTimer + " ms");
-          setTimeout(() => {
-            resolve(this.getFullMatchInfo(gameId));
-          }, this.retryTimer);
-        } else {
-          console.log("error getFullMatchInfo: " + gameId);
-          console.log(err.message);
+        switch(err.statusCode) {
+          case 404:
+            //mudar isto para um reject
+            resolve(undefined);
+            break;
+          case 429:
+            console.log("max requests reached, retrying in " + this.retryTimer + " ms");
+            this.retryRequest(resolve, this.getFullMatchInfo, [gameId], this.retryTimer);
+            break;
+          case 503:
+            console.log("getPlayerInfo Service unavailable, retrying in " + this.noServiceTimer + " ms");
+            this.retryRequest(resolve, this.getFullMatchInfo, [gameId], this.noServiceTimer);
+            break;
+          default:
+            console.log("error getFullMatchInfo");
+            console.log(err.message);
         }
       });
     });
