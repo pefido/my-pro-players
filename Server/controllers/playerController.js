@@ -74,6 +74,7 @@ class playerController {
         this.getPlayer(id).then((resPlayer) => {
           callback(resPlayer);
           countPlayers--;
+          console.log(countPlayers + " players left");
           if (countPlayers === 0) {
             callback(false);
           }

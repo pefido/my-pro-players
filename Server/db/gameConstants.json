@@ -817,6 +817,7 @@
     {
       "id": 400,
       "name": "PvP Classic Summoner's Rift 5v5 Draft Pick",
+      "shortName": "Draft Pick",
       "gameMode": "CLASSIC",
       "mapType": "SUMMONERS_RIFT",
       "rotating": false,

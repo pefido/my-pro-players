@@ -23,8 +23,11 @@ class dbRequest {
   getPlayersByUser(id, callback) {
     var retryTimer = 7000;
     var eventSource = new EventSource(this.baseUri + "/users/" + id + "/players?retry=" + retryTimer);
+    var counter = 0;
 
     eventSource.addEventListener('playerSent', (e) => {
+      counter++;
+      console.log("got " + counter);
       callback(JSON.parse(e.data));
     });
     eventSource.addEventListener('playerSentEnd', (e) => {

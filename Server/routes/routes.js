@@ -76,7 +76,6 @@ module.exports = (app, db) => {
   });
 
   app.put('/users/:id/settings', (req, res) => {
-    console.log("updating settings");
     db.updateUserSettings(req.params.id, req.body).then((savedSettings) => {
       if(savedSettings) {
         res.send(savedSettings);

@@ -8,7 +8,7 @@ class ServerUtilities {
     this.db = db;
 
     //populate database with static lol info
-    riotAPI.getChampionsListing((ChampionsListing) => {
+    riotAPI.getChampionsListing().then((ChampionsListing) => {
       db.championsCollection = ChampionsListing;
       for (var champion in db.championsCollection) {
         db.championsCollection[db.championsCollection[champion].key] = db.championsCollection[champion];
