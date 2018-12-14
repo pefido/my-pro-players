@@ -50,8 +50,8 @@ class summonerController {
         if (dbSummoner != undefined) {
           var currentTime = new Date();
           var lastDate = new Date(dbSummoner.lastUpdated);
-          //update summoner if it is older than 30 seconds
-          if ((currentTime - lastDate) / 1000 < 30) {
+          //update summoner if it is older than 30 seconds or playing for less than 15 minutes
+          if ((currentTime - lastDate) / 1000 < 30 || !this.canFF15(dbSummoner, currentTime)) {
             console.log("summoner cached");
             resolve(dbSummoner);
           } else {
@@ -97,6 +97,14 @@ class summonerController {
     } else {
       callback(false);
     }
+  }
+
+  canFF15(summoner, currentTime) {
+    var ff15 = true;
+    if(summoner.playing) {
+      ff15 = currentTime - summoner.currentMatch.gameStartTime > 1000 * 60 * 16;
+    }
+    return ff15;
   }
 
 }

@@ -192,8 +192,23 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
+    this.summonerCollection.set(20965425, {
+      id: 20965425,
+      accountId: 24328420,
+      name: 'FNC Broxah',
+      playing: false,
+      lastMatch: {
+        fullMatch: {}
+      },
+      currentMatch: {
+
+      },
+      lastUpdated: '2018-11-02T16:22:05.639Z'
+    });
+    
 
 
+    
 
 
 
@@ -204,7 +219,7 @@ class DB {
         system: 'mac'
       },
       followingPlayers: [20717177, 21081580, 23796520, 95206795, 73297023, 109537252, 20110160, 21071845, 20308708,
-        22322085, 30657524, 22136916]
+        22322085, 30657524, 22136916, 20965425]
     });
     this.userCollection.set(2, {
       id: 2,
