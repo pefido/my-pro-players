@@ -12,11 +12,14 @@ app.directive('player', [() => {
       
       var vm = this;
       vm.player = {};
-      vm.player.testField = "Rekkles";
-      vm.player.id = $stateParams.id;
-      console.log(vm.player);
-      console.log("aqui");
-      console.log($stateParams);
+
+      dbRequest.getPlayerProfile($stateParams.id).then((player) => {
+        vm.player = player;
+      }).catch(() => {
+        if(err.status === 404) {
+          $state.transitionTo('notFound', {type:'Player'}, {location: false});
+        }
+      });
     }]
   };
 }]);

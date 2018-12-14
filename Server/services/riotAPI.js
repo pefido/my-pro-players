@@ -8,7 +8,7 @@ class riotAPI {
     this.dataDragonLastVersion = undefined;
     this.dataDragon = 'http://ddragon.leagueoflegends.com/cdn/';
     this.retryTimer = 1000;
-    this.noServiceTimer = 3000;
+    this.noServiceTimer = 1000;
     this.requestsPerSecond = 20;
     this.requestsPer2Min = 100;
     this.resetMaxRequests();
@@ -37,6 +37,7 @@ class riotAPI {
     if (this.requestsPerSecond > 0 && this.requestsPer2Min > 0) {
       callback();
     } else {
+      this.requestsPerSecond === 0 ? console.log("waiting requestsPerSecond") : console.log("waiting requestsPer2Min");
       setTimeout(() => {
         this.waitForRequests(callback);
       }, this.retryTimer);
@@ -54,7 +55,7 @@ class riotAPI {
     }, retryTimer);
   }
 
-  getPlayerInfo(id) {
+  getSummonerInfo(id) {
     return new Promise((resolve, reject) => {
       this.validateMaxRequests().then(() => {
         this.updateMaxRequests();
@@ -68,15 +69,15 @@ class riotAPI {
             resolve(undefined);
             break;
           case 429:
-            console.log("max requests reached, retrying in " + this.retryTimer + " ms");
-            this.retryRequest(resolve, this.getPlayerInfo, [id], this.retryTimer);
+            console.log("max requests reached, retrying in " + this.retryTimer + " ms - getSummonerInfo");
+            this.retryRequest(resolve, this.getSummonerInfo, [id], this.retryTimer);
             break;
           case 503:
-            console.log("getPlayerInfo Service unavailable, retrying in " + this.noServiceTimer + " ms");
-            this.retryRequest(resolve, this.getPlayerInfo, [id], this.noServiceTimer);
+            console.log("getSummonerInfo Service unavailable, retrying in " + this.noServiceTimer + " ms");
+            this.retryRequest(resolve, this.getSummonerInfo, [id], this.noServiceTimer);
             break;
           default:
-            console.log("error getPlayerInfo");
+            console.log("error getSummonerInfo");
             console.log(err.message);
         }
       });
@@ -97,11 +98,11 @@ class riotAPI {
             resolve(undefined);
             break;
           case 429:
-            console.log("max requests reached, retrying in " + this.retryTimer + " ms");
+            console.log("max requests reached, retrying in " + this.retryTimer + " ms - getSpectatorInfo");
             this.retryRequest(resolve, this.getSpectatorInfo, [id], this.retryTimer);
             break;
           case 503:
-            console.log("getPlayerInfo Service unavailable, retrying in " + this.noServiceTimer + " ms");
+            console.log("getSummonerInfo Service unavailable, retrying in " + this.noServiceTimer + " ms");
             this.retryRequest(resolve, this.getSpectatorInfo, [id], this.noServiceTimer);
             break;
           default:
@@ -126,12 +127,12 @@ class riotAPI {
             resolve(undefined);
             break;
           case 429:
-            console.log("max requests reached, retrying in " + this.retryTimer + " ms");
-            this.retryRequest(resolve, this.getLastMatchInfo, [id], this.retryTimer);
+            console.log("max requests reached, retrying in " + this.retryTimer + " ms - getLastMatchInfo");
+            this.retryRequest(resolve, this.getLastMatchInfo, [accountId], this.retryTimer);
             break;
           case 503:
-            console.log("getPlayerInfo Service unavailable, retrying in " + this.noServiceTimer + " ms");
-            this.retryRequest(resolve, this.getLastMatchInfo, [id], this.noServiceTimer);
+            console.log("getLastMatchInfo Service unavailable, retrying in " + this.noServiceTimer + " ms");
+            this.retryRequest(resolve, this.getLastMatchInfo, [accountId], this.noServiceTimer);
             break;
           default:
             console.log("error getLastMatchInfo");
@@ -180,11 +181,11 @@ class riotAPI {
             resolve(undefined);
             break;
           case 429:
-            console.log("max requests reached, retrying in " + this.retryTimer + " ms");
+            console.log("max requests reached, retrying in " + this.retryTimer + " ms - getFullMatchInfo");
             this.retryRequest(resolve, this.getFullMatchInfo, [gameId], this.retryTimer);
             break;
           case 503:
-            console.log("getPlayerInfo Service unavailable, retrying in " + this.noServiceTimer + " ms");
+            console.log("getFullMatchInfo Service unavailable, retrying in " + this.noServiceTimer + " ms");
             this.retryRequest(resolve, this.getFullMatchInfo, [gameId], this.noServiceTimer);
             break;
           default:

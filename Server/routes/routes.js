@@ -2,7 +2,7 @@ const riotAPI = require('../services/riotAPI');
 const sseExpress = require('sse-express');
 
 module.exports = (app, db) => {
-  const playerController = new (require('../controllers/playerController'))(db);
+  const summonerController = new (require('../controllers/summonerController'))(db);
 
   app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -23,11 +23,9 @@ module.exports = (app, db) => {
 
   app.get('/users/:id', (req, res) => {
     db.getUser(req.params.id).then((user) => {
-      if (user != undefined) {
-        res.send(user);
-      } else {
-        res.status(404).send("User not found");
-      }
+      res.send(user);
+    }).catch(() => {
+      res.status(404).send("User not found");
     });
   });
 
@@ -37,39 +35,36 @@ module.exports = (app, db) => {
 
   app.get('/users/:id/players', sseExpress, (req, res) => {
     db.getUser(req.params.id).then((dbUser) => {
-      if (dbUser != undefined) {
-        playerController.getPlayersParallel(dbUser.followingPlayers, (followingPlayer) => {
-          if(followingPlayer) {
-            res.sse('playerSent', followingPlayer);
+      summonerController.getSummonersParallel(dbUser.followingPlayers, (followingPlayers) => {
+          if(followingPlayers) {
+            res.sse('playerSent', followingPlayers);
           } else {
             res.sse('playerSentEnd');
             res.end();
           }
         });
-      } else {
-        res.status(404).send('User not found');
-      }
+    }).catch(() => {
+      res.status(404).send('User not found');
     });
   });
 
   app.post('/users/:id/players/', (req, res) => {
-    var resPlayerId = db.getPlayerIdByUsername(req.body.username);
-    if (resPlayerId) {
-      db.addPlayerToUser(req.params.id, resPlayerId).then(() => {
-        return playerController.getPlayer(resPlayerId);
-      }).then((resPlayer) => {
-        res.send(resPlayer);
-      }).catch(() => {
-        res.status(409).send('Player conflict');
-      });
-    } else {
-      res.status(404).send('Player not found');
-    }
+    db.getSummonerIdByUsername(req.body.username).then((resSummonerId) => {
+        return db.addSummonerToUser(req.params.id, resSummonerId);
+    }).catch(() => {
+      res.status(404).send('Summoner not found');
+    }).then((resSummonerId) => {
+      return summonerController.getSummoner(resSummonerId);
+    }).then((resSummoner) => {
+      res.send(resSummoner);
+    }).catch(() => {
+      res.status(409).send('Player conflict');
+    });
   });
 
   app.delete('/users/:id/players/:playerId', (req, res) => {
-    db.removePlayerFromUser(req.params.id, req.params.playerId).then((newPlayerCollection) => {
-        res.send(newPlayerCollection);
+    db.removeSummonerFromUser(req.params.id, req.params.playerId).then((newSummonerCollection) => {
+        res.send(newSummonerCollection);
     }).catch(() => {
       res.status(404).send('Player does not exist in user');
     });
