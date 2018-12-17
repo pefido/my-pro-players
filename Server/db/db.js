@@ -218,7 +218,7 @@ class DB {
       settings: {
         system: 'mac'
       },
-      followingPlayers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+      followingPlayers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     });
     this.userCollection.set(2, {
       id: 2,
@@ -243,7 +243,7 @@ class DB {
       //lastGameStart: 1545048276879,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
-      playerAccounts: [20717177, 78387752]
+      playerAccounts: [78387752, 20717177]
     });
 
     this.playerCollection.set(2, {

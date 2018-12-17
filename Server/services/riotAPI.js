@@ -124,7 +124,7 @@ class riotAPI {
         switch(err.statusCode) {
           case 404:
             //mudar isto para um reject
-            resolve(undefined);
+            reject(err);
             break;
           case 429:
             console.log("max requests reached, retrying in " + this.retryTimer + " ms - getLastMatchInfo");

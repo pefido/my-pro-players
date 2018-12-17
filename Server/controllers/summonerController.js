@@ -26,6 +26,9 @@ class summonerController {
                 console.log("game cached");
                 return savedSummoner;
               }
+            }).catch((err) => {
+              console.log(err.message);
+              return savedSummoner;
             });
           } else {
             console.log("is playing");
