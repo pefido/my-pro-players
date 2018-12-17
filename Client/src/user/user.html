@@ -19,14 +19,14 @@
       ng-class="{'invisible' : !player.deleteButtonInvisible}" name="deletePlayer">X</button>
       <div class="playerNameEntry">
         <span>
-          {{player.name}}
+          {{player.username}}
         </span>
       </div>
       <div class="gameInfo">
-        <span ng-if="!player.playing">last played {{player.lastMatch.lastPlayed}} ago</span>
+        <span ng-if="!player.playing">last played {{player.relevantSummoner.lastMatch.lastPlayed}} ago</span>
         <div class="playingContainer" ng-if="player.playing">
-          playing <a class="queueName">{{player.currentMatch.playingQueue.shortName ||
-            player.currentMatch.playingQueue.name}}</a> with <a class="championName">{{player.currentMatch.playingChampion.name}}</a>
+          playing <a class="queueName">{{player.relevantSummoner.currentMatch.playingQueue.shortName ||
+            player.relevantSummoner.currentMatch.playingQueue.name}}</a> with <a class="championName">{{player.relevantSummoner.currentMatch.playingChampion.name}}</a>
         </div>
       </div>
       <div class="playingStatus">

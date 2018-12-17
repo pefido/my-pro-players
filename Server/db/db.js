@@ -2,14 +2,14 @@ class DB {
 
   constructor() {
     this.summonerCollection = new Map();
-    this.playersProfileCollection = new Map();
+    this.playerCollection = new Map();
     this.userCollection = new Map();
     this.championsCollection = {};
     this.matchCollection = [];
     this.matchmakingQueues = [];
 
 
-    //insert dunmy data
+    //insert dummy data
     this.summonerCollection.set(20717177, {
       id: 20717177,
       accountId: 23989840,
@@ -205,7 +205,7 @@ class DB {
       },
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
-    
+
 
 
     
@@ -218,8 +218,7 @@ class DB {
       settings: {
         system: 'mac'
       },
-      followingPlayers: [20717177, 21081580, 23796520, 95206795, 73297023, 109537252, 20110160, 21071845, 20308708,
-        22322085, 30657524, 22136916, 20965425]
+      followingPlayers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
     });
     this.userCollection.set(2, {
       id: 2,
@@ -227,7 +226,7 @@ class DB {
       settings: {
         system: 'windows'
       },
-      followingPlayers: [2]
+      followingPlayers: [3]
     });
 
 
@@ -235,69 +234,135 @@ class DB {
 
 
 
-    this.playersProfileCollection.set(1, {
+    this.playerCollection.set(1, {
       id: 1,
       username: 'Rekkles',
+      lastUpdated: '2018-11-02T16:22:05.639Z',
+      relevantSummoner: 20717177,
+      playing: false,
+      //lastGameStart: 1545048276879,
+      lastGameEnd: 1545048276879,
+      lastGameStart: 1545048276879,
       playerAccounts: [20717177, 78387752]
     });
 
-    this.playersProfileCollection.set(2, {
+    this.playerCollection.set(2, {
       id: 2,
       username: 'Pefido',
+      lastUpdated: '2018-11-02T16:22:05.639Z',
+      relevantSummoner: 21081580,
+      playing: false,
+      // lastGameStart: 1545048276879,
+      lastGameEnd: 1545048276879,
+      lastGameStart: 1545048276879,
       playerAccounts: [21081580]
     });
 
-    this.playersProfileCollection.set(3, {
+    this.playerCollection.set(3, {
       id: 3,
       username: 'Mithy',
+      lastUpdated: '2018-11-02T16:22:05.639Z',
+      relevantSummoner: 23796520,
+      playing: false,
+      // lastGameStart: 1545048276879,
+      lastGameEnd: 1545048276879,
+      lastGameStart: 1545048276879,
       playerAccounts: [23796520, 73297023]
     });
 
-    this.playersProfileCollection.set(4, {
+    this.playerCollection.set(4, {
       id: 4,
       username: 'Caps',
+      lastUpdated: '2018-11-02T16:22:05.639Z',
+      relevantSummoner: 95206795,
+      playing: false,
+      // lastGameStart: 1545048276879,
+      lastGameEnd: 1545048276879,
+      lastGameStart: 1545048276879,
       playerAccounts: [95206795]
     });
 
-    this.playersProfileCollection.set(5, {
+    this.playerCollection.set(5, {
       id: 5,
       username: 'Perkz',
+      lastUpdated: '2018-11-02T16:22:05.639Z',
+      relevantSummoner: 109537252,
+      playing: false,
+      // lastGameStart: 1545048276879,
+      lastGameEnd: 1545048276879,
+      lastGameStart: 1545048276879,
       playerAccounts: [109537252]
     });
 
-    this.playersProfileCollection.set(6, {
+    this.playerCollection.set(6, {
       id: 6,
       username: 'Zven',
+      lastUpdated: '2018-11-02T16:22:05.639Z',
+      relevantSummoner: 20110160,
+      playing: false,
+      // lastGameStart: 1545048276879,
+      lastGameEnd: 1545048276879,
+      lastGameStart: 1545048276879,
       playerAccounts: [20110160]
     });
 
-    this.playersProfileCollection.set(7, {
+    this.playerCollection.set(7, {
       id: 7,
       username: 'Jankos',
+      lastUpdated: '2018-11-02T16:22:05.639Z',
+      relevantSummoner: 21071845,
+      playing: false,
+      // lastGameStart: 1545048276879,
+      lastGameEnd: 1545048276879,
+      lastGameStart: 1545048276879,
       playerAccounts: [21071845]
     });
 
-    this.playersProfileCollection.set(8, {
+    this.playerCollection.set(8, {
       id: 8,
       username: 'Gilius',
+      lastUpdated: '2018-11-02T16:22:05.639Z',
+      relevantSummoner: 20308708,
+      playing: false,
+      // lastGameStart: 1545048276879,
+      lastGameEnd: 1545048276879,
+      lastGameStart: 1545048276879,
       playerAccounts: [20308708]
     });
 
-    this.playersProfileCollection.set(9, {
+    this.playerCollection.set(9, {
       id: 9,
       username: 'Hans Sama',
+      lastUpdated: '2018-11-02T16:22:05.639Z',
+      relevantSummoner: 22322085,
+      playing: false,
+      // lastGameStart: 1545048276879,
+      lastGameEnd: 1545048276879,
+      lastGameStart: 1545048276879,
       playerAccounts: [22322085]
     });
 
-    this.playersProfileCollection.set(10, {
+    this.playerCollection.set(10, {
       id: 10,
       username: 'Febiven',
+      lastUpdated: '2018-11-02T16:22:05.639Z',
+      relevantSummoner: 30657524,
+      playing: false,
+      // lastGameStart: 1545048276879,
+      lastGameEnd: 1545048276879,
+      lastGameStart: 1545048276879,
       playerAccounts: [30657524]
     });
 
-    this.playersProfileCollection.set(11, {
+    this.playerCollection.set(11, {
       id: 11,
       username: 'kaSing',
+      lastUpdated: '2018-11-02T16:22:05.639Z',
+      relevantSummoner: 22136916,
+      playing: false,
+      // lastGameStart: 1545048276879,
+      lastGameEnd: 1545048276879,
+      lastGameStart: 1545048276879,
       playerAccounts: [22136916]
     });
   }
@@ -381,7 +446,7 @@ class DB {
 
   updateSummoner(summoner) {
     return new Promise((resolve, reject) => {
-      return this.getSummoner(summoner.id).then((editingSummoner) => {
+      this.getSummoner(summoner.id).then((editingSummoner) => {
         editingSummoner.accountId = summoner.accountId;
         editingSummoner.name = summoner.name;
         editingSummoner.playing = false;
@@ -405,9 +470,14 @@ class DB {
     });
   }
 
-  updatePlayer() {
+  updatePlayer(player) {
     return new Promise((resolve, reject) => {
-      //still dunno what it does
+      this.getPlayer(player.id).then((editingPlayer) => {
+        this.playerCollection.set(player.id, player);
+        resolve(player);
+      }).catch(() => {
+        reject();
+      });
     });
   }
 

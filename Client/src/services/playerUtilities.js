@@ -7,15 +7,21 @@ class playerUtilities {
     return player.playing ? 'Playing' : 'Offline';
   }
 
-  getLastPlayedSeconds(gameCreation, gameDuration) {
-    var timestamp = gameCreation + (gameDuration * 1000) - (1000 * 60);
+  // getLastPlayedSeconds(gameCreation, gameDuration) {
+  //   var timestamp = gameCreation + (gameDuration * 1000) - (1000 * 60);
+  //   var seconds = (((new Date) - timestamp) / 1000);
+  //   return seconds;
+  // }
+
+  getLastPlayedSeconds(lastGameEnd) {
+    var timestamp = lastGameEnd - (1000 * 60);
     var seconds = (((new Date) - timestamp) / 1000);
     return seconds;
   }
 
-  getLastPlayed(gameCreation, gameDuration) {
+  getLastPlayed(lastGameEnd) {
     var lastPlayed = "";
-    var seconds = this.getLastPlayedSeconds(gameCreation, gameDuration);
+    var seconds = this.getLastPlayedSeconds(lastGameEnd);
 
     seconds >= 60 * 2 && seconds < 3600 * 2 ? lastPlayed = Math.round(seconds / 60) + " minutes" :
       seconds >= 3600 * 2 && seconds < 86400 * 2 ? lastPlayed = Math.round((seconds / 60) / 60) + " hours" :
@@ -30,10 +36,10 @@ class playerUtilities {
 
   fillLastPlayed(player) {
     if(!player.playing) {
-      player.lastMatch.lastPlayed = this.getLastPlayed(player.lastMatch.timestamp, player.lastMatch.fullMatch.gameDuration);
-      player.lastPlayedSeconds = this.getLastPlayedSeconds(player.lastMatch.timestamp, player.lastMatch.fullMatch.gameDuration);
+      player.relevantSummoner.lastMatch.lastPlayed = this.getLastPlayed(player.lastGameEnd);
+      player.relevantSummoner.lastPlayedSeconds = this.getLastPlayedSeconds(player.lastGameEnd);
     } else {
-      player.lastPlayedSeconds = 0;
+      player.relevantSummoner.lastPlayedSeconds = 0;
     }
   }
   

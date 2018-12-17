@@ -3,6 +3,7 @@ const sseExpress = require('sse-express');
 
 module.exports = (app, db) => {
   const summonerController = new (require('../controllers/summonerController'))(db);
+  const playerController = new (require('../controllers/playerController'))(summonerController, db);
 
   app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -33,11 +34,26 @@ module.exports = (app, db) => {
     res.send({ message: 'user dashboard page' });
   });
 
+  // app.get('/users/:id/players', sseExpress, (req, res) => {
+  //   db.getUser(req.params.id).then((dbUser) => {
+  //     summonerController.getSummonersParallel(dbUser.followingPlayers, (followingPlayers) => {
+  //         if(followingPlayers) {
+  //           res.sse('playerSent', followingPlayers);
+  //         } else {
+  //           res.sse('playerSentEnd');
+  //           res.end();
+  //         }
+  //       });
+  //   }).catch(() => {
+  //     res.status(404).send('User not found');
+  //   });
+  // });
+
   app.get('/users/:id/players', sseExpress, (req, res) => {
     db.getUser(req.params.id).then((dbUser) => {
-      summonerController.getSummonersParallel(dbUser.followingPlayers, (followingPlayers) => {
-          if(followingPlayers) {
-            res.sse('playerSent', followingPlayers);
+      playerController.getPlayersParallel(dbUser.followingPlayers, (followingPlayer) => {
+          if(followingPlayer) {
+            res.sse('playerSent', followingPlayer);
           } else {
             res.sse('playerSentEnd');
             res.end();
