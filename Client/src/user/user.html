@@ -23,7 +23,7 @@
         </span>
       </div>
       <div class="gameInfo">
-        <span ng-if="!player.playing">last played {{player.relevantSummoner.lastMatch.lastPlayed}} ago</span>
+        <span ng-if="!player.playing">{{player.notPlayingMessage}}</span>
         <div class="playingContainer" ng-if="player.playing">
           playing <a class="queueName">{{player.relevantSummoner.currentMatch.playingQueue.shortName ||
             player.relevantSummoner.currentMatch.playingQueue.name}}</a> with <a class="championName">{{player.relevantSummoner.currentMatch.playingChampion.name}}</a>

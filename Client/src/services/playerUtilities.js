@@ -35,11 +35,23 @@ class playerUtilities {
   }
 
   fillLastPlayed(player) {
-    if(!player.playing) {
-      player.relevantSummoner.lastMatch.lastPlayed = this.getLastPlayed(player.lastGameEnd);
-      player.relevantSummoner.lastPlayedSeconds = this.getLastPlayedSeconds(player.lastGameEnd);
+    if(player.relevantSummoner && player.relevantSummoner.lastMatch) {
+      if(!player.playing) {
+        player.relevantSummoner.lastMatch.lastPlayed = this.getLastPlayed(player.lastGameEnd);
+        player.relevantSummoner.lastPlayedSeconds = this.getLastPlayedSeconds(player.lastGameEnd);
+      } else {
+        player.relevantSummoner.lastPlayedSeconds = 0;
+      }
+    }
+  }
+
+  fillNotPlayingMessage(player) {
+    if(!player.playerAccounts.length) {
+      player.notPlayingMessage = "no summoners added to this player";
+    } else if(!player.relevantSummoner) {
+      player.notPlayingMessage = "no game found on record";
     } else {
-      player.relevantSummoner.lastPlayedSeconds = 0;
+      player.notPlayingMessage = "last played " + player.relevantSummoner.lastMatch.lastPlayed + " ago";
     }
   }
   

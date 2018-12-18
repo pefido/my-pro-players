@@ -243,7 +243,7 @@ class DB {
       //lastGameStart: 1545048276879,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
-      playerAccounts: [78387752, 20717177]
+      playerAccounts: [20717177, 78387752]
     });
 
     this.playerCollection.set(2, {
@@ -267,7 +267,7 @@ class DB {
       // lastGameStart: 1545048276879,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
-      playerAccounts: [23796520, 73297023]
+      playerAccounts: [73297023, 23796520]
     });
 
     this.playerCollection.set(4, {

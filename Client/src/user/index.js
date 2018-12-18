@@ -29,6 +29,7 @@ app.directive('user', [function () {
         dbRequest.getPlayersByUser(vm.user.id, (player) => {
           console.log(player);
           playerUtil.fillLastPlayed(player);
+          playerUtil.fillNotPlayingMessage(player);
           vm.players.push(player);
           $scope.$apply();
         });
