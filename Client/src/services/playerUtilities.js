@@ -49,7 +49,7 @@ class playerUtilities {
     if(!player.playerAccounts.length) {
       player.notPlayingMessage = "no summoners added to this player";
     } else if(!player.relevantSummoner) {
-      player.notPlayingMessage = "no game found on record";
+      player.notPlayingMessage = "no games found on record";
     } else {
       player.notPlayingMessage = "last played " + player.relevantSummoner.lastMatch.lastPlayed + " ago";
     }

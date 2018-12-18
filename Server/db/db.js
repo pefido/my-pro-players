@@ -462,6 +462,51 @@ class DB {
 
 
 
+    /////////Match related operations
+    getMatch(id, reference) {
+      return new Promise(() => {
+        var match = this.matchCollection.get(id);
+        if(match) {
+          if(reference) {
+            match.references++;
+            this.matchCollection.set(match.gameId, match);
+          }
+          resolve(match);
+        } else {
+          reject();
+        }
+      });
+    }
+
+    addMatch(match) {
+      return new Promise((resolve, reject) => {
+        this.getMatch(match.gameId, false).then((dbMatch) => {
+          match.references = dbMatch.references + 1;
+        }).catch(() => {
+          match.references = 1;
+        }).finally(() => {
+          var savedMatch = this.matchCollection.set(match.gameId, match);
+          resolve(savedMatch);
+        });
+      });
+    }
+
+    removeMatch(id) {
+      return new Promise((resolve, reject) => {
+        this.getMatch(match.gameId, false).then((dbMatch) => {
+          dbMatch.references--;
+          if(dbMatch.references === 0) {
+            this.matchCollection.delete(id);
+            resolve();
+          }
+        }).catch(() => {
+          reject();
+        });
+      })
+    }
+
+
+
   /////////player related operations
   getPlayer(id) {
     return new Promise((resolve, reject) => {

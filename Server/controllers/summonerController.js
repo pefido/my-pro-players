@@ -15,12 +15,24 @@ class summonerController {
           if (!savedSummoner.playing) {
             return riotAPI.getLastMatchInfo(savedSummoner.accountId).then((lastMatch) => {
               if (lastMatch.gameId != savedSummoner.lastMatch.gameId) {
-                console.log("game not cached, fetching");
-                return riotAPI.getFullMatchInfo(lastMatch.gameId).then((fullMatch) => {
+                if (savedSummoner.lastMatch.gameId) {
+                  this.db.removeMatch(savedSummoner.lastMatch.gameId);
+                }
+                // check if game is in DB
+                return this.db.getMatch(lastMatch.gameId, true).then((fullMatch) => {
                   lastMatch.fullMatch = fullMatch;
                   savedSummoner.lastMatch = lastMatch;
                   savedSummoner.lastGameEnd = this.getLastGameEnd(savedSummoner.lastMatch.timestamp, savedSummoner.lastMatch.fullMatch.gameDuration);
                   return savedSummoner;
+                }).catch(() => {
+                  console.log("game not cached, fetching");
+                  return riotAPI.getFullMatchInfo(lastMatch.gameId).then((fullMatch) => {
+                    lastMatch.fullMatch = fullMatch;
+                    this.db.addMatch(fullMatch);
+                    savedSummoner.lastMatch = lastMatch;
+                    savedSummoner.lastGameEnd = this.getLastGameEnd(savedSummoner.lastMatch.timestamp, savedSummoner.lastMatch.fullMatch.gameDuration);
+                    return savedSummoner;
+                  });
                 });
               } else {
                 console.log("game cached");

@@ -27,7 +27,6 @@ app.directive('user', [function () {
       dbRequest.getUser($stateParams.id).then((res) => {
         vm.user = res.data;
         dbRequest.getPlayersByUser(vm.user.id, (player) => {
-          console.log(player);
           playerUtil.fillLastPlayed(player);
           playerUtil.fillNotPlayingMessage(player);
           vm.players.push(player);
