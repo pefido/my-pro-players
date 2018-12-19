@@ -52,35 +52,35 @@ module.exports = (app, db) => {
   app.get('/users/:id/players', sseExpress, (req, res) => {
     db.getUser(req.params.id).then((dbUser) => {
       playerController.getPlayersParallel(dbUser.followingPlayers, (followingPlayer) => {
-          if(followingPlayer) {
-            res.sse('playerSent', followingPlayer);
-          } else {
-            res.sse('playerSentEnd');
-            res.end();
-          }
-        });
+        if (followingPlayer) {
+          res.sse('playerSent', followingPlayer);
+        } else {
+          res.sse('playerSentEnd');
+          res.end();
+        }
+      });
     }).catch(() => {
       res.status(404).send('User not found');
     });
   });
 
   app.post('/users/:id/players/', (req, res) => {
-    db.getSummonerIdByUsername(req.body.username).then((resSummonerId) => {
-        return db.addSummonerToUser(req.params.id, resSummonerId);
+    db.getPlayerIdByUsername(req.body.username).then((resSummonerId) => {
+      return db.addPlayerToUser(req.params.id, resSummonerId).catch(() => {
+        res.status(409).send('Player conflict');
+      });
     }).catch(() => {
-      res.status(404).send('Summoner not found');
-    }).then((resSummonerId) => {
-      return summonerController.getSummoner(resSummonerId);
-    }).then((resSummoner) => {
-      res.send(resSummoner);
-    }).catch(() => {
-      res.status(409).send('Player conflict');
+      res.status(404).send('Player not found');
+    }).then((resPlayerId) => {
+      return playerController.getPlayer(resPlayerId);
+    }).then((resPlayer) => {
+      res.send(resPlayer);
     });
   });
 
   app.delete('/users/:id/players/:playerId', (req, res) => {
-    db.removeSummonerFromUser(req.params.id, req.params.playerId).then((newSummonerCollection) => {
-        res.send(newSummonerCollection);
+    db.removePlayerFromUser(req.params.id, req.params.playerId).then((newPlayerCollection) => {
+      res.send(newPlayerCollection);
     }).catch(() => {
       res.status(404).send('Player does not exist in user');
     });
@@ -88,7 +88,7 @@ module.exports = (app, db) => {
 
   app.put('/users/:id/settings', (req, res) => {
     db.updateUserSettings(req.params.id, req.body).then((savedSettings) => {
-      if(savedSettings) {
+      if (savedSettings) {
         res.send(savedSettings);
       }
     })
@@ -104,7 +104,7 @@ module.exports = (app, db) => {
 
   app.get('/players/:id', (req, res) => {
     playerController.getPlayer(req.params.id).then((resPlayer) => {
-        res.send(resPlayer);
+      res.send(resPlayer);
     }).catch(() => {
       res.status(404).send('Player not found');
     });

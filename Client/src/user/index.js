@@ -60,9 +60,11 @@ app.directive('user', [function () {
           if (vm.playerInputText !== "" && vm.playerInputText !== undefined) {
             dbRequest.addPlayerToUser(vm.user.id, vm.playerInputText).then((res) => {
               if (res.status === 200) {
-                vm.user.followingPlayers.push(res.data.id);
-                playerUtil.fillLastPlayed(res.data);
-                res.data.playing ? vm.players.unshift(res.data) : vm.players.push(res.data);
+                var player = res.data;
+                vm.user.followingPlayers.push(player.id);
+                playerUtil.fillLastPlayed(player);
+                playerUtil.fillNotPlayingMessage(player);
+                player.playing ? vm.players.unshift(player) : vm.players.push(player);
                 vm.Notification.setNotification('success', 'Player added!', 3);
                 vm.toggleAddingPlayer();
               } else {

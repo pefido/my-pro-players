@@ -386,25 +386,39 @@ class DB {
     });
   }
 
-  addSummonerToUser(userId, summonerId) {
+  addPlayerToUser(userId, playerId) {
     return new Promise((resolve, reject) => {
       this.getUser(userId).then((user) => {
-        if (!(user.followingPlayers.includes(parseInt(summonerId)))) {
-          user.followingPlayers.push(parseInt(summonerId));
+        if (!(user.followingPlayers.includes(parseInt(playerId)))) {
+          user.followingPlayers.push(parseInt(playerId));
           this.userCollection.set(user.id, user);
-          resolve(parseInt(summonerId));
+          resolve(parseInt(playerId));
+        } else {
+          reject();
         }
-        reject();
       });
     });
   }
 
-  removeSummonerFromUser(userId, summonerId) {
+  // addSummonerToUser(userId, summonerId) {
+  //   return new Promise((resolve, reject) => {
+  //     this.getUser(userId).then((user) => {
+  //       if (!(user.followingPlayers.includes(parseInt(summonerId)))) {
+  //         user.followingPlayers.push(parseInt(summonerId));
+  //         this.userCollection.set(user.id, user);
+  //         resolve(parseInt(summonerId));
+  //       }
+  //       reject();
+  //     });
+  //   });
+  // }
+
+  removePlayerFromUser(userId, playerId) {
     return new Promise((resolve, reject) => {
       this.getUser(userId).then((user) => {
-        if (user.followingPlayers.includes(parseInt(summonerId))) {
-          user.followingPlayers = user.followingPlayers.filter((summoner) => {
-            return summoner != parseInt(summonerId);
+        if (user.followingPlayers.includes(parseInt(playerId))) {
+          user.followingPlayers = user.followingPlayers.filter((player) => {
+            return player != parseInt(playerId);
           });
           this.userCollection.set(user.id, user);
           resolve(user.followingPlayers);
@@ -414,6 +428,22 @@ class DB {
       });
     });
   }
+
+  // removeSummonerFromUser(userId, summonerId) {
+  //   return new Promise((resolve, reject) => {
+  //     this.getUser(userId).then((user) => {
+  //       if (user.followingPlayers.includes(parseInt(summonerId))) {
+  //         user.followingPlayers = user.followingPlayers.filter((summoner) => {
+  //           return summoner != parseInt(summonerId);
+  //         });
+  //         this.userCollection.set(user.id, user);
+  //         resolve(user.followingPlayers);
+  //       } else {
+  //         reject();
+  //       }
+  //     });
+  //   });
+  // }
 
   updateUserSettings(userId, settingsObj) {
     return new Promise((resolve, reject) => {
@@ -468,6 +498,7 @@ class DB {
         var match = this.matchCollection.get(id);
         if(match) {
           if(reference) {
+            console.log("adding reference to " + match.gameId);
             match.references++;
             this.matchCollection.set(match.gameId, match);
           }
@@ -483,6 +514,7 @@ class DB {
         this.getMatch(match.gameId, false).then((dbMatch) => {
           match.references = dbMatch.references + 1;
         }).catch(() => {
+          console.log("adding reference to " + match.gameId);
           match.references = 1;
         }).finally(() => {
           var savedMatch = this.matchCollection.set(match.gameId, match);
@@ -494,8 +526,10 @@ class DB {
     removeMatch(id) {
       return new Promise((resolve, reject) => {
         this.getMatch(match.gameId, false).then((dbMatch) => {
+          console.log("removing reference from " + match.gameId);
           dbMatch.references--;
           if(dbMatch.references === 0) {
+            console.log("removing match");
             this.matchCollection.delete(id);
             resolve();
           }
@@ -512,6 +546,15 @@ class DB {
     return new Promise((resolve, reject) => {
       var player = this.playerCollection.get(id);
       player ? resolve(player) : reject();
+    });
+  }
+
+  getPlayerIdByUsername(username) {
+    return new Promise((resolve, reject) => {
+      var resPlayer = Array.from(this.playerCollection.values()).find((player) => {
+        return player.username === username;
+      });
+      resPlayer ? resolve(resPlayer.id) : reject();
     });
   }
 
