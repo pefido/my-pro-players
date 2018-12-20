@@ -43,20 +43,35 @@ class playerController {
     });
   }
 
+  getPlayerByUsername(username) {
+    return new Promise((resolve, reject) => {
+      this.db.getPlayerIdByUsername(username).then((playerId) => {
+        return this.getPlayer(playerId);
+      }).catch(() => {
+        reject();
+      }).then((player) => {
+          resolve(player);
+      });
+    })
+  }
+
   updatePlayerInfo(dbPlayer) {
     return new Promise((resolve, reject) => {
       var end = false;
       var playing = false;
+      var lastGameStart = 0;
       var lastGameEnd = 0;
       var relevantSummoner = undefined;
       this.summonerController.getSummonersParallel(dbPlayer.playerAccounts, (summoner) => {
         if(summoner) {
           if(summoner.playing) {
             playing = summoner.playing;
+            lastGameStart = summoner.currentMatch.gameStartTime;
             relevantSummoner = summoner;
             end = true;
           } else if(summoner.lastGameEnd > lastGameEnd) {
             lastGameEnd = summoner.lastGameEnd;
+            lastGameStart = summoner.lastMatch.timestamp;
             relevantSummoner = summoner;
           }
         } else {
@@ -65,6 +80,7 @@ class playerController {
         if(end) {
           dbPlayer.playing = playing;
           dbPlayer.lastGameEnd = lastGameEnd;
+          dbPlayer.lastGameStart = lastGameStart;
           dbPlayer.relevantSummoner = relevantSummoner;
           dbPlayer.lastUpdated = new Date();
           this.db.updatePlayer(dbPlayer).then((savedPlayer) => {

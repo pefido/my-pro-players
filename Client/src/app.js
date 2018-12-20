@@ -21,7 +21,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       template: '<user></user>',
     })
     .state('player', {
-      url: '/players/:id',
+      url: '/players/:username',
       template: '<player></player>',
     })
     .state('notFound', {

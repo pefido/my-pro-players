@@ -208,7 +208,7 @@ class DB {
 
 
 
-    
+
 
 
 
@@ -236,11 +236,19 @@ class DB {
 
     this.playerCollection.set(1, {
       id: 1,
+      firstName: 'Martin',
+      lastName: 'Larsson',
+      nationality: 'Swedish',
+      infoBoard:
+        {
+          role: ['Role', 'AD Carry'],
+          team: ['Team', 'Fnatic'],
+          playsIn: ['League', 'EU LCS'],
+        },
       username: 'Rekkles',
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 20717177,
       playing: false,
-      //lastGameStart: 1545048276879,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
       playerAccounts: [20717177, 78387752]
@@ -252,7 +260,6 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 21081580,
       playing: false,
-      // lastGameStart: 1545048276879,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
       playerAccounts: [21081580]
@@ -264,7 +271,6 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 23796520,
       playing: false,
-      // lastGameStart: 1545048276879,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
       playerAccounts: [73297023, 23796520]
@@ -276,7 +282,6 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 95206795,
       playing: false,
-      // lastGameStart: 1545048276879,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
       playerAccounts: [95206795]
@@ -288,7 +293,6 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 109537252,
       playing: false,
-      // lastGameStart: 1545048276879,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
       playerAccounts: [109537252]
@@ -300,7 +304,6 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 20110160,
       playing: false,
-      // lastGameStart: 1545048276879,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
       playerAccounts: [20110160]
@@ -312,7 +315,6 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 21071845,
       playing: false,
-      // lastGameStart: 1545048276879,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
       playerAccounts: [21071845]
@@ -324,7 +326,6 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 20308708,
       playing: false,
-      // lastGameStart: 1545048276879,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
       playerAccounts: [20308708]
@@ -336,7 +337,6 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 22322085,
       playing: false,
-      // lastGameStart: 1545048276879,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
       playerAccounts: [22322085]
@@ -348,7 +348,6 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 30657524,
       playing: false,
-      // lastGameStart: 1545048276879,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
       playerAccounts: [30657524]
@@ -360,7 +359,6 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 22136916,
       playing: false,
-      // lastGameStart: 1545048276879,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
       playerAccounts: [22136916]
@@ -492,52 +490,52 @@ class DB {
 
 
 
-    /////////Match related operations
-    getMatch(id, reference) {
-      return new Promise(() => {
-        var match = this.matchCollection.get(id);
-        if(match) {
-          if(reference) {
-            console.log("adding reference to " + match.gameId);
-            match.references++;
-            this.matchCollection.set(match.gameId, match);
-          }
-          resolve(match);
-        } else {
-          reject();
-        }
-      });
-    }
-
-    addMatch(match) {
-      return new Promise((resolve, reject) => {
-        this.getMatch(match.gameId, false).then((dbMatch) => {
-          match.references = dbMatch.references + 1;
-        }).catch(() => {
+  /////////Match related operations
+  getMatch(id, reference) {
+    return new Promise(() => {
+      var match = this.matchCollection.get(id);
+      if (match) {
+        if (reference) {
           console.log("adding reference to " + match.gameId);
-          match.references = 1;
-        }).finally(() => {
-          var savedMatch = this.matchCollection.set(match.gameId, match);
-          resolve(savedMatch);
-        });
-      });
-    }
+          match.references++;
+          this.matchCollection.set(match.gameId, match);
+        }
+        resolve(match);
+      } else {
+        reject();
+      }
+    });
+  }
 
-    removeMatch(id) {
-      return new Promise((resolve, reject) => {
-        this.getMatch(match.gameId, false).then((dbMatch) => {
-          console.log("removing reference from " + match.gameId);
-          dbMatch.references--;
-          if(dbMatch.references === 0) {
-            console.log("removing match");
-            this.matchCollection.delete(id);
-            resolve();
-          }
-        }).catch(() => {
-          reject();
-        });
-      })
-    }
+  addMatch(match) {
+    return new Promise((resolve, reject) => {
+      this.getMatch(match.gameId, false).then((dbMatch) => {
+        match.references = dbMatch.references + 1;
+      }).catch(() => {
+        console.log("adding reference to " + match.gameId);
+        match.references = 1;
+      }).finally(() => {
+        var savedMatch = this.matchCollection.set(match.gameId, match);
+        resolve(savedMatch);
+      });
+    });
+  }
+
+  removeMatch(id) {
+    return new Promise((resolve, reject) => {
+      this.getMatch(match.gameId, false).then((dbMatch) => {
+        console.log("removing reference from " + match.gameId);
+        dbMatch.references--;
+        if (dbMatch.references === 0) {
+          console.log("removing match");
+          this.matchCollection.delete(id);
+          resolve();
+        }
+      }).catch(() => {
+        reject();
+      });
+    })
+  }
 
 
 

@@ -8,14 +8,14 @@ app.directive('player', [() => {
     templateUrl: './player.html',
     bindToController: true,
     controllerAs: 'vm',
-    controller: ['$stateParams', 'dbRequest', function($stateParams, dbRequest) {
+    controller: ['$state', '$stateParams', 'dbRequest', function($state, $stateParams, dbRequest) {
       
       var vm = this;
       vm.player = {};
 
-      dbRequest.getPlayerProfile($stateParams.id).then((player) => {
-        vm.player = player;
-      }).catch(() => {
+      dbRequest.getPlayer($stateParams.username).then((res) => {
+        vm.player = res.data;
+      }).catch((err) => {
         if(err.status === 404) {
           $state.transitionTo('notFound', {type:'Player'}, {location: false});
         }

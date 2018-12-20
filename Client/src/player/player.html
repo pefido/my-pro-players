@@ -1,12 +1,23 @@
 <div class="playerContainer">
-    {{vm.player}}
-  <div>
-      this is the player page
+  <div class="playerUsername">
+    {{vm.player.firstName}} '{{vm.player.username}}' {{vm.player.lastName}}
   </div>
-  <div>
-      {{vm.player.id}}
+  <div class="playerInfo">
+    <div class="photoColumn">
+      <div class="playerPhotoContainer">
+        <div class="playerPhoto">
+          <span>image placeholder</span>
+        </div>
+      </div>
+    </div>
+    <div class="infoBoard">
+      <div class="infoEntry" ng-repeat="info in vm.player.infoBoard">
+        <span class="infoKey">{{info[0]}}:</span> {{info[1]}}
+      </div>
+    </div>
   </div>
-  <div>
-      id: {{vm.player.username}}
+  <div class="playerStats">
+
   </div>
+
 </div>

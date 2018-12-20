@@ -14,7 +14,7 @@ body {
   border-style: solid;
   border-width: 0px 0px 1px 0px;
   border-bottom-color: #FFF59D;
-  width: 90%;
+  width: 91%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -312,4 +312,77 @@ input:focus, button:focus, .userSettingsModalContent:focus{
   font-size: 30px;
   font-weight: 100;
   color: #FFF59D;
+}
+
+
+
+
+/* player page */
+
+
+.playerContainer {
+  margin-top: 50px;
+  margin-bottom: 10px;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.playerInfo {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.photoColumn {
+  width: 50%;
+  min-width: 240px;
+}
+
+.playerPhotoContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.playerPhoto {
+  width: 240;
+  height: 320;
+  background-color: #3b4457;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.infoBoard {
+  background-color: #3b4457;
+  width: 50%;
+  min-width: 240px;
+  padding: 30px 0 ;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.infoEntry {
+  margin-bottom: 40px;
+  margin-left: 10px;
+  color: #fafafa;
+  font-size: 20px;
+}
+
+.infoEntry:last-child {
+  margin-bottom: 0;
+}
+
+.infoKey {
+  color: #FFF59D;
+}
+
+.playerUsername {
+  font-size: 30px;
+  font-weight: 100;
+  color: #FFF59D;
+  margin-bottom: 15px;
 }

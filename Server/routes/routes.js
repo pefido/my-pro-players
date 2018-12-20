@@ -102,8 +102,8 @@ module.exports = (app, db) => {
     res.send({ message: 'players page' });
   });
 
-  app.get('/players/:id', (req, res) => {
-    playerController.getPlayer(req.params.id).then((resPlayer) => {
+  app.get('/players/:username', (req, res) => {
+    playerController.getPlayerByUsername(req.params.username).then((resPlayer) => {
       res.send(resPlayer);
     }).catch(() => {
       res.status(404).send('Player not found');

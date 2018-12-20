@@ -39,7 +39,7 @@ class dbRequest {
   }
 
   getPlayer(username) {
-    return this.$http.get(this.baseUri + "/players/" + id);
+    return this.$http.get(this.baseUri + "/players/" + username);
   }
 
   addPlayerToUser(userId, playerUsername) {
