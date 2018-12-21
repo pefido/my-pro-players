@@ -4,39 +4,16 @@
       Hello {{vm.user.username}}! Check who is playing
     </div>
   </div>
-  <div class="listContainer">
-    <div class="addPlayerContainer">
-      <div class="userSettingsButtonContainer" ng-click="vm.toggleUserSettingsModalVisible()" ng-bind-html="vm.addIcon('gear', {'class': 'userSettingsButton'})"></div>
-      <input focus-on="newPlayerFocus" ng-if="vm.isAddingPlayer()" ng-blur="vm.toggleAddingPlayer()" class="newPlayerInput"
-        ng-model="vm.playerInputText" ng-keydown="vm.addPlayer($event)" type="text" name="newPlayer" placeholder="Insert player name">
-      <button class="addPlayer" ng-if="!vm.isAddingPlayer()" ng-click="vm.toggleAddingPlayer()">
-          + Add Player
-      </button>
-    </div>
-    <div class="listEntry" ng-repeat="player in vm.players | orderBy:'relevantSummoner.lastPlayedSeconds'" ng-mouseenter="vm.toggleDeleteButtonVis(player)"
-      ng-mouseleave="vm.toggleDeleteButtonVis(player)">
-      <button class = " deletePlayerButton" ng-click="vm.removePlayer(player.id)"
-      ng-class="{'invisible' : !player.deleteButtonInvisible}" name="deletePlayer">X</button>
-      <div class="playerNameEntry">
-        <span>
-          {{player.username}}
-        </span>
-      </div>
-      <div class="gameInfo">
-        <span ng-if="!player.playing">{{player.notPlayingMessage}}</span>
-        <div class="playingContainer" ng-if="player.playing">
-          playing <a class="queueName">{{player.relevantSummoner.currentMatch.playingQueue.shortName ||
-            player.relevantSummoner.currentMatch.playingQueue.name}}</a> with <a class="championName">{{player.relevantSummoner.currentMatch.playingChampion.name}}</a>
-        </div>
-      </div>
-      <div class="playingStatus">
-        <span class="playerPlayingEntry" ng-class="{playingBorder: player.playing, offlineBorder: !player.playing}"
-          ng-click="vm.copySpectateCommand(player)">
-          {{vm.getPlayerStatus(player)}}
-        </span>
-      </div>
-    </div>
-  </div>
+  <entity-list 
+    entities="vm.players"
+    entity-input-text="vm.playerInputText"
+    add-entity="vm.addPlayer"
+    remove-entity="vm.removePlayer"
+    get-entity-status="vm.getPlayerStatus"
+    toggle-user-settings-modal-visible="vm.toggleUserSettingsModalVisible"
+    copy-spectate-command="vm.copySpectateCommand"
+    entity-type="'Player'"
+  ></entity-list>
 </div>
 
 <div class="userSettingsModal" ng-if="vm.isUserSettingsModalVisible" ng-click="vm.toggleUserSettingsModalVisible()">

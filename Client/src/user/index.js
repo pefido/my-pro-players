@@ -1,8 +1,8 @@
 const angular = require('angular');
 const app = angular.module('app');
 require('../services/dbRequest');
+require("../components/entityList");
 const playerUtil = require('../services/playerUtilities');
-const octicons = require("octicons");
 
 app.directive('user', [function () {
   return {
@@ -10,19 +10,15 @@ app.directive('user', [function () {
     templateUrl: './user.html',
     bindToController: true,
     controllerAs: 'vm',
-    controller: ['$state', '$scope', '$sce', 'Clipboard', 'Notification', 'focus', '$stateParams', 'dbRequest', function ($state, $scope, $sce, Clipboard, Notification, focus, $stateParams, dbRequest) {
+    controller: ['$q', '$state', '$scope', '$sce', 'Clipboard', 'Notification', 'focus', '$stateParams', 'dbRequest', function ($q, $state, $scope, $sce, Clipboard, Notification, focus, $stateParams, dbRequest) {
       var vm = this;
       vm.user = {};
       vm.players = [];
       vm.Notification = Notification;
       vm.addingPlayer = false;
-      vm.octicons = octicons;
       vm.sce = $sce;
       vm.isUserSettingsModalVisible = false;
-
-      vm.addIcon = (icon, optionsObj) => {
-        return $sce.trustAsHtml(octicons[icon].toSVG(optionsObj));
-      };
+      vm.playerInputText = "";
 
       dbRequest.getUser($stateParams.id).then((res) => {
         vm.user = res.data;
@@ -33,56 +29,41 @@ app.directive('user', [function () {
           $scope.$apply();
         });
       })
-      .catch((err) => {
-        if(err.status === 404) {
-          $state.transitionTo('notFound', {type:'User'}, {location: false});
-        }
-      });
+        .catch((err) => {
+          if (err.status === 404) {
+            $state.transitionTo('notFound', { type: 'User' }, { location: false });
+          }
+        });
 
       vm.getPlayerStatus = (player) => {
         return playerUtil.getPlayerStatus(player);
       };
 
-      vm.isAddingPlayer = () => {
-        return vm.addingPlayer;
-      };
-
-      vm.toggleAddingPlayer = () => {
-        vm.addingPlayer = !vm.addingPlayer;
-        if (vm.addingPlayer) {
-          vm.playerInputText = "";
-          focus('newPlayerFocus');
-        }
-      };
-
-      vm.addPlayer = (keyEvent) => {
-        if (keyEvent.which === 13) {//enter key
-          if (vm.playerInputText !== "" && vm.playerInputText !== undefined) {
-            dbRequest.addPlayerToUser(vm.user.id, vm.playerInputText).then((res) => {
-              if (res.status === 200) {
-                var player = res.data;
-                vm.user.followingPlayers.push(player.id);
-                playerUtil.fillLastPlayed(player);
-                playerUtil.fillNotPlayingMessage(player);
-                player.playing ? vm.players.unshift(player) : vm.players.push(player);
-                vm.Notification.setNotification('success', 'Player added!', 3);
-                vm.toggleAddingPlayer();
-              } else {
-                //handle other kind of responses
-              }
-            }, (res) => {
-              switch (res.status) {
-                case 404:
-                  vm.Notification.setNotification('error', 'Player does not exist', 3);
-                  break;
-                case 409:
-                  vm.Notification.setNotification('error', 'Player already followed', 3);
-              }
-            });
-          }
-        } else if (keyEvent.which === 27) {//escape key
-          vm.toggleAddingPlayer();
-        }
+      vm.addPlayer = () => {
+        return $q((resolve, reject) => {
+          dbRequest.addPlayerToUser(vm.user.id, vm.playerInputText).then((res) => {
+            if (res.status === 200) {
+              var player = res.data;
+              vm.user.followingPlayers.push(player.id);
+              playerUtil.fillLastPlayed(player);
+              playerUtil.fillNotPlayingMessage(player);
+              player.playing ? vm.players.unshift(player) : vm.players.push(player);
+              vm.Notification.setNotification('success', 'Player added!', 3);
+              resolve();
+            } else {
+              //handle other kind of responses
+            }
+          }, (res) => {
+            reject();
+            switch (res.status) {
+              case 404:
+                vm.Notification.setNotification('error', 'Player does not exist', 3);
+                break;
+              case 409:
+                vm.Notification.setNotification('error', 'Player already followed', 3);
+            }
+          });
+        });
       };
 
       vm.removePlayer = (id) => {
@@ -102,10 +83,6 @@ app.directive('user', [function () {
           }
         });
       }
-
-      vm.toggleDeleteButtonVis = (player) => {
-        player.deleteButtonInvisible = !player.deleteButtonInvisible
-      };
 
       vm.copySpectateCommand = (player) => {
         if (player.playing) {

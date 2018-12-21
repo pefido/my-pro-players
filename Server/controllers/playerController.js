@@ -61,12 +61,16 @@ class playerController {
       var playing = false;
       var lastGameStart = 0;
       var lastGameEnd = 0;
+      var matchType = undefined;
+      var playingChampion = undefined;
       var relevantSummoner = undefined;
       this.summonerController.getSummonersParallel(dbPlayer.playerAccounts, (summoner) => {
         if(summoner) {
           if(summoner.playing) {
             playing = summoner.playing;
             lastGameStart = summoner.currentMatch.gameStartTime;
+            matchType = summoner.currentMatch.playingQueue.shortName || summoner.currentMatch.playingQueue.name;
+            playingChampion = summoner.currentMatch.playingChampion.name;
             relevantSummoner = summoner;
             end = true;
           } else if(summoner.lastGameEnd > lastGameEnd) {
@@ -81,6 +85,8 @@ class playerController {
           dbPlayer.playing = playing;
           dbPlayer.lastGameEnd = lastGameEnd;
           dbPlayer.lastGameStart = lastGameStart;
+          dbPlayer.matchType = matchType;
+          dbPlayer.playingChampion = playingChampion;
           dbPlayer.relevantSummoner = relevantSummoner;
           dbPlayer.lastUpdated = new Date();
           this.db.updatePlayer(dbPlayer).then((savedPlayer) => {
