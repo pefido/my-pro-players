@@ -398,19 +398,6 @@ class DB {
     });
   }
 
-  // addSummonerToUser(userId, summonerId) {
-  //   return new Promise((resolve, reject) => {
-  //     this.getUser(userId).then((user) => {
-  //       if (!(user.followingPlayers.includes(parseInt(summonerId)))) {
-  //         user.followingPlayers.push(parseInt(summonerId));
-  //         this.userCollection.set(user.id, user);
-  //         resolve(parseInt(summonerId));
-  //       }
-  //       reject();
-  //     });
-  //   });
-  // }
-
   removePlayerFromUser(userId, playerId) {
     return new Promise((resolve, reject) => {
       this.getUser(userId).then((user) => {
@@ -426,22 +413,6 @@ class DB {
       });
     });
   }
-
-  // removeSummonerFromUser(userId, summonerId) {
-  //   return new Promise((resolve, reject) => {
-  //     this.getUser(userId).then((user) => {
-  //       if (user.followingPlayers.includes(parseInt(summonerId))) {
-  //         user.followingPlayers = user.followingPlayers.filter((summoner) => {
-  //           return summoner != parseInt(summonerId);
-  //         });
-  //         this.userCollection.set(user.id, user);
-  //         resolve(user.followingPlayers);
-  //       } else {
-  //         reject();
-  //       }
-  //     });
-  //   });
-  // }
 
   updateUserSettings(userId, settingsObj) {
     return new Promise((resolve, reject) => {
@@ -483,6 +454,36 @@ class DB {
         resolve(editingSummoner);
       }).catch(() => {
         reject();
+      });
+    });
+  }
+
+  addSummonerToPlayer(playerId, summonerId) {
+    return new Promise((resolve, reject) => {
+      this.getPlayer(playerId).then((player) => {
+        if (!(player.playerAccounts.includes(parseInt(summonerId)))) {
+          player.playerAccounts.push(parseInt(summonerId));
+          this.playerCollection.set(player.id, player);
+          resolve(parseInt(summonerId));
+        } else {
+          reject();
+        }
+      });
+    });
+  }
+
+  removeSummonerFromPlayer(playerId, summonerId) {
+    return new Promise((resolve, reject) => {
+      this.getPlayer(playerId).then((player) => {
+        if (player.playerAccounts.includes(parseInt(summonerId))) {
+          player.playerAccounts = player.playerAccounts.filter((summoner) => {
+            return summoner != parseInt(summonerId);
+          });
+          this.playerCollection.set(player.id, player);
+          resolve(player.playerAccounts);
+        } else {
+          reject();
+        }
       });
     });
   }

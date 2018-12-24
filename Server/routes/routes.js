@@ -110,4 +110,55 @@ module.exports = (app, db) => {
     });
   });
 
+  app.get('/players/:username/summoners', sseExpress, (req, res) => {
+    playerController.getPlayerByUsername(req.params.username).then((resPlayer) => {
+      summonerController.getSummonersParallel(resPlayer.playerAccounts, (summoner) => {
+        if (summoner) {
+          res.sse('summonerSent', summoner);
+        } else {
+          res.sse('summonerSentEnd');
+          res.end();
+        }
+      });
+    }).catch(() => {
+      res.status(404).send('Player not found');
+    });
+  });
+
+  app.post('/players/:username/summoners/', (req, res) => {
+    db.getSummonerIdByUsername(req.body.username).then((resSummonerId) => {
+      db.getPlayerIdByUsername(req.params.username).then((playerId) => {
+        db.addSummonerToPlayer(playerId, resSummonerId).then((resSummonerId) => {
+          summonerController.getSummoner(resSummonerId).then((resSummoner) => {
+            res.send(resSummoner);
+          });
+        }).catch(() => {
+          res.status(409).send('Player conflict');
+        });
+      }).catch(() => {
+        res.status(404).send('Player not found');
+      });
+    }).catch(() => {
+      res.status(404).send('Summoner not found');
+    });
+  });
+
+  app.delete('/players/:username/summoners/:summonerId', (req, res) => {
+    db.getPlayerIdByUsername(req.params.username).then((playerId) => {
+      db.removeSummonerFromPlayer(playerId, req.params.summonerId).then((newSummonerCollection) => {
+        res.send(newSummonerCollection);
+      }).catch(() => {
+        res.status(404).send('Summoner does not exist in player');
+      });
+    }).catch(() => {
+      res.status(404).send('Player not found');
+    });
+
+
+    
+  });
+
 }
+
+
+

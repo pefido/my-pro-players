@@ -13,7 +13,7 @@
       ng-class="{'invisible' : !entity.deleteButtonInvisible}" name="deleteEntity">X</button>
       <div class="playerNameEntry">
         <span>
-          {{entity.username}}
+          {{entity.username || entity.name}}
         </span>
       </div>
       <div class="gameInfo">

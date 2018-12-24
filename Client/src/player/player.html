@@ -17,7 +17,17 @@
     </div>
   </div>
   <div class="playerStats">
-
+    Some player stats will go here
   </div>
+  <entity-list 
+    entities="vm.summoners"
+    entity-input-text="vm.summonerInputText"
+    add-entity="vm.addSummoner"
+    remove-entity="vm.removeSummoner"
+    get-entity-status="vm.getSummonerStatus"
+    toggle-user-settings-modal-visible="vm.toggleUserSettingsModalVisible"
+    copy-spectate-command="vm.copySpectateCommand"
+    entity-type="'Summoner'"
+  ></entity-list>
 
 </div>

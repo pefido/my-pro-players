@@ -43,11 +43,42 @@ class dbRequest {
   }
 
   addPlayerToUser(userId, playerUsername) {
-    return this.$http.post(this.baseUri + "/users/" + userId + "/players/", { 'username': playerUsername });
+    return this.$http.post(this.baseUri + "/users/" + userId + "/players", { 'username': playerUsername });
   }
 
   removePlayerFromUser(userId, playerId) {
     return this.$http.delete(this.baseUri + "/users/" + userId + "/players/" + playerId);
+  }
+
+
+
+
+  /////////Summoner Collection
+
+  getSummonersByPlayer(username, callback) {
+    var retryTimer = 7000;
+    var eventSource = new EventSource(this.baseUri + "/players/" + username + "/summoners?retry=" + retryTimer);
+    var counter = 0;
+
+    eventSource.addEventListener('summonerSent', (e) => {
+      counter++;
+      console.log("got " + counter);
+      callback(JSON.parse(e.data));
+    });
+    eventSource.addEventListener('summonerSentEnd', (e) => {
+      eventSource.close();
+    });
+    eventSource.onerror = () => {
+      eventSource.close();
+    }
+  }
+
+  addSummonerToPlayer(playerUsername, summonerUsername) {
+    return this.$http.post(this.baseUri + "/players/" + playerUsername + "/summoners", { 'username': summonerUsername });
+  }
+
+  removeSummonerFromPlayer(playerUsername, summonerId) {
+    return this.$http.delete(this.baseUri + "/players/" + playerUsername + "/summoners/" + summonerId);
   }
 
 
