@@ -11,6 +11,7 @@ class DB {
 
     //insert dummy data
     this.summonerCollection.set(20717177, {
+      entityType: 'summoner',
       id: 20717177,
       accountId: 23989840,
       name: 'Rekkles',
@@ -25,6 +26,7 @@ class DB {
     });
 
     this.summonerCollection.set(21081580, {
+      entityType: 'summoner',
       id: 21081580,
       accountId: 0,
       name: 'Pefido',
@@ -39,6 +41,7 @@ class DB {
     });
 
     this.summonerCollection.set(23796520, {
+      entityType: 'summoner',
       id: 23796520,
       accountId: 0,
       name: 'mithy',
@@ -53,6 +56,7 @@ class DB {
     });
 
     this.summonerCollection.set(95206795, {
+      entityType: 'summoner',
       id: 95206795,
       accountId: 231084181,
       name: 'FNC Caps1',
@@ -67,6 +71,7 @@ class DB {
     });
 
     this.summonerCollection.set(73297023, {
+      entityType: 'summoner',
       id: 73297023,
       accountId: 221657540,
       name: 'mithypote',
@@ -81,6 +86,7 @@ class DB {
     });
 
     this.summonerCollection.set(109537252, {
+      entityType: 'summoner',
       id: 109537252,
       accountId: 241195068,
       name: 'G2 Perkz',
@@ -95,6 +101,7 @@ class DB {
     });
 
     this.summonerCollection.set(20110160, {
+      entityType: 'summoner',
       id: 20110160,
       accountId: 23099233,
       name: 'TSM ZV3N',
@@ -109,6 +116,7 @@ class DB {
     });
 
     this.summonerCollection.set(21071845, {
+      entityType: 'summoner',
       id: 21071845,
       accountId: 24467412,
       name: 'G2 Jerkz',
@@ -123,6 +131,7 @@ class DB {
     });
 
     this.summonerCollection.set(20308708, {
+      entityType: 'summoner',
       id: 20308708,
       accountId: 23396278,
       name: 'G0DGILIUS',
@@ -137,6 +146,7 @@ class DB {
     });
 
     this.summonerCollection.set(22322085, {
+      entityType: 'summoner',
       id: 22322085,
       accountId: 26164230,
       name: 'MSF Hansssama',
@@ -151,6 +161,7 @@ class DB {
     });
 
     this.summonerCollection.set(30657524, {
+      entityType: 'summoner',
       id: 30657524,
       accountId: 34455333,
       name: 'MSF Febiven',
@@ -165,6 +176,7 @@ class DB {
     });
 
     this.summonerCollection.set(22136916, {
+      entityType: 'summoner',
       id: 22136916,
       accountId: 25932954,
       name: 'kaSing 2018',
@@ -179,6 +191,7 @@ class DB {
     });
 
     this.summonerCollection.set(78387752, {
+      entityType: 'summoner',
       id: 78387752,
       accountId: 223983687,
       name: 'HHAZMEMF',
@@ -193,9 +206,25 @@ class DB {
     });
 
     this.summonerCollection.set(20965425, {
+      entityType: 'summoner',
       id: 20965425,
       accountId: 24328420,
       name: 'FNC Broxah',
+      playing: false,
+      lastMatch: {
+        fullMatch: {}
+      },
+      currentMatch: {
+
+      },
+      lastUpdated: '2018-11-02T16:22:05.639Z'
+    });
+
+    this.summonerCollection.set(22493694, {
+      entityType: 'summoner',
+      id: 22493694,
+      accountId: 26410658,
+      name: 'TOP de nota 10',
       playing: false,
       lastMatch: {
         fullMatch: {}
@@ -235,6 +264,7 @@ class DB {
 
 
     this.playerCollection.set(1, {
+      entityType: 'player',
       id: 1,
       firstName: 'Martin',
       lastName: 'Larsson',
@@ -245,7 +275,7 @@ class DB {
           team: ['Team', 'Fnatic'],
           playsIn: ['League', 'EU LCS'],
         },
-      username: 'Rekkles',
+      name: 'Rekkles',
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 20717177,
       playing: false,
@@ -255,8 +285,18 @@ class DB {
     });
 
     this.playerCollection.set(2, {
+      entityType: 'player',
       id: 2,
-      username: 'Pefido',
+      firstName: 'Pedro',
+      lastName: 'Durães',
+      nationality: 'Portuguese',
+      infoBoard:
+        {
+          role: ['Role', 'AD Carry'],
+          team: ['Team', 'MafAld'],
+          playsIn: ['League', 'EU LCS'],
+        },
+      name: 'Pefido',
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 21081580,
       playing: false,
@@ -266,8 +306,18 @@ class DB {
     });
 
     this.playerCollection.set(3, {
+      entityType: 'player',
       id: 3,
-      username: 'Mithy',
+      firstName: 'Alfonso',
+      lastName: 'Aguirre',
+      nationality: 'Spanish',
+      infoBoard:
+        {
+          role: ['Role', 'Support'],
+          team: ['Team', 'Origen'],
+          playsIn: ['League', 'EU LCS'],
+        },
+      name: 'Mithy',
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 23796520,
       playing: false,
@@ -277,8 +327,18 @@ class DB {
     });
 
     this.playerCollection.set(4, {
+      entityType: 'player',
       id: 4,
-      username: 'Caps',
+      firstName: 'Rasmus',
+      lastName: 'Winther',
+      nationality: 'Danish',
+      infoBoard:
+        {
+          role: ['Role', 'Mid'],
+          team: ['Team', 'G2 Esports'],
+          playsIn: ['League', 'EU LCS'],
+        },
+      name: 'Caps',
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 95206795,
       playing: false,
@@ -288,8 +348,18 @@ class DB {
     });
 
     this.playerCollection.set(5, {
+      entityType: 'player',
       id: 5,
-      username: 'Perkz',
+      firstName: 'Luka',
+      lastName: 'Perković',
+      nationality: 'Croatia',
+      infoBoard:
+        {
+          role: ['Role', 'AD Carry'],
+          team: ['Team', 'G2 Esports'],
+          playsIn: ['League', 'EU LCS'],
+        },
+      name: 'Perkz',
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 109537252,
       playing: false,
@@ -299,8 +369,18 @@ class DB {
     });
 
     this.playerCollection.set(6, {
+      entityType: 'player',
       id: 6,
-      username: 'Zven',
+      firstName: 'Jesper',
+      lastName: 'Svenningsen',
+      nationality: 'Danish',
+      infoBoard:
+        {
+          role: ['Role', 'AD Carry'],
+          team: ['Team', 'Team SoloMid'],
+          playsIn: ['League', 'NA LCS'],
+        },
+      name: 'Zven',
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 20110160,
       playing: false,
@@ -310,8 +390,18 @@ class DB {
     });
 
     this.playerCollection.set(7, {
+      entityType: 'player',
       id: 7,
-      username: 'Jankos',
+      firstName: 'Marcin',
+      lastName: 'Jankowski',
+      nationality: 'Polish',
+      infoBoard:
+        {
+          role: ['Role', 'Jungler'],
+          team: ['Team', 'G2 Esports'],
+          playsIn: ['League', 'EU LCS'],
+        },
+      name: 'Jankos',
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 21071845,
       playing: false,
@@ -321,8 +411,18 @@ class DB {
     });
 
     this.playerCollection.set(8, {
+      entityType: 'player',
       id: 8,
-      username: 'Gilius',
+      firstName: 'Berk',
+      lastName: 'Demir',
+      nationality: 'German',
+      infoBoard:
+        {
+          role: ['Role', 'Jungler'],
+          team: ['Team', 'Beşiktaş e-Sports Club'],
+          playsIn: ['League', 'TCL'],
+        },
+      name: 'Gilius',
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 20308708,
       playing: false,
@@ -332,8 +432,18 @@ class DB {
     });
 
     this.playerCollection.set(9, {
+      entityType: 'player',
       id: 9,
-      username: 'Hans Sama',
+      firstName: 'Steven',
+      lastName: 'Liv',
+      nationality: 'French',
+      infoBoard:
+        {
+          role: ['Role', 'AD Carry'],
+          team: ['Team', 'Misfits Gaming'],
+          playsIn: ['League', 'EU LCS'],
+        },
+      name: 'Hans Sama',
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 22322085,
       playing: false,
@@ -343,8 +453,18 @@ class DB {
     });
 
     this.playerCollection.set(10, {
+      entityType: 'player',
       id: 10,
-      username: 'Febiven',
+      firstName: 'Fabian',
+      lastName: 'Diepstraten',
+      nationality: 'Dutch',
+      infoBoard:
+        {
+          role: ['Role', 'Mid'],
+          team: ['Team', 'Misfits Gaming'],
+          playsIn: ['League', 'EU LCS'],
+        },
+      name: 'Febiven',
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 30657524,
       playing: false,
@@ -354,8 +474,18 @@ class DB {
     });
 
     this.playerCollection.set(11, {
+      entityType: 'player',
       id: 11,
-      username: 'kaSing',
+      firstName: 'Raymond',
+      lastName: 'Tsang',
+      nationality: 'United Kingdom',
+      infoBoard:
+        {
+          role: ['Role', 'Support'],
+          team: ['Team', 'exceL Esports'],
+          playsIn: ['League', 'EU LCS'],
+        },
+      name: 'kaSing',
       lastUpdated: '2018-11-02T16:22:05.639Z',
       relevantSummoner: 22136916,
       playing: false,
@@ -363,6 +493,29 @@ class DB {
       lastGameStart: 1545048276879,
       playerAccounts: [22136916]
     });
+
+    this.playerCollection.set(12, {
+      entityType: 'player',
+      id: 12,
+      firstName: 'Alexandre',
+      lastName: 'Rodrigues',
+      nationality: 'Portuguese',
+      infoBoard:
+        {
+          role: ['Role', 'TOP'],
+          team: ['Team', 'K1CK eSports Club'],
+          playsIn: ['League', 'LPLOL'],
+        },
+      name: 'Truklax',
+      lastUpdated: '2018-11-02T16:22:05.639Z',
+      relevantSummoner: 20717177,
+      playing: false,
+      lastGameEnd: 1545048276879,
+      lastGameStart: 1545048276879,
+      playerAccounts: [22493694]
+    });
+
+
   }
 
 
@@ -551,7 +704,7 @@ class DB {
   getPlayerIdByUsername(username) {
     return new Promise((resolve, reject) => {
       var resPlayer = Array.from(this.playerCollection.values()).find((player) => {
-        return player.username === username;
+        return player.name === username;
       });
       resPlayer ? resolve(resPlayer.id) : reject();
     });

@@ -12,14 +12,13 @@
       <button class = " deletePlayerButton" ng-click="vm.removeEntity(entity.id)"
       ng-class="{'invisible' : !entity.deleteButtonInvisible}" name="deleteEntity">X</button>
       <div class="playerNameEntry">
-        <span>
-          {{entity.username || entity.name}}
-        </span>
+        <a ng-if="entity.entityType==='player'" ui-sref="player({username: entity.name})">{{entity.name}}</a>
+        <a ng-if="entity.entityType==='summoner'">{{entity.name}}</a>
       </div>
       <div class="gameInfo">
         <span ng-if="!entity.playing">{{entity.notPlayingMessage}}</span>
         <div class="playingContainer" ng-if="entity.playing">
-          playing <a class="queueName">{{entity.matchType}}</a> with <a class="championName">{{entity.currentMatch.playingChampion.name}}</a>
+          playing <a class="queueName">{{entity.matchType}}</a> with <a class="championName">{{entity.playingChampion}}</a>
         </div>
       </div>
       <div class="playingStatus">

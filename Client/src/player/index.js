@@ -9,18 +9,23 @@ app.directive('player', [() => {
     templateUrl: './player.html',
     bindToController: true,
     controllerAs: 'vm',
-    controller: ['Notification', '$q', '$scope', '$state', '$stateParams', 'dbRequest', function(Notification, $q, $scope, $state, $stateParams, dbRequest) {
+    controller: ['Clipboard', 'Notification', '$q', '$scope', '$state', '$stateParams', 'dbRequest', function(Clipboard, Notification, $q, $scope, $state, $stateParams, dbRequest) {
       
       var vm = this;
       vm.player = {};
       vm.summoners = [];
       vm.Notification = Notification;
       vm.summonerInputText = "";
+      vm.user = {
+        settings: {
+          system: "mac"
+        }
+      };
       
 
       dbRequest.getPlayer($stateParams.username).then((res) => {
         vm.player = res.data;
-        dbRequest.getSummonersByPlayer(vm.player.username, (summoner) => {
+        dbRequest.getSummonersByPlayer(vm.player.name, (summoner) => {
           summonerUtil.fillLastPlayed(summoner);
           summonerUtil.fillNotPlayingMessage(summoner);
           vm.summoners.push(summoner);
@@ -34,7 +39,7 @@ app.directive('player', [() => {
 
       vm.addSummoner = () => {
         return $q((resolve, reject) => {
-          dbRequest.addSummonerToPlayer(vm.player.username, vm.summonerInputText).then((res) => {
+          dbRequest.addSummonerToPlayer(vm.player.name, vm.summonerInputText).then((res) => {
             if (res.status === 200) {
               var summoner = res.data;
               vm.player.playerAccounts.push(summoner.id);
@@ -59,7 +64,7 @@ app.directive('player', [() => {
       };
 
       vm.removeSummoner = (id) => {
-        dbRequest.removeSummonerFromPlayer(vm.player.username, id).then((res) => {
+        dbRequest.removeSummonerFromPlayer(vm.player.name, id).then((res) => {
           if (res.status === 200) {
             vm.summoners = vm.summoners.filter((summoner) => { return summoner.id != id });
             vm.player.playerAccounts = res.data;
@@ -78,6 +83,20 @@ app.directive('player', [() => {
 
       vm.getSummonerStatus = (summoner) => {
         return summonerUtil.getSummonerStatus(summoner);
+      };
+
+      vm.copySpectateCommand = (summoner) => {
+        if (summoner.playing) {
+          var command = "";
+          if (vm.user.settings.system === "mac") {
+            command = 'cd /Applications/League\ of\ Legends.app/Contents/LoL/RADS/solutions/lol_game_client_sln/releases/ && cd $(ls -1vr -d */ | head -1) && cd deploy && chmod +x ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends && riot_launched=true ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends 8394 LoLLauncher "" "-Locale=en_US" "spectator spectator.euw1.lol.riotgames.com:80 ' + summoner.currentMatch.observers.encryptionKey + ' ' + summoner.currentMatch.gameId + ' EUW1"';
+          } else {
+            command = "some other command I need to find out";
+          }
+
+          Clipboard.copyToClipboard(command);
+          vm.Notification.setNotification('success', 'Spectator command copied to clipboard!', 4);
+        }
       };
 
     }]

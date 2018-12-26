@@ -49,7 +49,9 @@ class summonerController {
               return summoner.summonerId === savedSummoner.id;
             });
             savedSummoner.currentMatch.playingChampion = this.db.getChampionNameById(participant.championId);
+            savedSummoner.playingChampion = savedSummoner.currentMatch.playingChampion.name;
             savedSummoner.currentMatch.playingQueue = this.db.getQueueById(savedSummoner.currentMatch.gameQueueConfigId);
+            savedSummoner.matchType = savedSummoner.currentMatch.playingQueue.shortName || savedSummoner.currentMatch.playingQueue.name;
             return savedSummoner;
           }
         });

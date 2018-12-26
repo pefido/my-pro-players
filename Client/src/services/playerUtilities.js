@@ -39,8 +39,11 @@ class playerUtilities {
       if(!player.playing) {
         player.relevantSummoner.lastMatch.lastPlayed = this.getLastPlayed(player.lastGameEnd);
         player.relevantSummoner.lastPlayedSeconds = this.getLastPlayedSeconds(player.lastGameEnd);
+        player.lastPlayed = this.getLastPlayed(player.lastGameEnd);
+        player.lastPlayedSeconds = this.getLastPlayedSeconds(player.lastGameEnd);
       } else {
         player.relevantSummoner.lastPlayedSeconds = 0;
+        player.lastPlayedSeconds = 0;
       }
     }
   }

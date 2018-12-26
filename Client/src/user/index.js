@@ -54,7 +54,6 @@ app.directive('user', [function () {
               //handle other kind of responses
             }
           }, (res) => {
-            reject();
             switch (res.status) {
               case 404:
                 vm.Notification.setNotification('error', 'Player does not exist', 3);
