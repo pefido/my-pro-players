@@ -1,3 +1,5 @@
+require("../userSettingsModal");
+
 const angular = require('angular');
 const app = angular.module('app');
 const octicons = require("octicons");
@@ -12,15 +14,18 @@ app.directive('entityList', [function() {
       addEntity: '=',
       removeEntity: '=',
       getEntityStatus: '=',
-      toggleUserSettingsModalVisible: '=',
       copySpectateCommand: '=',
-      entityType: '='
+      entityType: '=',
+      settings: '=',
+      userId: '=',
+      changeUserSettings: '='
     },
     bindToController: true,
     controllerAs: 'vm',
     controller: ['$sce', 'focus', function($sce, focus) {
       var vm = this;
       vm.addingEntity = false;
+      vm.isUserSettingsModalVisible = false;
 
       vm.addIcon = (icon, optionsObj) => {
         return $sce.trustAsHtml(octicons[icon].toSVG(optionsObj));
@@ -51,6 +56,17 @@ app.directive('entityList', [function() {
           }
         } else if (keyEvent.which === 27) {//escape key
           vm.toggleAddingEntity();
+        }
+      };
+
+      vm.toggleUserSettingsModalVisible = (event) => {
+        if (event == undefined) {
+          vm.isUserSettingsModalVisible = !vm.isUserSettingsModalVisible;
+        } else if (event.which === 27) {//escape key
+          vm.isUserSettingsModalVisible = !vm.isUserSettingsModalVisible;
+        }
+        if (vm.isUserSettingsModalVisible) {
+          focus('userSettingsModal');
         }
       };
 

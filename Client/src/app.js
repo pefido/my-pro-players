@@ -4,6 +4,7 @@ const app = angular.module('app', ['ui.router']);
 
 require('./services/appUtilities');
 require('./services/notification');
+require('./services/dbRequest');
 require('./user');
 require('./player');
 require('./notFound');

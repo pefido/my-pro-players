@@ -10,34 +10,10 @@
     add-entity="vm.addPlayer"
     remove-entity="vm.removePlayer"
     get-entity-status="vm.getPlayerStatus"
-    toggle-user-settings-modal-visible="vm.toggleUserSettingsModalVisible"
     copy-spectate-command="vm.copySpectateCommand"
-    entity-type="'Player'"
+    entity-type="'player'"
+    settings="vm.user.settings"
+    change-user-settings="vm.changeUserSettings"
   ></entity-list>
 </div>
 
-<div class="userSettingsModal" ng-if="vm.isUserSettingsModalVisible" ng-click="vm.toggleUserSettingsModalVisible()">
-  <div class="userSettingsModalContent" tabindex="0" focus-on="userSettingsModal" ng-click="$event.stopPropagation()"
-    ng-keydown="vm.toggleUserSettingsModalVisible($event)">
-    <div class="introSentence">
-      User Settings
-    </div>
-    <div class="userSettingsList">
-      <div class="userSettingsEntry">
-        <div class="userSettingName">
-            <span>Spectator Command</span>
-        </div>
-        <div class="userSettingOptions">
-          <div class="settingRadioContainer">
-            <span>Windows</span>
-            <input type="radio" ng-model="vm.user.settings.system" ng-change="vm.changeUserSettings()" value="windows">
-          </div>
-          <div class="settingRadioContainer">
-              <span>Mac</span>
-              <input type="radio" ng-model="vm.user.settings.system" ng-change="vm.changeUserSettings()" value="mac">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> 

@@ -2,7 +2,7 @@ const angular = require('angular');
 const app = angular.module('app');
 
 class dbRequest {
-  constructor($http, $q) {
+  constructor($http) {
     this.$http = $http;
     this.baseUri = "http://localhost:3000";
   }

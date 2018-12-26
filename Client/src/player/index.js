@@ -1,6 +1,5 @@
 const angular = require('angular');
 const app = angular.module('app');
-require('../services/dbRequest');
 const summonerUtil = require('../services/summonerUtilities');
 
 app.directive('player', [() => {
@@ -9,19 +8,24 @@ app.directive('player', [() => {
     templateUrl: './player.html',
     bindToController: true,
     controllerAs: 'vm',
-    controller: ['Clipboard', 'Notification', '$q', '$scope', '$state', '$stateParams', 'dbRequest', function(Clipboard, Notification, $q, $scope, $state, $stateParams, dbRequest) {
-      
+    controller: ['Clipboard', 'Notification', '$q', '$scope', '$state', '$stateParams', 'dbRequest', function (Clipboard, Notification, $q, $scope, $state, $stateParams, dbRequest) {
+
       var vm = this;
       vm.player = {};
       vm.summoners = [];
       vm.Notification = Notification;
       vm.summonerInputText = "";
-      vm.user = {
-        settings: {
-          system: "mac"
+      vm.user = {};
+
+      //tmp user
+      dbRequest.getUser(1).then((res) => {
+        vm.user = res.data;
+      }).catch((err) => {
+        if (err.status === 404) {
+          console.log("user nopt found");
         }
-      };
-      
+      });
+
 
       dbRequest.getPlayer($stateParams.username).then((res) => {
         vm.player = res.data;
@@ -32,8 +36,8 @@ app.directive('player', [() => {
           $scope.$apply();
         });
       }).catch((err) => {
-        if(err.status === 404) {
-          $state.transitionTo('notFound', {type:'Player'}, {location: false});
+        if (err.status === 404) {
+          $state.transitionTo('notFound', { type: 'Player' }, { location: false });
         }
       });
 
@@ -97,6 +101,17 @@ app.directive('player', [() => {
           Clipboard.copyToClipboard(command);
           vm.Notification.setNotification('success', 'Spectator command copied to clipboard!', 4);
         }
+      };
+
+      vm.changeUserSettings = () => {
+        dbRequest.updateUserSettings(vm.user.id, vm.user.settings).then((res) => {
+          if (res.status != 200) {
+            vm.Notification.setNotification('error', 'Settings not saved!', 3);
+          }
+        })
+          .catch((err) => {
+            vm.Notification.setNotification('error', 'Settings not saved!', 3);
+          });
       };
 
     }]

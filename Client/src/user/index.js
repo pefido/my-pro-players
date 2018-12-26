@@ -1,6 +1,5 @@
 const angular = require('angular');
 const app = angular.module('app');
-require('../services/dbRequest');
 require("../components/entityList");
 const playerUtil = require('../services/playerUtilities');
 
@@ -10,14 +9,13 @@ app.directive('user', [function () {
     templateUrl: './user.html',
     bindToController: true,
     controllerAs: 'vm',
-    controller: ['$q', '$state', '$scope', '$sce', 'Clipboard', 'Notification', 'focus', '$stateParams', 'dbRequest', function ($q, $state, $scope, $sce, Clipboard, Notification, focus, $stateParams, dbRequest) {
+    controller: ['$q', '$state', '$scope', '$sce', 'Clipboard', 'Notification', '$stateParams', 'dbRequest', function ($q, $state, $scope, $sce, Clipboard, Notification, $stateParams, dbRequest) {
       var vm = this;
       vm.user = {};
       vm.players = [];
       vm.Notification = Notification;
       vm.addingPlayer = false;
       vm.sce = $sce;
-      vm.isUserSettingsModalVisible = false;
       vm.playerInputText = "";
 
       dbRequest.getUser($stateParams.id).then((res) => {
@@ -94,17 +92,6 @@ app.directive('user', [function () {
 
           Clipboard.copyToClipboard(command);
           vm.Notification.setNotification('success', 'Spectator command copied to clipboard!', 4);
-        }
-      };
-
-      vm.toggleUserSettingsModalVisible = (event) => {
-        if (event == undefined) {
-          vm.isUserSettingsModalVisible = !vm.isUserSettingsModalVisible;
-        } else if (event.which === 27) {//escape key
-          vm.isUserSettingsModalVisible = !vm.isUserSettingsModalVisible;
-        }
-        if (vm.isUserSettingsModalVisible) {
-          focus('userSettingsModal');
         }
       };
 
