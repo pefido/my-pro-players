@@ -98,7 +98,7 @@ app.directive('player', [() => {
         if (summoner.playing) {
           var command = "";
           if (vm.user.settings.system === "mac") {
-            command = 'cd /Applications/League\ of\ Legends.app/Contents/LoL/RADS/solutions/lol_game_client_sln/releases/ && cd $(ls -1vr -d */ | head -1) && cd deploy && chmod +x ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends && riot_launched=true ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends 8394 LoLLauncher "" "-Locale=en_US" "spectator spectator.euw1.lol.riotgames.com:80 ' + summoner.currentMatch.observers.encryptionKey + ' ' + summoner.currentMatch.gameId + ' EUW1"';
+            command = 'cd /Applications/League\\ of\\ Legends.app/Contents/LoL/RADS/solutions/lol_game_client_sln/releases/ && cd $(ls -1vr -d */ | head -1) && cd deploy && chmod +x ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends && riot_launched=true ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends 8394 LoLLauncher "" "-Locale=en_US" "spectator spectator.euw1.lol.riotgames.com:80 ' + summoner.currentMatch.observers.encryptionKey + ' ' + summoner.currentMatch.gameId + ' EUW1"';
           } else {
             command = "some other command I need to find out";
           }
