@@ -1,6 +1,16 @@
 <div class="playerContainer">
-  <div class="playerUsername">
-    {{vm.player.firstName}} '{{vm.player.name}}' {{vm.player.lastName}}
+  <div class="playerTopBar">
+    <div class="playerUsername">
+      {{vm.player.firstName}} '{{vm.player.name}}' {{vm.player.lastName}}
+    </div>
+
+    <div class="playingStatus biggerPlayingStatus">
+      <span class="playerPlayingEntry biggerPlayingEntry" ng-class="{playingBorder: vm.player.playing, offlineBorder: !vm.player.playing}"
+      ng-click="vm.copySpectateCommand(vm.player.relevantSummoner)">
+        {{vm.getPlayerStatus(vm.player)}}
+      </span>
+    </div>
+
   </div>
   <div class="playerInfo">
     <div class="photoColumn">

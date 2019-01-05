@@ -1,25 +1,28 @@
-<div class="listContainer">
+<div class="entityListWrap">
+  <div class="listContainer">
     <div class="addPlayerContainer">
       <div class="userSettingsButtonContainer" ng-click="vm.toggleUserSettingsModalVisible()" ng-bind-html="vm.addIcon('gear', {'class': 'userSettingsButton'})"></div>
       <input focus-on="newPlayerFocus" ng-if="vm.isAddingEntity()" ng-blur="vm.toggleAddingEntity()" class="newPlayerInput"
         ng-model="vm.entityInputText" ng-keydown="vm.keyPressed($event)" type="text" name="newEntity" placeholder="Insert {{vm.entityType}} name">
       <button class="addPlayer" ng-if="!vm.isAddingEntity()" ng-click="vm.toggleAddingEntity()">
-          + Add {{vm.entityType}}
+        + Add {{vm.entityType}}
       </button>
     </div>
     <div class="listEntry" ng-repeat="entity in vm.entities | orderBy:'lastPlayedSeconds'" ng-mouseenter="vm.toggleDeleteButtonVis(entity)"
       ng-mouseleave="vm.toggleDeleteButtonVis(entity)">
-      <button class = " deletePlayerButton" ng-click="vm.removeEntity(entity.id)"
-      ng-class="{'invisible' : !entity.deleteButtonInvisible}" name="deleteEntity">X</button>
-      <div class="playerNameEntry">
-        <a ng-if="entity.entityType==='player'" ui-sref="player({username: entity.name})">{{entity.name}}</a>
-        <a ng-if="entity.entityType==='summoner'">{{entity.name}}</a>
-      </div>
-      <div class="gameInfo">
-        <span ng-if="!entity.playing">{{entity.notPlayingMessage}}</span>
-        <div class="playingContainer" ng-if="entity.playing">
-          playing <a class="queueName">{{entity.matchType}}</a> with <a class="championName">{{entity.playingChampion}}</a>
+      <div class="entityDeleteCombo">
+        <button class="deletePlayerButton" ng-click="vm.removeEntity(entity.id)" ng-class="{'invisible' : !entity.deleteButtonInvisible}"
+          name="deleteEntity">X</button>
+        <div class="playerNameEntry">
+          <a ng-if="entity.entityType==='player'" ui-sref="player({username: entity.name})">{{entity.name}}</a>
+          <a ng-if="entity.entityType==='summoner'">{{entity.name}}</a>
         </div>
+      </div>
+      <div class="gameInfo" ng-if="!entity.playing">
+        {{entity.notPlayingMessage}}
+      </div>
+      <div class="gameInfo" ng-if="entity.playing">
+        playing <a class="queueName">{{entity.matchType}}</a> with <a class="championName">{{entity.playingChampion}}</a>
       </div>
       <div class="playingStatus">
         <span class="playerPlayingEntry" ng-class="{playingBorder: entity.playing, offlineBorder: !entity.playing}"
@@ -30,10 +33,11 @@
     </div>
   </div>
 
-  <user-settings-modal 
+  <user-settings-modal
     settings="vm.settings"
-    is-user-settings-modal-visible = "vm.isUserSettingsModalVisible"
-    toggle-user-settings-modal-visible = "vm.toggleUserSettingsModalVisible"
-    user-id = "vm.userId"
-    change-user-settings="vm.changeUserSettings"
-  ></user-settings-modal>
+    is-user-settings-modal-visible="vm.isUserSettingsModalVisible"
+    toggle-user-settings-modal-visible="vm.toggleUserSettingsModalVisible"
+    user-id="vm.userId"
+    change-user-settings="vm.changeUserSettings">
+  </user-settings-modal>
+</div>

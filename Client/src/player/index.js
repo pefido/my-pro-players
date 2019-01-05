@@ -1,6 +1,7 @@
 const angular = require('angular');
 const app = angular.module('app');
 const summonerUtil = require('../services/summonerUtilities');
+const playerUtil = require('../services/playerUtilities');
 
 app.directive('player', [() => {
   return {
@@ -87,6 +88,10 @@ app.directive('player', [() => {
 
       vm.getSummonerStatus = (summoner) => {
         return summonerUtil.getSummonerStatus(summoner);
+      };
+
+      vm.getPlayerStatus = (player) => {
+        return playerUtil.getPlayerStatus(player);
       };
 
       vm.copySpectateCommand = (summoner) => {
