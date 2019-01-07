@@ -207,12 +207,6 @@ input:focus, button:focus, .userSettingsModalContent:focus{
   
 }
 
-@media (max-width: 519px) {
-  .listEntry {
-    flex-direction: column;
-  }
-}
-
 .deletePlayerButton {
   color:#E57373;
   background-color: inherit;
@@ -294,6 +288,33 @@ input:focus, button:focus, .userSettingsModalContent:focus{
   color: #F44336;
 }
 
+@media (max-width: 519px) {
+  .listEntry {
+    flex-direction: column;
+  }
+
+  .gameInfo {
+    text-align: center;
+    width: auto;
+    margin-bottom: 10px;
+  }
+
+  .playerNameEntry {
+    padding-right: 17px;
+    text-align: right;
+  }
+
+  .entityDeleteCombo {
+    width: auto;
+  }
+
+  .playingStatus {
+    width: auto;
+    margin-right: 0px;
+  }
+  
+}
+
 
 
 
@@ -368,8 +389,6 @@ input:focus, button:focus, .userSettingsModalContent:focus{
 .playerContainer {
   margin-top: 50px;
   margin-bottom: 10px;
-  margin-left: 5%;
-  margin-right: 5%;
 }
 
 .playerInfo {
@@ -386,6 +405,7 @@ input:focus, button:focus, .userSettingsModalContent:focus{
 .photoColumn {
   width: 50%;
   min-width: 240px;
+  margin-bottom: 2px;
 }
 
 .playerPhotoContainer {
@@ -406,20 +426,20 @@ input:focus, button:focus, .userSettingsModalContent:focus{
   background-color: #3b4457;
   width: 50%;
   min-width: 240px;
+  margin-bottom: 2px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .infoEntry {
-  margin-bottom: 40px;
   margin-left: 10px;
   color: #fafafa;
   font-size: 20px;
-}
-
-.infoEntry:last-child {
-  margin-bottom: 0;
+  height: 60;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .infoKey {
@@ -429,6 +449,7 @@ input:focus, button:focus, .userSettingsModalContent:focus{
 .playerTopBar {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .playerUsername {
@@ -441,9 +462,16 @@ input:focus, button:focus, .userSettingsModalContent:focus{
 .biggerPlayingStatus {
   width: auto;
   margin-left: 20px;
+  margin-right: 20px;
 }
 
 .biggerPlayingEntry {
   font-size: 18px;
   width: 70px;
+}
+
+@media (max-width: 534px) {
+  .playerTopBar {
+    justify-content: center;
+  }
 }

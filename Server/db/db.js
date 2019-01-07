@@ -235,6 +235,20 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
+    this.summonerCollection.set(19751358, {
+      entityType: 'summoner',
+      id: 19751358,
+      accountId: 22602333,
+      name: 'Kikis',
+      playing: false,
+      lastMatch: {
+        fullMatch: {}
+      },
+      currentMatch: {
+
+      },
+      lastUpdated: '2018-11-02T16:22:05.639Z'
+    });
 
 
 
@@ -513,6 +527,27 @@ class DB {
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
       playerAccounts: [22493694]
+    });
+
+    this.playerCollection.set(13, {
+      entityType: 'player',
+      id: 13,
+      firstName: 'Mateusz',
+      lastName: 'Szkudlarek',
+      nationality: 'Polish',
+      infoBoard:
+        {
+          role: ['Role', 'Jungler'],
+          team: ['Team', 'Rogue'],
+          playsIn: ['League', 'EU LCS'],
+        },
+      name: 'Kikis',
+      lastUpdated: '2018-11-02T16:22:05.639Z',
+      relevantSummoner: 19751358,
+      playing: false,
+      lastGameEnd: 1545048276879,
+      lastGameStart: 1545048276879,
+      playerAccounts: [19751358]
     });
 
 

@@ -57,6 +57,18 @@ class playerUtilities {
       player.notPlayingMessage = "last played " + player.relevantSummoner.lastMatch.lastPlayed + " ago";
     }
   }
+
+  getSpectateCommand(player, system) {
+    var command = false;
+    if (player.playing) {
+      if (system === "mac") {
+        command = 'cd /Applications/League\\ of\\ Legends.app/Contents/LoL/RADS/solutions/lol_game_client_sln/releases/ && cd $(ls -1vr -d */ | head -1) && cd deploy && chmod +x ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends && riot_launched=true ./LeagueofLegends.app/Contents/MacOS/LeagueofLegends 8394 LoLLauncher "" "-Locale=en_US" "spectator spectator.euw1.lol.riotgames.com:80 ' + player.relevantSummoner.currentMatch.observers.encryptionKey + ' ' + player.relevantSummoner.currentMatch.gameId + ' EUW1"';
+      } else {
+        command = "some other command I need to find out";
+      }
+    }
+    return command;
+  };
   
 }
 

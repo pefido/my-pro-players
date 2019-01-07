@@ -22,7 +22,9 @@
     </div>
     <div class="infoBoard">
       <div class="infoEntry" ng-repeat="info in vm.player.infoBoard">
-        <span class="infoKey">{{info[0]}}:</span> {{info[1]}}
+        <div class="infoText">
+          <span class="infoKey">{{info[0]}}:</span> {{info[1]}}
+        </div>
       </div>
     </div>
   </div>

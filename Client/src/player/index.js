@@ -94,6 +94,7 @@ app.directive('player', [() => {
         return playerUtil.getPlayerStatus(player);
       };
 
+      //this function needs to go elsewhere
       vm.copySpectateCommand = (summoner) => {
         if (summoner.playing) {
           var command = "";
@@ -103,6 +104,14 @@ app.directive('player', [() => {
             command = "some other command I need to find out";
           }
 
+          Clipboard.copyToClipboard(command);
+          vm.Notification.setNotification('success', 'Spectator command copied to clipboard!', 4);
+        }
+      };
+
+      vm.copySpectateCommand = (entity) => {
+        var command = entity.entityType === 'summoner' ? summonerUtil.getSpectateCommand(entity, vm.user.settings.system) : command = playerUtil.getSpectateCommand(entity, vm.user.settings.system);
+        if(command) {
           Clipboard.copyToClipboard(command);
           vm.Notification.setNotification('success', 'Spectator command copied to clipboard!', 4);
         }
