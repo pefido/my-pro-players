@@ -59,7 +59,7 @@ class riotAPI {
     return new Promise((resolve, reject) => {
       this.validateMaxRequests().then(() => {
         this.updateMaxRequests();
-        return rp(this.baseUri + '/lol/summoner/v3/summoners/' + id, { qs: { api_key: this.riotAPIKey }, json: true });
+        return rp(this.baseUri + '/lol/summoner/v4/summoners/' + id, { qs: { api_key: this.riotAPIKey }, json: true });
       }).then((res) => {
         resolve(res);
       }).catch((err) => {
@@ -88,7 +88,7 @@ class riotAPI {
     return new Promise((resolve, reject) => {
       this.validateMaxRequests().then(() => {
         this.updateMaxRequests();
-        return rp(this.baseUri + '/lol/spectator/v3/active-games/by-summoner/' + id, { qs: { api_key: this.riotAPIKey }, json: true });
+        return rp(this.baseUri + '/lol/spectator/v4/active-games/by-summoner/' + id, { qs: { api_key: this.riotAPIKey }, json: true });
       }).then((res) => {
         resolve(res);
       }).catch((err) => {
@@ -117,7 +117,7 @@ class riotAPI {
     return new Promise((resolve, reject) => {
       this.validateMaxRequests().then(() => {
         this.updateMaxRequests();
-        return rp(this.baseUri + '/lol/match/v3/matchlists/by-account/' + accountId, { qs: { endIndex: 1, api_key: this.riotAPIKey }, json: true });
+        return rp(this.baseUri + '/lol/match/v4/matchlists/by-account/' + accountId, { qs: { endIndex: 1, api_key: this.riotAPIKey }, json: true });
       }).then((res) => {
         resolve(res.matches[0]);
       }).catch((err) => {
@@ -171,7 +171,7 @@ class riotAPI {
     return new Promise((resolve, reject) => {
       this.validateMaxRequests().then(() => {
         this.updateMaxRequests();
-        return rp(this.baseUri + '/lol/match/v3/matches/' + gameId, { qs: { endIndex: 1, api_key: this.riotAPIKey }, json: true });
+        return rp(this.baseUri + '/lol/match/v4/matches/' + gameId, { qs: { endIndex: 1, api_key: this.riotAPIKey }, json: true });
       }).then((res) => {
         resolve(res);
       }).catch((err) => {

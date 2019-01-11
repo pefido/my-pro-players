@@ -10,9 +10,9 @@ class DB {
 
 
     //insert dummy data
-    this.summonerCollection.set(20717177, {
+    this.summonerCollection.set("ac7QrhhCQ8bAvLf8JGRY1Mk_irmfaHZJasSl99IRgN3cg7A", {
       entityType: 'summoner',
-      id: 20717177,
+      id: "ac7QrhhCQ8bAvLf8JGRY1Mk_irmfaHZJasSl99IRgN3cg7A",
       accountId: 23989840,
       name: 'Rekkles',
       playing: false,
@@ -25,9 +25,9 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
-    this.summonerCollection.set(21081580, {
+    this.summonerCollection.set("LkyihBWP-SMM9_N6xOs1ZpriIE8o7Xub1IBWYQ9xgngNMao", {
       entityType: 'summoner',
-      id: 21081580,
+      id: "LkyihBWP-SMM9_N6xOs1ZpriIE8o7Xub1IBWYQ9xgngNMao",
       accountId: 0,
       name: 'Pefido',
       playing: false,
@@ -40,9 +40,9 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
-    this.summonerCollection.set(23796520, {
+    this.summonerCollection.set("QPOeQGAQEPIrhslb3-oOMT58DasdW1jk03Fp0focsQaYBGg", {
       entityType: 'summoner',
-      id: 23796520,
+      id: "QPOeQGAQEPIrhslb3-oOMT58DasdW1jk03Fp0focsQaYBGg",
       accountId: 0,
       name: 'mithy',
       playing: false,
@@ -55,9 +55,9 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
-    this.summonerCollection.set(95206795, {
+    this.summonerCollection.set("777Qwh_kG6enyD9yLMr05fG4hHorkVdfJyJad6ZNEMRLiL8", {
       entityType: 'summoner',
-      id: 95206795,
+      id: "777Qwh_kG6enyD9yLMr05fG4hHorkVdfJyJad6ZNEMRLiL8",
       accountId: 231084181,
       name: 'FNC Caps1',
       playing: false,
@@ -70,9 +70,9 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
-    this.summonerCollection.set(73297023, {
+    this.summonerCollection.set("7ICTgTqpqPdID4vsJLC60YID09r429eFiA1DEL-aX65TN4I", {
       entityType: 'summoner',
-      id: 73297023,
+      id: "7ICTgTqpqPdID4vsJLC60YID09r429eFiA1DEL-aX65TN4I",
       accountId: 221657540,
       name: 'mithypote',
       playing: false,
@@ -85,9 +85,9 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
-    this.summonerCollection.set(109537252, {
+    this.summonerCollection.set("8Dgq4ptbuDMdn5Bs8s1YWQ3EkIq7CvSZep8aps-osGzApTfY", {
       entityType: 'summoner',
-      id: 109537252,
+      id: "8Dgq4ptbuDMdn5Bs8s1YWQ3EkIq7CvSZep8aps-osGzApTfY",
       accountId: 241195068,
       name: 'G2 Perkz',
       playing: false,
@@ -100,9 +100,9 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
-    this.summonerCollection.set(20110160, {
+    this.summonerCollection.set("OZl5H9w_2w0b7Wg2DuKBtMaOAjOT4HOdmsAKeBofoJIuU0U", {
       entityType: 'summoner',
-      id: 20110160,
+      id: "OZl5H9w_2w0b7Wg2DuKBtMaOAjOT4HOdmsAKeBofoJIuU0U",
       accountId: 23099233,
       name: 'TSM ZV3N',
       playing: false,
@@ -115,9 +115,9 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
-    this.summonerCollection.set(21071845, {
+    this.summonerCollection.set("5qkrWxI-KzNGidDlwfCcUmdU7mTRk6fMWuu6kEr_qLpo9lc", {
       entityType: 'summoner',
-      id: 21071845,
+      id: "5qkrWxI-KzNGidDlwfCcUmdU7mTRk6fMWuu6kEr_qLpo9lc",
       accountId: 24467412,
       name: 'G2 Jerkz',
       playing: false,
@@ -130,9 +130,9 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
-    this.summonerCollection.set(20308708, {
+    this.summonerCollection.set("QnMdeyX4xlF_IcoytbefUEHaYpHpV1MlgC2998P3DcAXAqc", {
       entityType: 'summoner',
-      id: 20308708,
+      id: "QnMdeyX4xlF_IcoytbefUEHaYpHpV1MlgC2998P3DcAXAqc",
       accountId: 23396278,
       name: 'G0DGILIUS',
       playing: false,
@@ -145,9 +145,9 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
-    this.summonerCollection.set(22322085, {
+    this.summonerCollection.set("Wj2gC-bHSMMMP31ZUzEXXfzz4EwBdJamxaLDXN_wVTyF2l8", {
       entityType: 'summoner',
-      id: 22322085,
+      id: "Wj2gC-bHSMMMP31ZUzEXXfzz4EwBdJamxaLDXN_wVTyF2l8",
       accountId: 26164230,
       name: 'MSF Hansssama',
       playing: false,
@@ -160,9 +160,9 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
-    this.summonerCollection.set(30657524, {
+    this.summonerCollection.set("PeqiHrp7dHMh7YmuHo4wp5tHWH7G5F7y0FAcoL4AdgfFOgE", {
       entityType: 'summoner',
-      id: 30657524,
+      id: "PeqiHrp7dHMh7YmuHo4wp5tHWH7G5F7y0FAcoL4AdgfFOgE",
       accountId: 34455333,
       name: 'MSF Febiven',
       playing: false,
@@ -175,9 +175,9 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
-    this.summonerCollection.set(22136916, {
+    this.summonerCollection.set("N7iwO_A93MrltqC_8xDcmN7Eeil7n3_eEOQjc1nEw1yWrbk", {
       entityType: 'summoner',
-      id: 22136916,
+      id: "N7iwO_A93MrltqC_8xDcmN7Eeil7n3_eEOQjc1nEw1yWrbk",
       accountId: 25932954,
       name: 'kaSing 2018',
       playing: false,
@@ -190,9 +190,9 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
-    this.summonerCollection.set(78387752, {
+    this.summonerCollection.set("hMpcX-R5ygyrZ8zSD6Jy2VANdIZ_c-oDSRY__9V8fFa9zQg", {
       entityType: 'summoner',
-      id: 78387752,
+      id: "hMpcX-R5ygyrZ8zSD6Jy2VANdIZ_c-oDSRY__9V8fFa9zQg",
       accountId: 223983687,
       name: 'HHAZMEMF',
       playing: false,
@@ -205,9 +205,9 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
-    this.summonerCollection.set(20965425, {
+    this.summonerCollection.set("lf_VCpG2YcvN7F8Nlo8cPfGgMgNDmSWntgOcysq1aTlEcRI", {
       entityType: 'summoner',
-      id: 20965425,
+      id: "lf_VCpG2YcvN7F8Nlo8cPfGgMgNDmSWntgOcysq1aTlEcRI",
       accountId: 24328420,
       name: 'FNC Broxah',
       playing: false,
@@ -220,9 +220,9 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
-    this.summonerCollection.set(22493694, {
+    this.summonerCollection.set("kO_njTqyRwYMyfcKwpMDww9NBLZOp1yl4JOpMFpNxxjQ8LU", {
       entityType: 'summoner',
-      id: 22493694,
+      id: "kO_njTqyRwYMyfcKwpMDww9NBLZOp1yl4JOpMFpNxxjQ8LU",
       accountId: 26410658,
       name: 'TOP de nota 10',
       playing: false,
@@ -235,9 +235,9 @@ class DB {
       lastUpdated: '2018-11-02T16:22:05.639Z'
     });
 
-    this.summonerCollection.set(19751358, {
+    this.summonerCollection.set("wZUpEoF7OQqXrfEumXFcNUqvokzHswnHw4ihYV7buhzJA94", {
       entityType: 'summoner',
-      id: 19751358,
+      id: "wZUpEoF7OQqXrfEumXFcNUqvokzHswnHw4ihYV7buhzJA94",
       accountId: 22602333,
       name: 'Kikis',
       playing: false,
@@ -291,11 +291,11 @@ class DB {
         },
       name: 'Rekkles',
       lastUpdated: '2018-11-02T16:22:05.639Z',
-      relevantSummoner: 20717177,
+      relevantSummoner: "ac7QrhhCQ8bAvLf8JGRY1Mk_irmfaHZJasSl99IRgN3cg7A",
       playing: false,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
-      playerAccounts: [20717177, 78387752]
+      playerAccounts: ["ac7QrhhCQ8bAvLf8JGRY1Mk_irmfaHZJasSl99IRgN3cg7A", "hMpcX-R5ygyrZ8zSD6Jy2VANdIZ_c-oDSRY__9V8fFa9zQg"]
     });
 
     this.playerCollection.set(2, {
@@ -312,11 +312,11 @@ class DB {
         },
       name: 'Pefido',
       lastUpdated: '2018-11-02T16:22:05.639Z',
-      relevantSummoner: 21081580,
+      relevantSummoner: "LkyihBWP-SMM9_N6xOs1ZpriIE8o7Xub1IBWYQ9xgngNMao",
       playing: false,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
-      playerAccounts: [21081580]
+      playerAccounts: ["LkyihBWP-SMM9_N6xOs1ZpriIE8o7Xub1IBWYQ9xgngNMao"]
     });
 
     this.playerCollection.set(3, {
@@ -333,11 +333,11 @@ class DB {
         },
       name: 'Mithy',
       lastUpdated: '2018-11-02T16:22:05.639Z',
-      relevantSummoner: 23796520,
+      relevantSummoner: "QPOeQGAQEPIrhslb3-oOMT58DasdW1jk03Fp0focsQaYBGg",
       playing: false,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
-      playerAccounts: [73297023, 23796520]
+      playerAccounts: ["7ICTgTqpqPdID4vsJLC60YID09r429eFiA1DEL-aX65TN4I", "QPOeQGAQEPIrhslb3-oOMT58DasdW1jk03Fp0focsQaYBGg"]
     });
 
     this.playerCollection.set(4, {
@@ -354,11 +354,11 @@ class DB {
         },
       name: 'Caps',
       lastUpdated: '2018-11-02T16:22:05.639Z',
-      relevantSummoner: 95206795,
+      relevantSummoner: "777Qwh_kG6enyD9yLMr05fG4hHorkVdfJyJad6ZNEMRLiL8",
       playing: false,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
-      playerAccounts: [95206795]
+      playerAccounts: ["777Qwh_kG6enyD9yLMr05fG4hHorkVdfJyJad6ZNEMRLiL8"]
     });
 
     this.playerCollection.set(5, {
@@ -375,11 +375,11 @@ class DB {
         },
       name: 'Perkz',
       lastUpdated: '2018-11-02T16:22:05.639Z',
-      relevantSummoner: 109537252,
+      relevantSummoner: "8Dgq4ptbuDMdn5Bs8s1YWQ3EkIq7CvSZep8aps-osGzApTfY",
       playing: false,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
-      playerAccounts: [109537252]
+      playerAccounts: ["8Dgq4ptbuDMdn5Bs8s1YWQ3EkIq7CvSZep8aps-osGzApTfY"]
     });
 
     this.playerCollection.set(6, {
@@ -396,11 +396,11 @@ class DB {
         },
       name: 'Zven',
       lastUpdated: '2018-11-02T16:22:05.639Z',
-      relevantSummoner: 20110160,
+      relevantSummoner: "OZl5H9w_2w0b7Wg2DuKBtMaOAjOT4HOdmsAKeBofoJIuU0U",
       playing: false,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
-      playerAccounts: [20110160]
+      playerAccounts: ["OZl5H9w_2w0b7Wg2DuKBtMaOAjOT4HOdmsAKeBofoJIuU0U"]
     });
 
     this.playerCollection.set(7, {
@@ -417,11 +417,11 @@ class DB {
         },
       name: 'Jankos',
       lastUpdated: '2018-11-02T16:22:05.639Z',
-      relevantSummoner: 21071845,
+      relevantSummoner: "5qkrWxI-KzNGidDlwfCcUmdU7mTRk6fMWuu6kEr_qLpo9lc",
       playing: false,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
-      playerAccounts: [21071845]
+      playerAccounts: ["5qkrWxI-KzNGidDlwfCcUmdU7mTRk6fMWuu6kEr_qLpo9lc"]
     });
 
     this.playerCollection.set(8, {
@@ -438,11 +438,11 @@ class DB {
         },
       name: 'Gilius',
       lastUpdated: '2018-11-02T16:22:05.639Z',
-      relevantSummoner: 20308708,
+      relevantSummoner: "QnMdeyX4xlF_IcoytbefUEHaYpHpV1MlgC2998P3DcAXAqc",
       playing: false,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
-      playerAccounts: [20308708]
+      playerAccounts: ["QnMdeyX4xlF_IcoytbefUEHaYpHpV1MlgC2998P3DcAXAqc"]
     });
 
     this.playerCollection.set(9, {
@@ -459,11 +459,11 @@ class DB {
         },
       name: 'Hans Sama',
       lastUpdated: '2018-11-02T16:22:05.639Z',
-      relevantSummoner: 22322085,
+      relevantSummoner: "Wj2gC-bHSMMMP31ZUzEXXfzz4EwBdJamxaLDXN_wVTyF2l8",
       playing: false,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
-      playerAccounts: [22322085]
+      playerAccounts: ["Wj2gC-bHSMMMP31ZUzEXXfzz4EwBdJamxaLDXN_wVTyF2l8"]
     });
 
     this.playerCollection.set(10, {
@@ -480,11 +480,11 @@ class DB {
         },
       name: 'Febiven',
       lastUpdated: '2018-11-02T16:22:05.639Z',
-      relevantSummoner: 30657524,
+      relevantSummoner: "PeqiHrp7dHMh7YmuHo4wp5tHWH7G5F7y0FAcoL4AdgfFOgE",
       playing: false,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
-      playerAccounts: [30657524]
+      playerAccounts: ["PeqiHrp7dHMh7YmuHo4wp5tHWH7G5F7y0FAcoL4AdgfFOgE"]
     });
 
     this.playerCollection.set(11, {
@@ -501,11 +501,11 @@ class DB {
         },
       name: 'kaSing',
       lastUpdated: '2018-11-02T16:22:05.639Z',
-      relevantSummoner: 22136916,
+      relevantSummoner: "N7iwO_A93MrltqC_8xDcmN7Eeil7n3_eEOQjc1nEw1yWrbk",
       playing: false,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
-      playerAccounts: [22136916]
+      playerAccounts: ["N7iwO_A93MrltqC_8xDcmN7Eeil7n3_eEOQjc1nEw1yWrbk"]
     });
 
     this.playerCollection.set(12, {
@@ -522,11 +522,11 @@ class DB {
         },
       name: 'Truklax',
       lastUpdated: '2018-11-02T16:22:05.639Z',
-      relevantSummoner: 20717177,
+      relevantSummoner: "ac7QrhhCQ8bAvLf8JGRY1Mk_irmfaHZJasSl99IRgN3cg7A",
       playing: false,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
-      playerAccounts: [22493694]
+      playerAccounts: ["kO_njTqyRwYMyfcKwpMDww9NBLZOp1yl4JOpMFpNxxjQ8LU"]
     });
 
     this.playerCollection.set(13, {
@@ -543,11 +543,11 @@ class DB {
         },
       name: 'Kikis',
       lastUpdated: '2018-11-02T16:22:05.639Z',
-      relevantSummoner: 19751358,
+      relevantSummoner: "wZUpEoF7OQqXrfEumXFcNUqvokzHswnHw4ihYV7buhzJA94",
       playing: false,
       lastGameEnd: 1545048276879,
       lastGameStart: 1545048276879,
-      playerAccounts: [19751358]
+      playerAccounts: ["wZUpEoF7OQqXrfEumXFcNUqvokzHswnHw4ihYV7buhzJA94"]
     });
 
 
@@ -617,7 +617,7 @@ class DB {
 
   getSummoner(id) {
     return new Promise((resolve, reject) => {
-      var summoner = this.summonerCollection.get(parseInt(id));
+      var summoner = this.summonerCollection.get(id);
       summoner ? resolve(summoner) : reject();
     });
   }
@@ -649,10 +649,10 @@ class DB {
   addSummonerToPlayer(playerId, summonerId) {
     return new Promise((resolve, reject) => {
       this.getPlayer(playerId).then((player) => {
-        if (!(player.playerAccounts.includes(parseInt(summonerId)))) {
-          player.playerAccounts.push(parseInt(summonerId));
+        if (!(player.playerAccounts.includes(summonerId))) {
+          player.playerAccounts.push(summonerId);
           this.playerCollection.set(player.id, player);
-          resolve(parseInt(summonerId));
+          resolve(summonerId);
         } else {
           reject();
         }
@@ -663,9 +663,9 @@ class DB {
   removeSummonerFromPlayer(playerId, summonerId) {
     return new Promise((resolve, reject) => {
       this.getPlayer(playerId).then((player) => {
-        if (player.playerAccounts.includes(parseInt(summonerId))) {
+        if (player.playerAccounts.includes(summonerId)) {
           player.playerAccounts = player.playerAccounts.filter((summoner) => {
-            return summoner != parseInt(summonerId);
+            return summoner != summonerId;
           });
           this.playerCollection.set(player.id, player);
           resolve(player.playerAccounts);
