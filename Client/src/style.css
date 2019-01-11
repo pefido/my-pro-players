@@ -457,12 +457,12 @@ input:focus, button:focus, .userSettingsModalContent:focus{
   font-weight: 100;
   color: #FFF59D;
   margin-bottom: 15px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .biggerPlayingStatus {
   width: auto;
-  margin-left: 20px;
-  margin-right: 20px;
 }
 
 .biggerPlayingEntry {
