@@ -1,4 +1,6 @@
+const passport = require('passport');
 const riotAPI = require('../services/riotAPI');
+const auth = require('../services/authentication');
 const sseExpress = require('sse-express');
 
 module.exports = (app, db) => {
@@ -22,7 +24,7 @@ module.exports = (app, db) => {
     res.send({ message: 'users page' });
   });
 
-  app.get('/users/:id', (req, res) => {
+  app.get('/users/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
     db.getUser(req.params.id).then((user) => {
       res.send(user);
     }).catch(() => {
@@ -157,6 +159,44 @@ module.exports = (app, db) => {
 
     
   });
+
+
+
+
+
+
+  //////authentication routes
+
+  app.post('/authenticate', (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    db.getUserByEmail(email).then((user) => {
+      db.getPassword(user.id).then((hash) => {
+        auth.comparePassword(password, hash).then(() => {
+          const token = auth.signToken(user);
+          var resJson = {
+            success: true,
+            token: 'JWT ' + token,
+            user: {
+              id: user.id,
+              username: user.username,
+              email: user.email
+            }
+          };
+          res.send(resJson);
+        }).catch((err) => {
+          res.status(401).send(err);
+        });
+      });
+    }).catch(() => {
+      res.status(404).send('User not found');
+    })
+
+
+  });
+
+
 
 }
 

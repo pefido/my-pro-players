@@ -1,9 +1,12 @@
+const bcrypt = require('bcryptjs');
+
 class DB {
 
   constructor() {
     this.summonerCollection = new Map();
     this.playerCollection = new Map();
     this.userCollection = new Map();
+    this.passwordCollection = new Map();
     this.championsCollection = {};
     this.matchCollection = [];
     this.matchmakingQueues = [];
@@ -258,19 +261,49 @@ class DB {
     this.userCollection.set(1, {
       id: 1,
       username: 'pefido',
+      email: 'pefido@gmail.com',
       settings: {
         system: 'mac'
       },
       followingPlayers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     });
+
     this.userCollection.set(2, {
       id: 2,
       username: 'theTruckman',
+      email: 'fignico24@gmail.com',
       settings: {
         system: 'windows'
       },
       followingPlayers: [3]
     });
+
+
+
+
+
+
+
+    bcrypt.genSalt(10).then((salt) => {
+      bcrypt.hash("password1", salt).then((hash) => {
+        this.passwordCollection.set(1, hash);
+      }).catch((err) => {
+        console.log(err);
+      })
+    }).catch((err) => {
+      console.log(err)
+    });
+
+    bcrypt.genSalt(10).then((salt) => {
+      bcrypt.hash("password2", salt).then((hash) => {
+        this.passwordCollection.set(2, hash);
+      }).catch((err) => {
+        console.log(err);
+      })
+    }).catch((err) => {
+      console.log(err)
+    });
+
 
 
 
@@ -564,11 +597,32 @@ class DB {
 
 
 
+  /////////password related operations
+  getPassword(id) {
+    return new Promise((resolve, reject) => {
+      var hash = this.passwordCollection.get(parseInt(id));
+      hash ? resolve(hash) : reject();
+    });
+  }
+
+
+
+
   /////////user related operations
   getUser(id) {
     return new Promise((resolve, reject) => {
       var user = this.userCollection.get(parseInt(id));
       user ? resolve(user) : reject();
+    });
+  }
+
+  getUserByEmail(email) {
+    console.log(email);
+    return new Promise((resolve, reject) => {
+      var resUser = Array.from(this.userCollection.values()).find((user) => {
+        return user.email === email;
+      });
+      resUser ? resolve(resUser) : reject();
     });
   }
 
