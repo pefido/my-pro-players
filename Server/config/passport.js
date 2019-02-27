@@ -9,8 +9,8 @@ module.exports = (passport, db) => {
   passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
     db.getUser(jwt_payload.id).then((user) => {
       return done(null, user);
-    }).catch(() => {
-      return done(null, false);
+    }).catch((err) => {
+      return done(err, false);
     });
   }));
 }

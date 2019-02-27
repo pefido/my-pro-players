@@ -10,9 +10,10 @@ module.exports = (app, db) => {
   app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     next();
   });
+
 
   app.get('/', (req, res) => {
     res.send({ message: 'Hello World!!!' });
@@ -20,11 +21,18 @@ module.exports = (app, db) => {
 
 
   /////////user routes
+  const userCheck = (req, res, next) => {
+    if (req.user.id != req.params.id) {
+      return res.status(401).send('Access denied');
+    }
+    next();
+  }
+
   app.get('/users', (req, res) => {
     res.send({ message: 'users page' });
   });
 
-  app.get('/users/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
+  app.get('/users/:id', passport.authenticate('jwt', {session: false}), userCheck, (req, res) => {
     db.getUser(req.params.id).then((user) => {
       res.send(user);
     }).catch(() => {
@@ -51,13 +59,12 @@ module.exports = (app, db) => {
   //   });
   // });
 
-  app.get('/users/:id/players', sseExpress, (req, res) => {
+  app.get('/users/:id/players', passport.authenticate('jwt', {session: false}), userCheck, sseExpress, (req, res) => {
     db.getUser(req.params.id).then((dbUser) => {
       playerController.getPlayersParallel(dbUser.followingPlayers, (followingPlayer) => {
         if (followingPlayer) {
           res.sse('playerSent', followingPlayer);
         } else {
-          res.sse('playerSentEnd');
           res.end();
         }
       });
@@ -66,7 +73,7 @@ module.exports = (app, db) => {
     });
   });
 
-  app.post('/users/:id/players/', (req, res) => {
+  app.post('/users/:id/players/', passport.authenticate('jwt', {session: false}), userCheck, (req, res) => {
     db.getPlayerIdByUsername(req.body.username).then((resSummonerId) => {
       return db.addPlayerToUser(req.params.id, resSummonerId).catch(() => {
         res.status(409).send('Player conflict');
@@ -80,7 +87,7 @@ module.exports = (app, db) => {
     });
   });
 
-  app.delete('/users/:id/players/:playerId', (req, res) => {
+  app.delete('/users/:id/players/:playerId', passport.authenticate('jwt', {session: false}), userCheck, (req, res) => {
     db.removePlayerFromUser(req.params.id, req.params.playerId).then((newPlayerCollection) => {
       res.send(newPlayerCollection);
     }).catch(() => {
@@ -88,7 +95,7 @@ module.exports = (app, db) => {
     });
   });
 
-  app.put('/users/:id/settings', (req, res) => {
+  app.put('/users/:id/settings', passport.authenticate('jwt', {session: false}), userCheck, (req, res) => {
     db.updateUserSettings(req.params.id, req.body).then((savedSettings) => {
       if (savedSettings) {
         res.send(savedSettings);
@@ -174,7 +181,7 @@ module.exports = (app, db) => {
     db.getUserByEmail(email).then((user) => {
       db.getPassword(user.id).then((hash) => {
         auth.comparePassword(password, hash).then(() => {
-          const token = auth.signToken(user);
+          const token = auth.signToken({id: user.id, username: user.username});
           var resJson = {
             success: true,
             token: 'JWT ' + token,
@@ -190,7 +197,7 @@ module.exports = (app, db) => {
         });
       });
     }).catch(() => {
-      res.status(404).send('User not found');
+      res.status(401).send('User not found');
     })
 
 

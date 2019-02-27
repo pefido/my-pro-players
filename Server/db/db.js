@@ -612,12 +612,11 @@ class DB {
   getUser(id) {
     return new Promise((resolve, reject) => {
       var user = this.userCollection.get(parseInt(id));
-      user ? resolve(user) : reject();
+      user ? resolve(user) : reject("user not found");
     });
   }
 
   getUserByEmail(email) {
-    console.log(email);
     return new Promise((resolve, reject) => {
       var resUser = Array.from(this.userCollection.values()).find((user) => {
         return user.email === email;

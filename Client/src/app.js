@@ -5,9 +5,11 @@ const app = angular.module('app', ['ui.router']);
 require('./services/appUtilities');
 require('./services/notification');
 require('./services/dbRequest');
+require('./services/authentication');
 require('./user');
 require('./player');
 require('./notFound');
+require('./authenticate');
 
 app.controller('appController', ['$scope', 'Notification', ($scope, Notification) => {
   $scope.notificationObj = Notification.notificationObj;
@@ -31,6 +33,10 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       params: {
         type: "Resource"
       }
+    })
+    .state('authenticate', {
+      url: '/authenticate',
+      template: '<authenticate></authenticate>',
     });
 
   $locationProvider.html5Mode(true);

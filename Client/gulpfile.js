@@ -45,7 +45,8 @@ var serverTask = (done) => {
   connect.server({
     root: './dist',
     livereload: true,
-    fallback: './dist/index.html'
+    fallback: './dist/index.html',
+    host: '0.0.0.0'
   });
   done();
 }

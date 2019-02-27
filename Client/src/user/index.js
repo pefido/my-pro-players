@@ -9,15 +9,20 @@ app.directive('user', [function () {
     templateUrl: './user.html',
     bindToController: true,
     controllerAs: 'vm',
-    controller: ['$q', '$state', '$scope', '$sce', 'Clipboard', 'Notification', '$stateParams', 'dbRequest', function ($q, $state, $scope, $sce, Clipboard, Notification, $stateParams, dbRequest) {
+    controller: ['$q', '$state', '$scope', '$sce', 'Clipboard', 'Notification', '$stateParams', 'dbRequest', 'Authentication',
+    function ($q, $state, $scope, $sce, Clipboard, Notification, $stateParams, dbRequest, Authentication) {
       var vm = this;
       vm.user = {};
       vm.players = [];
       vm.Notification = Notification;
+      vm.Authentication = Authentication;
       vm.addingPlayer = false;
       vm.sce = $sce;
       vm.playerInputText = "";
 
+      if(!vm.Authentication.isAuthenticated()) {
+        $state.transitionTo('authenticate');
+      }
       dbRequest.getUser($stateParams.id).then((res) => {
         vm.user = res.data;
         dbRequest.getPlayersByUser(vm.user.id, (player) => {
@@ -30,6 +35,8 @@ app.directive('user', [function () {
         .catch((err) => {
           if (err.status === 404) {
             $state.transitionTo('notFound', { type: 'User' }, { location: false });
+          } else if(err.status === 401) {
+            vm.Authentication.handleUnauthorized(err);
           }
         });
 
@@ -58,6 +65,7 @@ app.directive('user', [function () {
                 break;
               case 409:
                 vm.Notification.setNotification('error', 'Player already followed', 3);
+                break;
             }
           });
         });

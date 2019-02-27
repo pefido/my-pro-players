@@ -1,19 +1,23 @@
 const angular = require('angular');
 const app = angular.module('app');
 
+const { NativeEventSource, EventSourcePolyfill } = require('event-source-polyfill');
+const EventSource = NativeEventSource || EventSourcePolyfill;
+
 class dbRequest {
-  constructor($http) {
+  constructor($http, Authentication) {
     this.$http = $http;
     this.baseUri = "http://localhost:3000";
+    this.Authentication = Authentication;
   }
 
   //////////User Collection
   getUser(id) {
-    return this.$http.get(this.baseUri + "/users/" + id);
+    return this.$http.get(this.baseUri + "/users/" + id, this.Authentication.authHeader());
   }
 
   updateUserSettings(userId, settings) {
-    return this.$http.put(this.baseUri + "/users/" + userId + "/settings/", settings);
+    return this.$http.put(this.baseUri + "/users/" + userId + "/settings/", settings, this.Authentication.authHeader());
   }
 
 
@@ -22,16 +26,13 @@ class dbRequest {
   /////////Player Collection
   getPlayersByUser(id, callback) {
     var retryTimer = 7000;
-    var eventSource = new EventSource(this.baseUri + "/users/" + id + "/players?retry=" + retryTimer);
+    var eventSource = new EventSourcePolyfill(this.baseUri + "/users/" + id + "/players?retry=" + retryTimer, this.Authentication.authHeader());
     var counter = 0;
 
     eventSource.addEventListener('playerSent', (e) => {
       counter++;
       console.log("got " + counter);
       callback(JSON.parse(e.data));
-    });
-    eventSource.addEventListener('playerSentEnd', (e) => {
-      eventSource.close();
     });
     eventSource.onerror = () => {
       eventSource.close();
@@ -43,11 +44,11 @@ class dbRequest {
   }
 
   addPlayerToUser(userId, playerUsername) {
-    return this.$http.post(this.baseUri + "/users/" + userId + "/players", { 'username': playerUsername });
+    return this.$http.post(this.baseUri + "/users/" + userId + "/players", { 'username': playerUsername }, this.Authentication.authHeader());
   }
 
   removePlayerFromUser(userId, playerId) {
-    return this.$http.delete(this.baseUri + "/users/" + userId + "/players/" + playerId);
+    return this.$http.delete(this.baseUri + "/users/" + userId + "/players/" + playerId, this.Authentication.authHeader());
   }
 
 
@@ -84,4 +85,4 @@ class dbRequest {
 
 }
 
-app.service('dbRequest', dbRequest);
+app.service('dbRequest', ['$http', 'Authentication', dbRequest]);
