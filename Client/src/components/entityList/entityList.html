@@ -1,7 +1,9 @@
 <div class="entityListWrap">
   <div class="listContainer">
     <div class="addPlayerContainer">
-      <div class="userSettingsButtonContainer" ng-click="vm.toggleUserSettingsModalVisible()" ng-bind-html="vm.addIcon('gear', {'class': 'userSettingsButton'})"></div>
+      <div class="userSettingsButtonContainer" ng-click="vm.toggleUserSettingsModalVisible()"
+        ng-bind-html="vm.addIcon('gear', {'class': 'userSettingsButton'})">
+      </div>
       <input focus-on="newPlayerFocus" ng-if="vm.isAddingEntity()" ng-blur="vm.toggleAddingEntity()" class="newPlayerInput"
         ng-model="vm.entityInputText" ng-keydown="vm.keyPressed($event)" type="text" name="newEntity" placeholder="Insert {{vm.entityType}} name">
       <button class="addPlayer" ng-if="!vm.isAddingEntity()" ng-click="vm.toggleAddingEntity()">

@@ -1,5 +1,19 @@
-<div>
-  Email: <input type="email" name="email" ng-model="vm.email">
-  Password<input type="password" name="password" ng-model="vm.password">
+<div class="authWrapper">
+  <form ng-submit="vm.authenticate()" class="authForm">
+    <div class="authInputWrapper">
+      <div class="authInputText">
+        Email
+      </div>
+      <input class="authInput" type="email" name="email" ng-model="vm.email" autofocus>
+    </div>
+    <div class="authInputWrapper">
+      <div class="authInputText">
+        Password
+      </div>
+      <input class="authInput" type="password" name="password" ng-model="vm.password">
+    </div>
+    <div class="authInputWrapper">
+      <input class="authSubmit" type="submit" value="Submit"></input>
+    </div>
+  </form>
 </div>
-<button ng-click="vm.authenticate()">Submit</button>
