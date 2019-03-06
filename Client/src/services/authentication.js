@@ -64,8 +64,14 @@ class Authentication {
     this.deleteToken();
   }
 
+  switchUser() {
+    this.logout();
+    this.$state.transitionTo('authenticate');
+  }
+
   handleUnauthorized(error) {
     if(error.data === "Unauthorized") {
+      this.logout();
       this.$state.transitionTo('authenticate');
     } else if(error.data === "Access denied") {
       this.$state.transitionTo('user', { id: this.getUser().id });

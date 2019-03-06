@@ -11,7 +11,9 @@ require('./player');
 require('./notFound');
 require('./authenticate');
 
-app.controller('appController', ['$scope', 'Notification', ($scope, Notification) => {
+app.controller('appController', ['$scope', 'Notification', 'Authentication' 
+,($scope, Notification, Authentication) => {
+  $scope.Authentication = Authentication;
   $scope.notificationObj = Notification.notificationObj;
 }]);
 

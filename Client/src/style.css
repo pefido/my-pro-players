@@ -11,9 +11,6 @@ body {
 .header {
   padding-top: 30px;
   padding-bottom: 20px;
-  border-style: solid;
-  border-width: 0px 0px 1px 0px;
-  border-bottom-color: #FFF59D;
   width: 91%;
   margin-left: auto;
   margin-right: auto;
@@ -28,6 +25,35 @@ body {
   text-align: center;
   margin: 0px;
   cursor: pointer;
+}
+
+.navbarWrapper {
+  padding: 10px 0;
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
+  border-bottom-color: #FFF59D;
+  width: 91%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.navbarContent {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  padding-right: 20px;
+}
+
+.navbarItem {
+  color: #FFF59D;
+  margin: 0 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.navbarSpacer {
+  color: #FFF59D;
+  font-size: 20px;
 }
 
 /* user page */
